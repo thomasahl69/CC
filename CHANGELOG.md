@@ -8,6 +8,11 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.2.1 — 2026-06-27
+
+- Saving an event now reports the real reason if it fails (e.g. a missing `events`
+  table) instead of a generic "could not create" message.
+
 ## v1.2.0 — 2026-06-27
 
 - The admin now **stays logged in**: on load it checks for a valid session and

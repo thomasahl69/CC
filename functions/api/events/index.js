@@ -25,12 +25,20 @@ export async function onRequestPost(context) {
 
   const id = "evt_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   const now = new Date().toISOString();
-  await context.env.DB.prepare(
-    "INSERT INTO events (id, created_at, title, date, location, description, cost) VALUES (?,?,?,?,?,?,?)"
-  ).bind(
-    id, now, clip(b.title, 200), clip(b.date, 40),
-    clip(b.location, 300), clip(b.description, 4000), clip(b.cost, 80)
-  ).run();
+  try {
+    await context.env.DB.prepare(
+      "INSERT INTO events (id, created_at, title, date, location, description, cost) VALUES (?,?,?,?,?,?,?)"
+    ).bind(
+      id, now, clip(b.title, 200), clip(b.date, 40),
+      clip(b.location, 300), clip(b.description, 4000), clip(b.cost, 80)
+    ).run();
+  } catch (e) {
+    const msg = String(e && e.message || e);
+    const hint = /no such table/i.test(msg)
+      ? "The events table doesn't exist yet — run schema.sql (or create it in the D1 console)."
+      : msg;
+    return json({ ok: false, error: hint }, 500);
+  }
 
   return json({ ok: true, id });
 }
