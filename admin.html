@@ -298,6 +298,17 @@ async function sha256(str){
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
 
+/* ---------- server layer (Cloudflare Pages + D1) ----------
+   SERVER becomes true after a successful API login. When false
+   (preview / no backend) everything falls back to localStorage. */
+let SERVER=false;
+async function api(path,opts={}){
+  const r=await fetch('/api'+path,{credentials:'same-origin',
+    headers:{'content-type':'application/json'},...opts});
+  let body=null; try{body=await r.json()}catch(_){}
+  return {ok:r.ok,status:r.status,body};
+}
+
 /* ---------- seed content (from the two source documents) ---------- */
 const SEED={version:1,updatedAt:new Date().toISOString(),modules:[
   {
@@ -343,10 +354,15 @@ function loadData(){
   if(raw){try{return JSON.parse(raw)}catch(e){}}
   return structuredClone(SEED);
 }
-function persist(){
+async function persist(){
   data.updatedAt=new Date().toISOString();
-  const ok=lsSet(LS_DATA,JSON.stringify(data));
-  setSaved(ok?'Saved':'In memory only');
+  if(SERVER){
+    try{const r=await api('/content',{method:'PUT',body:JSON.stringify(data)});setSaved(r.ok?'Saved':'Save failed')}
+    catch(e){setSaved('Offline — not saved')}
+  }else{
+    const ok=lsSet(LS_DATA,JSON.stringify(data));
+    setSaved(ok?'Saved':'In memory only');
+  }
 }
 function setDirty(){dirty=true;document.getElementById('saveState').classList.add('dirty');document.getElementById('saveText').textContent='Saving\u2026';
   clearTimeout(setDirty._t);setDirty._t=setTimeout(()=>{persist();dirty=false;document.getElementById('saveState').classList.remove('dirty')},500);}
@@ -454,7 +470,12 @@ document.getElementById('fileIn').onchange=e=>{
   }catch(err){alert('That file is not a valid knowledge-base export.')}};
   r.readAsText(f);e.target.value='';
 };
-document.getElementById('btnLock').onclick=()=>{document.getElementById('app').classList.remove('on');document.getElementById('gate').style.display='grid';document.getElementById('pw').value=''};
+document.getElementById('btnLock').onclick=async()=>{
+  if(SERVER){try{await api('/logout',{method:'POST'})}catch(e){}SERVER=false}
+  document.getElementById('app').classList.remove('on');
+  document.getElementById('gate').style.display='grid';
+  document.getElementById('pw').value='';
+};
 
 /* ---------- submissions ---------- */
 const SUBS_KEY='ccs_submissions_v1';
@@ -464,6 +485,20 @@ let subFilter='all';
 
 function loadSubs(){try{return JSON.parse(lsGet(SUBS_KEY)||'[]')}catch(e){return []}}
 function saveSubs(){lsSet(SUBS_KEY,JSON.stringify(subs))}
+async function refreshSubs(){
+  if(SERVER){
+    try{const r=await api('/submissions');if(r.ok&&r.body&&Array.isArray(r.body.submissions)){subs=r.body.submissions;return}}
+    catch(e){console.warn('Could not load submissions',e)}
+    subs=[];
+  }else{subs=loadSubs()}
+}
+async function commitSub(s){
+  if(SERVER){
+    try{await api('/submissions/'+encodeURIComponent(s.id),{method:'PATCH',
+      body:JSON.stringify({status:s.status,response:s.response,aiDraft:s.aiDraft,respondedAt:s.respondedAt})})}
+    catch(e){console.warn('Could not save change',e)}
+  }else{saveSubs()}
+}
 function updateSubBadge(){
   const n=subs.filter(s=>s.status==='new').length;
   const b=document.getElementById('subBadge');
@@ -471,7 +506,7 @@ function updateSubBadge(){
 }
 const STATUS_LABEL={'new':'New','in-progress':'In progress','responded':'Responded','archived':'Archived'};
 
-function showView(which){
+async function showView(which){
   const content=which==='content';
   document.getElementById('contentView').style.display=content?'':'none';
   document.getElementById('subsView').style.display=content?'none':'';
@@ -481,7 +516,7 @@ function showView(which){
   document.getElementById('subActions').style.display=content?'none':'flex';
   document.getElementById('tabContent').classList.toggle('active',content);
   document.getElementById('tabSubs').classList.toggle('active',!content);
-  if(!content){subs=loadSubs();renderSubList();updateSubBadge()}
+  if(!content){await refreshSubs();renderSubList();updateSubBadge()}
 }
 document.getElementById('tabContent').onclick=()=>showView('content');
 document.getElementById('tabSubs').onclick=()=>showView('subs');
@@ -549,14 +584,17 @@ function renderSubDetail(){
   host.appendChild(d);
 
   const tick=()=>{const t=document.getElementById('subTick');t.classList.add('show');clearTimeout(tick._t);tick._t=setTimeout(()=>t.classList.remove('show'),1200)};
-  d.querySelector('#subStatus').onchange=e=>{s.status=e.target.value;saveSubs();renderSubList();updateSubBadge();tick()};
+  d.querySelector('#subStatus').onchange=e=>{s.status=e.target.value;commitSub(s);renderSubList();updateSubBadge();tick()};
   d.querySelector('#subResp').oninput=e=>{
     s.response=e.target.value;s.respondedAt=new Date().toISOString();
     if(s.status==='new'&&s.response.trim()){s.status='in-progress';renderSubList();updateSubBadge();d.querySelector('#subStatus').value='in-progress'}
-    saveSubs();
-    clearTimeout(renderSubDetail._t);renderSubDetail._t=setTimeout(tick,400);
+    clearTimeout(renderSubDetail._t);renderSubDetail._t=setTimeout(()=>{commitSub(s);tick()},400);
   };
-  d.querySelector('#delSub').onclick=()=>{if(confirm('Delete this submission permanently?')){subs=subs.filter(x=>x.id!==s.id);activeSub=null;saveSubs();renderSubList();renderSubDetail();updateSubBadge()}};
+  d.querySelector('#delSub').onclick=async()=>{if(confirm('Delete this submission permanently?')){
+    const id=s.id;subs=subs.filter(x=>x.id!==id);activeSub=null;
+    if(SERVER){try{await api('/submissions/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}else{saveSubs()}
+    renderSubList();renderSubDetail();updateSubBadge();
+  }};
 }
 
 /* submissions export / import */
@@ -577,25 +615,65 @@ document.getElementById('subFileIn').onchange=e=>{
   r.readAsText(f);e.target.value='';
 };
 
-/* ---------- password ---------- */
+/* ---------- login / storage mode ---------- */
+function applyStorageMode(){
+  if(SERVER){
+    const c=document.querySelector('#contentNotice div');
+    if(c)c.innerHTML='<b>Connected to your database.</b> Changes save to the server and are shared across devices and with your AI engine.';
+    const s=document.querySelector('#subNotice div');
+    if(s)s.innerHTML='<b>Live submissions from your database.</b> Responses sent from the site appear here automatically.';
+    const sub=document.querySelector('.brand small');if(sub)sub.textContent='Connected · live';
+  }
+}
+async function loadContentFromServer(){
+  try{
+    const r=await api('/content');
+    if(r.ok){
+      if(r.body&&r.body.data&&Array.isArray(r.body.data.modules)){data=r.body.data}
+      else{data=structuredClone(SEED);await api('/content',{method:'PUT',body:JSON.stringify(data)})}
+      return;
+    }
+  }catch(e){console.warn('content load failed',e)}
+  data=loadData();
+}
+async function enterApp(){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').classList.add('on');
+  applyStorageMode();
+  if(SERVER){await loadContentFromServer()}else{data=loadData()}
+  activeId=data.modules[0]?.id||null;
+  renderList();renderEditor();
+  await refreshSubs();updateSubBadge();
+}
+
 document.getElementById('btnPw').onclick=()=>document.getElementById('dlgPw').showModal();
 document.getElementById('savePw').onclick=async()=>{
+  if(SERVER){
+    document.getElementById('dlgPw').close();
+    alert('In server mode the password is the ADMIN_PASSWORD secret. Change it in your Cloudflare dashboard (Settings \u2192 Variables and Secrets), then redeploy.');
+    return;
+  }
   const v=document.getElementById('newPw').value;if(v.length<4){alert('Use at least 4 characters.');return}
   lsSet(LS_PW,await sha256(v));document.getElementById('newPw').value='';document.getElementById('dlgPw').close();
   alert('Password updated for this browser.');
 };
 document.getElementById('gateForm').onsubmit=async(e)=>{
   e.preventDefault();
-  const entered=await sha256(document.getElementById('pw').value);
+  const pw=document.getElementById('pw').value;
+  const errEl=document.getElementById('gateErr');errEl.textContent='';
+  /* 1) try the server */
+  try{
+    const r=await api('/login',{method:'POST',body:JSON.stringify({password:pw})});
+    if(r.body&&typeof r.body.ok!=='undefined'){
+      if(r.body.ok){SERVER=true;await enterApp();return}
+      errEl.textContent='Incorrect password. Try again.';document.getElementById('pw').select();return;
+    }
+  }catch(_){/* no backend reachable -> local fallback */}
+  /* 2) local fallback (preview / offline) */
+  const entered=await sha256(pw);
   const stored=lsGet(LS_PW)||DEFAULT_PW_HASH;
-  if(entered===stored){
-    document.getElementById('gate').style.display='none';
-    document.getElementById('app').classList.add('on');
-    renderList();renderEditor();updateSubBadge();
-  }else{
-    document.getElementById('gateErr').textContent='Incorrect password. Try again.';
-    document.getElementById('pw').select();
-  }
+  if(entered===stored){SERVER=false;await enterApp()}
+  else{errEl.textContent='Incorrect password. Try again.';document.getElementById('pw').select()}
 };
 </script>
 </body>

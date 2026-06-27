@@ -1,46 +1,60 @@
-# Authentic Joy in the Journey — website bundle
+# Authentic Joy in the Journey — website bundle (CC)
 
-Everything for Christina Carpenter's site, ready to upload. Keep **all files in
-the same folder** — the pages link to the icons with simple relative paths
-(e.g. `favicon.ico`), so they need to sit next to `index.html`.
+Christina Carpenter's site, now with a real server backend (Cloudflare Pages + D1)
+so forms and admin data are stored on the server, not in a single browser.
 
-## What's inside
+## Folder layout
 
-| File | What it is |
-|------|------------|
-| `index.html` | The public website (hero, story, the two spaces, events, offerings, testimonials, the pop-out reflection questionnaire, newsletter/contact, footer). Fully mobile-responsive. |
-| `admin.html` | **Private** workspace. Password-gated. Two tabs: **Content** (the AI knowledge base — The Framework + The Art of Layered Learning) and **Submissions** (questionnaire responses you can read, status, and respond to). Do not link to this from the public site. |
-| `README-admin.md` | How the admin works, the JSON the AI engine consumes, and — important — the security/production notes. Read this one. |
-| `favicon.ico` | Browser-tab icon (16/32/48 px). |
-| `favicon-16.png`, `favicon-32.png`, `favicon-192.png` | PNG icons for modern browsers / sharing. |
-| `favicon.avif` | Your original icon image, for browsers that support AVIF. |
-| `apple-touch-icon.png` | Home-screen icon for iPhone/iPad. |
+```
+CC/
+├── index.html              Public website (responsive)
+├── admin.html              Private admin (login, content + submissions)
+├── schema.sql              D1 database tables
+├── wrangler.toml           Cloudflare config (paste your D1 id here)
+├── functions/              The server API (Cloudflare Pages Functions)
+│   └── api/
+│       ├── _lib.js         shared helpers (auth, json)
+│       ├── login.js        POST /api/login
+│       ├── logout.js       POST /api/logout · GET session check
+│       ├── content.js      GET/PUT /api/content   (knowledge base)
+│       └── submissions/
+│           ├── index.js    POST (public submit) · GET (admin list)
+│           └── [id].js      PATCH/DELETE (admin update/remove)
+├── favicon.ico, favicon-*.png, favicon.avif, apple-touch-icon.png
+├── README.md               this file
+├── README-admin.md         how the admin works + the JSON the AI uses
+└── DEPLOY-cloudflare.md     step-by-step: create the D1 and go live
+```
 
-## How to put it online
+Keep every file together and keep the `functions/` folder exactly where it is —
+Cloudflare turns it into the API automatically.
 
-1. Upload **every file in this folder** to your web host, all in the same place.
-2. Make sure the public homepage is served as `index.html`.
-3. The admin lives at `admin.html` (e.g. `yoursite.com/admin.html`). Open it,
-   then change the default password right away (button is in the top bar).
-4. Favicons cache hard — do a hard refresh if the old icon lingers.
+## Two ways it runs
 
-## Default admin password
+- **Deployed on Cloudflare Pages with D1** → forms and admin read/write the
+  database. Submissions from any visitor land in the admin. Content is shared
+  across devices and available to the AI engine. This is the real setup.
+- **Opened directly / before deploy / in a preview** → it falls back to the
+  browser's local storage so you can still click around. Nothing breaks; it just
+  isn't shared. No code change needed to switch — it detects the server.
 
-`bloom2025` — **change it immediately** inside the admin (Password button).
+## Go live
 
-## Honest reminders (details in README-admin.md)
+Follow **DEPLOY-cloudflare.md**. Short version:
 
-- A password on a static page is a soft gate, not real security. For genuine
-  protection of the private content and the AI key, the admin/login/AI step move
-  to a small backend. The exported JSON is already shaped for that.
-- Right now, edits and questionnaire submissions save to **one browser**. For
-  real submissions from any visitor (and content that's shared across devices and
-  live to the AI), the forms post to a shared backend/form service and the admin
-  reads from the same place.
+1. `npx wrangler d1 create cc-db` → paste the id into `wrangler.toml`
+2. `npx wrangler d1 execute cc-db --remote --file=./schema.sql`
+3. `npx wrangler pages deploy .`
+4. Set secrets `ADMIN_PASSWORD` and `SESSION_SECRET`
+5. Confirm the `DB` binding → redeploy → log in at `/admin.html`
 
-## Things you can ask for next
+## Default admin password (local-fallback only)
 
-- Wire the questionnaire to a real backend so submissions arrive for anyone.
-- Connect the AI response engine so the reserved "Automated draft" slot fills in.
-- Add the auto-expiring events feature (the note found in The Framework doc).
-- Hook the newsletter/contact form to a mail service.
+`bloom2025` is the local fallback password used when there's no server. Once
+deployed, the real password is the `ADMIN_PASSWORD` secret you set in step 4.
+
+## What's next
+
+- Connect the AI response engine so the **Automated draft** slot fills in
+  (outline at the end of DEPLOY-cloudflare.md).
+- Optional: auto-expiring events section (the note found in The Framework doc).

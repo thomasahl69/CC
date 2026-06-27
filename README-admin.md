@@ -28,6 +28,11 @@ so the feedback sounds like you, not a generic chatbot.
 
 ## Please read this part — about "password protected" and "not accessible to the public"
 
+> **Update:** the server backend described below is now **built** (Cloudflare Pages
+> Functions + D1). See `DEPLOY-cloudflare.md` to switch it on. Once deployed, the
+> admin password and all data live on the server, not in the page. The notes below
+> explain why that matters.
+
 This is the honest version, because it affects how you roll this out.
 
 A password typed into a plain web page (a static site like the current one) is a

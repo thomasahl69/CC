@@ -113,11 +113,12 @@ section{padding-block:clamp(64px,9vw,128px)}
 .brand svg{width:26px;height:26px;flex:none}
 .brand span{color:var(--sage-deep)}
 .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;margin:0;padding:0}
-.nav-links a{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft);position:relative;padding-block:4px;transition:color .2s}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--sage-deep);transition:width .28s ease}
-.nav-links a:hover{color:var(--ink)}
-.nav-links a:hover::after{width:100%}
+.nav-links a:not(.btn){font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft);position:relative;padding-block:4px;transition:color .2s}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--sage-deep);transition:width .28s ease}
+.nav-links a:not(.btn):hover{color:var(--ink)}
+.nav-links a:not(.btn):hover::after{width:100%}
 .nav-cta{margin-left:.5rem}
+.nav-cta .btn-solid{color:var(--paper)}
 
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
 .hamburger span{width:24px;height:2px;background:var(--ink);transition:transform .3s ease,opacity .25s ease}
@@ -931,7 +932,7 @@ const form=document.getElementById('contactForm');
 const success=document.getElementById('formSuccess');
 const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function setInvalid(field,bad){field.classList.toggle('invalid',bad);return bad}
-form.addEventListener('submit',(e)=>{
+form.addEventListener('submit',async(e)=>{
   e.preventDefault();
   const name=document.getElementById('name');
   const email=document.getElementById('email');
@@ -940,7 +941,24 @@ form.addEventListener('submit',(e)=>{
   bad=setInvalid(email.closest('.field'),!emailRe.test(email.value.trim()))||bad;
   if(bad){form.querySelector('.invalid input').focus();return}
 
-  /* No backend wired yet — show confirmation. Connect a form service to receive entries. */
+  const sub={
+    type:'contact',
+    questionnaire:'Newsletter / Contact',
+    name:name.value.trim(),
+    email:email.value.trim(),
+    phone:'',
+    preferredContact:'Email',
+    responses:[
+      {q:'Subject',a:document.getElementById('subject').value.trim()},
+      {q:'Message',a:document.getElementById('message').value.trim()}
+    ]
+  };
+  const btn=form.querySelector('button[type=submit]');
+  const label=btn.textContent; btn.disabled=true; btn.textContent='Sending…';
+  const result=await postSubmission(sub);
+  btn.disabled=false; btn.textContent=label;
+  if(typeof result==='string' && result.startsWith('error:')){alert('Sorry — '+result.slice(6)+' Please try again.');return}
+
   form.style.display='none';
   success.classList.add('show');
   success.scrollIntoView({behavior:'smooth',block:'center'});
@@ -972,16 +990,22 @@ document.getElementById('quizDone').addEventListener('click',closeQuiz);
 quiz.addEventListener('click',e=>{if(e.target===quiz)closeQuiz()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&quiz.classList.contains('open'))closeQuiz()});
 
-function saveSubmission(sub){
+async function postSubmission(sub){
   try{
-    const arr=JSON.parse(localStorage.getItem(SUBMISSIONS_KEY)||'[]');
-    arr.unshift(sub);
-    localStorage.setItem(SUBMISSIONS_KEY,JSON.stringify(arr));
-    return true;
-  }catch(e){return false}
+    const r=await fetch('/api/submissions',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(sub)});
+    let d=null; try{ d=await r.json(); }catch(_){}
+    if(d && d.ok) return 'server';
+    if(d && d.ok===false && d.error) return 'error:'+d.error;
+  }catch(_){ /* no server reachable (preview/offline) */ }
+  // fallback so nothing is lost when there's no backend yet
+  try{
+    const a=JSON.parse(localStorage.getItem(SUBMISSIONS_KEY)||'[]');
+    a.unshift(sub); localStorage.setItem(SUBMISSIONS_KEY,JSON.stringify(a));
+  }catch(_){}
+  return 'local';
 }
 
-quizForm.addEventListener('submit',(e)=>{
+quizForm.addEventListener('submit',async(e)=>{
   e.preventDefault();
   const name=document.getElementById('q-name');
   const email=document.getElementById('q-email');
@@ -991,8 +1015,7 @@ quizForm.addEventListener('submit',(e)=>{
   if(bad){quizForm.querySelector('.invalid input').focus();return}
 
   const sub={
-    id:'sub_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-    createdAt:new Date().toISOString(),
+    type:'questionnaire',
     questionnaire:'The Art of Layered Learning',
     name:name.value.trim(),
     email:email.value.trim(),
@@ -1003,15 +1026,17 @@ quizForm.addEventListener('submit',(e)=>{
       {q:'What sparks wonder in your children?',a:document.getElementById('q2').value.trim()},
       {q:'Where have you seen growth that surprised you?',a:document.getElementById('q3').value.trim()},
       {q:'Which practical idea are you excited to try first?',a:document.getElementById('q4').value.trim()}
-    ],
-    status:'new',
-    response:'',     /* Christina's reply, written in the admin */
-    aiDraft:'',      /* reserved for the future automated response */
-    respondedAt:null
+    ]
   };
-  saveSubmission(sub);
-  /* For real visitors, also POST `sub` to your backend/form service here. */
 
+  const btn=quizForm.querySelector('button[type=submit]');
+  const label=btn.textContent; btn.disabled=true; btn.textContent='Sending…';
+  const result=await postSubmission(sub);
+  btn.disabled=false; btn.textContent=label;
+
+  if(typeof result==='string' && result.startsWith('error:')){
+    alert('Sorry — '+result.slice(6)+' Please try again.');return;
+  }
   quizForm.reset();
   quizForm.style.display='none';
   quizSuccess.classList.add('show');
