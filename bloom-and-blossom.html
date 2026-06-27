@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Bloom & Blossom Conference — page v1.4.0 -->
+<!-- Bloom & Blossom Conference — page v1.4.1 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.4.0">
+<meta name="version" content="1.4.1">
 <title>Bloom &amp; Blossom Conference | Authentic Joy in the Journey</title>
 <meta name="description" content="The Bloom and Blossom Conference is a gathering for mothers to be encouraged, equipped, empowered, and inspired on their motherhood and home education journey.">
 <meta property="og:title" content="Bloom &amp; Blossom Conference">
@@ -178,7 +178,7 @@ section{padding-block:clamp(60px,8vw,116px)}
       <img src="favicon-192.png" alt="" onerror="this.style.display='none'">
       Bloom <span>&amp; Blossom</span>
     </a>
-    <span class="site-ver">v1.4.0</span>
+    <span class="site-ver">v1.4.1</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -379,10 +379,20 @@ document.getElementById('year').textContent=new Date().getFullYear();
 /* gallery — live highlight photos with botanical fallback */
 (function(){
   const ids=['20ae10_8b9cc0a256a74b4794bed1324ebbb9e1','20ae10_80a4417b162b4908afb7262bd719dfbb','20ae10_03f8e448ac0a4ef8a6656de39329b02f','20ae10_1c7f4a56a6b34914901d97f008f27694','20ae10_7d94271c5aa04df6ac1f973e2b45f599','20ae10_df3e4aada25041519a720d62ef20cd0b'];
-  const fb='<div class="fallback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22c0-5-4-7-4-12a4 4 0 0 1 8 0c0 5-4 7-4 12z"/></svg></div>';
-  document.getElementById('galleryGrid').innerHTML=ids.map(id=>
-    '<div class="tile"><img loading="lazy" src="https://static.wixstatic.com/media/'+id+'~mv2.jpg/v1/fill/w_600,h_600,al_c,q_80,enc_auto/p.jpg" alt="Bloom and Blossom highlight" onerror="this.parentNode.innerHTML=\''+fb.replace(/'/g,"\\'")+'\'"></div>'
-  ).join('');
+  const grid=document.getElementById('galleryGrid');
+  if(!grid)return;
+  const FALLBACK='<div class="fallback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22c0-5-4-7-4-12a4 4 0 0 1 8 0c0 5-4 7-4 12z"/></svg></div>';
+  ids.forEach(id=>{
+    const tile=document.createElement('div');
+    tile.className='tile';
+    const img=document.createElement('img');
+    img.loading='lazy';
+    img.alt='Bloom and Blossom highlight';
+    img.src='https://static.wixstatic.com/media/'+id+'~mv2.jpg/v1/fill/w_600,h_600,al_c,q_80,enc_auto/p.jpg';
+    img.addEventListener('error',function(){tile.innerHTML=FALLBACK;});
+    tile.appendChild(img);
+    grid.appendChild(tile);
+  });
 })();
 
 /* upcoming conference dates from the events API (falls back gracefully) */

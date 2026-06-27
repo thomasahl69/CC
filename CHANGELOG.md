@@ -8,6 +8,12 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.4.1 — 2026-06-27
+
+- Fixed the conference page highlights gallery: a quote-escaping bug in the image
+  fallback was leaking stray `">` characters between photos. Rebuilt it to render
+  cleanly.
+
 ## v1.4.0 — 2026-06-27
 
 - Version number moved to the **top-left** (next to the logo) on the home and
