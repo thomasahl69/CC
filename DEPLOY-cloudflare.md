@@ -25,12 +25,16 @@ You only do steps 1–7 once. After that, updates are just "upload again."
 
 ## 1. Create the D1 database
 
+> **Already done for you.** Your database `cc-db`
+> (`07f3d742-77a0-4918-b5a1-eeb6fe0652d1`) is already filled into `wrangler.toml`.
+> If you ever recreate it, run the command below and paste the new id.
+
 ```bash
 npx wrangler d1 create cc-db
 ```
 
-It prints a `database_id`. Open `wrangler.toml` and paste it in place of
-`PASTE_YOUR_D1_DATABASE_ID_HERE`.
+It prints a `database_id`. Open `wrangler.toml` and paste it in place of the id
+that's there.
 
 ## 2. Create the tables
 
