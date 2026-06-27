@@ -8,6 +8,16 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.1.0 — 2026-06-27
+
+- New **Events** manager in the admin: add/edit/delete upcoming events with
+  topic, date & time, location, cost, and description.
+- Events are stored in a new D1 `events` table (`functions/api/events/`).
+- The public site's "Upcoming Gatherings" section now loads from the database:
+  events dated today or later show automatically and are sorted by date; past
+  events drop off the public site but remain in the admin as history.
+- Requires running the updated `schema.sql` once to create the `events` table.
+
 ## v1.0.0 — 2026-06-27
 
 First tracked release. Everything built so far:

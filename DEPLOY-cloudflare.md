@@ -100,8 +100,16 @@ npx wrangler pages deploy .
 
 ## Updating later
 
-Edit files, run `npx wrangler pages deploy` again. Database contents (submissions
-and your edited knowledge base) stay put — deploys don't touch the data.
+Edit files, run `npx wrangler pages deploy` again. Database contents (submissions,
+events, and your edited knowledge base) stay put — deploys don't touch the data.
+
+**If a new version adds a table** (e.g. v1.1.0 added `events`), re-run the schema
+once — it uses `CREATE TABLE IF NOT EXISTS`, so it only adds what's missing and
+leaves your existing data alone:
+
+```bash
+npx wrangler d1 execute cc-db --remote --file=./schema.sql
+```
 
 ## Troubleshooting
 

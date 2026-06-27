@@ -24,3 +24,14 @@ CREATE TABLE IF NOT EXISTS content (
   data        TEXT NOT NULL,                          -- JSON: { version, updatedAt, modules:[...] }
   updated_at  TEXT
 );
+
+CREATE TABLE IF NOT EXISTS events (
+  id          TEXT PRIMARY KEY,
+  created_at  TEXT NOT NULL,
+  title       TEXT,                                   -- topic
+  date        TEXT,                                   -- ISO datetime, e.g. 2026-10-11T08:00
+  location    TEXT,
+  description TEXT,
+  cost        TEXT                                    -- free text, e.g. "$58" or "Free"
+);
+CREATE INDEX IF NOT EXISTS idx_events_date ON events(date);

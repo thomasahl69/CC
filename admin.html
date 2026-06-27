@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.0.0 -->
+<!-- Content Studio (admin) — v1.1.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.0.0">
+<meta name="version" content="1.1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -123,6 +123,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 @media(max-width:780px){
   .layout{grid-template-columns:1fr}
   .sidebar{border-right:0;border-bottom:1px solid var(--line);max-height:38vh}
+  .row2{grid-template-columns:1fr}
 }
 
 /* view tabs */
@@ -131,6 +132,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .vtab.active{background:var(--paper);color:var(--ink);box-shadow:0 2px 8px -4px var(--shadow)}
 .badge{background:var(--rose);color:#fff;border-radius:999px;font-size:.62rem;padding:.15em .5em;line-height:1;font-family:var(--util)}
 .ver{font-family:var(--util);font-size:.62rem;letter-spacing:.1em;color:var(--sage-deep);opacity:.85;align-self:flex-start;margin-top:3px;font-weight:500}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -174,7 +176,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.0.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.1.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -192,11 +194,12 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.0.0</span>
+      <span class="ver" id="appVer">v1.1.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
       <button class="vtab" id="tabSubs" role="tab">Submissions <span class="badge" id="subBadge" hidden>0</span></button>
+      <button class="vtab" id="tabEvents" role="tab">Events</button>
     </div>
     <span id="contentActions" style="display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn ghost tiny" id="btnPreview">Preview JSON</button>
@@ -221,6 +224,10 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
   <div class="notice" id="subNotice" style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
     <div><b>Showing submissions saved in this browser.</b> A questionnaire sent from a visitor's own device won't appear here until the form posts to a shared backend. See README-admin.md to connect it — then this same screen reads live submissions.</div>
+  </div>
+  <div class="notice" id="eventsNotice" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><b>These events feed the public site.</b> Anything dated today or later shows in the "Upcoming Gatherings" section automatically; past dates drop off the site but stay here as history.</div>
   </div>
 
   <!-- CONTENT VIEW -->
@@ -263,6 +270,22 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
       </div>
     </main>
   </div>
+
+  <!-- EVENTS VIEW -->
+  <div class="layout" id="eventsView" style="display:none">
+    <aside class="sidebar">
+      <div class="shead"><span>Upcoming Events</span><button class="btn tiny" id="btnAddEvt">+ New</button></div>
+      <div id="evtList"></div>
+    </aside>
+    <main class="editor" id="evtEditor">
+      <div class="empty" id="evtEmpty">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+          <p>Select an event to edit,<br>or add a new one.</p>
+        </div>
+      </div>
+    </main>
+  </div>
 </div>
 
 <!-- preview dialog -->
@@ -294,7 +317,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.0.0';
+const APP_VERSION='1.1.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -515,19 +538,24 @@ function updateSubBadge(){
 const STATUS_LABEL={'new':'New','in-progress':'In progress','responded':'Responded','archived':'Archived'};
 
 async function showView(which){
-  const content=which==='content';
-  document.getElementById('contentView').style.display=content?'':'none';
-  document.getElementById('subsView').style.display=content?'none':'';
-  document.getElementById('contentNotice').style.display=content?'':'none';
-  document.getElementById('subNotice').style.display=content?'none':'';
-  document.getElementById('contentActions').style.display=content?'flex':'none';
-  document.getElementById('subActions').style.display=content?'none':'flex';
-  document.getElementById('tabContent').classList.toggle('active',content);
-  document.getElementById('tabSubs').classList.toggle('active',!content);
-  if(!content){await refreshSubs();renderSubList();updateSubBadge()}
+  const isC=which==='content', isS=which==='subs', isE=which==='events';
+  document.getElementById('contentView').style.display=isC?'':'none';
+  document.getElementById('subsView').style.display=isS?'':'none';
+  document.getElementById('eventsView').style.display=isE?'':'none';
+  document.getElementById('contentNotice').style.display=isC?'':'none';
+  document.getElementById('subNotice').style.display=isS?'':'none';
+  document.getElementById('eventsNotice').style.display=isE?'':'none';
+  document.getElementById('contentActions').style.display=isC?'flex':'none';
+  document.getElementById('subActions').style.display=isS?'flex':'none';
+  document.getElementById('tabContent').classList.toggle('active',isC);
+  document.getElementById('tabSubs').classList.toggle('active',isS);
+  document.getElementById('tabEvents').classList.toggle('active',isE);
+  if(isS){await refreshSubs();renderSubList();updateSubBadge()}
+  if(isE){await refreshEvents();renderEvtList()}
 }
 document.getElementById('tabContent').onclick=()=>showView('content');
 document.getElementById('tabSubs').onclick=()=>showView('subs');
+document.getElementById('tabEvents').onclick=()=>showView('events');
 document.getElementById('subFilter').onchange=e=>{subFilter=e.target.value;renderSubList()};
 
 function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
@@ -661,6 +689,91 @@ document.getElementById('subFileIn').onchange=e=>{
   }catch(err){alert('That file is not a valid submissions export.')}};
   r.readAsText(f);e.target.value='';
 };
+
+/* ---------- events ---------- */
+const EVTS_KEY='ccs_events_v1';
+let events=[];
+let activeEvt=null;
+function loadEventsLocal(){try{return JSON.parse(lsGet(EVTS_KEY)||'[]')}catch(e){return []}}
+function saveEventsLocal(){lsSet(EVTS_KEY,JSON.stringify(events))}
+async function refreshEvents(){
+  if(SERVER){
+    try{const r=await api('/events');if(r.ok&&r.body&&Array.isArray(r.body.events)){events=r.body.events;return}}
+    catch(e){console.warn('Could not load events',e)}
+    events=[];
+  }else{events=loadEventsLocal()}
+}
+let evtSaveTimer=null;
+function scheduleEvtSave(ev){clearTimeout(evtSaveTimer);evtSaveTimer=setTimeout(()=>commitEvt(ev),500)}
+async function commitEvt(ev){
+  if(SERVER){
+    try{await api('/events/'+encodeURIComponent(ev.id),{method:'PATCH',
+      body:JSON.stringify({title:ev.title,date:ev.date,location:ev.location,description:ev.description,cost:ev.cost})})}
+    catch(e){console.warn('event save failed',e)}
+  }else{saveEventsLocal()}
+}
+async function addEvt(){
+  const draft={title:'New event',date:'',location:'',description:'',cost:''};
+  if(SERVER){
+    try{const r=await api('/events',{method:'POST',body:JSON.stringify(draft)});
+      if(r.ok&&r.body&&r.body.ok){await refreshEvents();activeEvt=r.body.id;renderEvtList();renderEvtDetail();return}}
+    catch(e){}
+    alert('Could not create the event on the server.');return;
+  }
+  const ev={id:'evt_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),createdAt:new Date().toISOString(),...draft};
+  events.unshift(ev);saveEventsLocal();activeEvt=ev.id;renderEvtList();renderEvtDetail();
+}
+document.getElementById('btnAddEvt').onclick=addEvt;
+
+function renderEvtList(){
+  const host=document.getElementById('evtList');if(!host)return;host.innerHTML='';
+  if(events.length===0){host.innerHTML='<p style="color:var(--ink-soft);font-size:.82rem;padding:.4rem">No events yet. Click + New to add one.</p>';return}
+  const start=new Date();start.setHours(0,0,0,0);
+  const sorted=[...events].sort((a,b)=>{const da=a.date?new Date(a.date):null,db=b.date?new Date(b.date):null;if(!da||isNaN(da))return 1;if(!db||isNaN(db))return -1;return da-db});
+  sorted.forEach(ev=>{
+    const d=ev.date?new Date(ev.date):null;const valid=d&&!isNaN(d);const past=valid&&d<start;
+    const b=document.createElement('button');
+    b.className='mod-item'+(ev.id===activeEvt?' active':'');
+    b.innerHTML='<span class="ic">'+(valid?d.getDate():'?')+'</span>'
+      +'<span class="mt"><strong>'+esc(ev.title||'Untitled')+'</strong><em>'
+      +(valid?d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'No date')
+      +(past?' · past':'')+'</em></span>';
+    b.onclick=()=>{activeEvt=ev.id;renderEvtList();renderEvtDetail()};
+    host.appendChild(b);
+  });
+}
+
+function renderEvtDetail(){
+  const host=document.getElementById('evtEditor');
+  const ev=events.find(x=>x.id===activeEvt);
+  if(!ev){host.innerHTML='';host.appendChild(document.getElementById('evtEmpty'));return}
+  host.innerHTML='';
+  const d=document.createElement('div');
+  d.innerHTML=`
+    <div class="ed-head">
+      <span class="util" style="color:var(--ink-soft)">Event · feeds the public site</span>
+      <button class="btn danger tiny" id="delEvt">Delete event</button>
+    </div>
+    <div class="fieldset"><label class="lbl">Topic / title</label><input class="inp big" id="ev-title" value="${esc(ev.title||'')}"></div>
+    <div class="row2">
+      <div class="fieldset"><label class="lbl">Date &amp; time</label><input class="inp" id="ev-date" type="datetime-local" value="${esc(ev.date||'')}"></div>
+      <div class="fieldset"><label class="lbl">Cost</label><input class="inp" id="ev-cost" placeholder="e.g. $58 or Free" value="${esc(ev.cost||'')}"></div>
+    </div>
+    <div class="fieldset"><label class="lbl">Location</label><input class="inp" id="ev-loc" placeholder="Venue, city, state" value="${esc(ev.location||'')}"></div>
+    <div class="fieldset"><label class="lbl">Description</label><textarea class="ta" id="ev-desc" rows="4" placeholder="A sentence or two about this gathering.">${esc(ev.description||'')}</textarea></div>
+    <p class="form-note" id="evtSaved" style="color:var(--sage-deep);min-height:1.2em"></p>`;
+  host.appendChild(d);
+  const mark=()=>{const e=document.getElementById('evtSaved');if(!e)return;e.textContent='Saved \u2713';clearTimeout(mark._t);mark._t=setTimeout(()=>{e.textContent=''},1200)};
+  const bind=(id,prop)=>{const el=document.getElementById(id);el.oninput=e=>{ev[prop]=e.target.value;scheduleEvtSave(ev);renderEvtList();clearTimeout(bind._t);bind._t=setTimeout(mark,540)}};
+  bind('ev-title','title');bind('ev-date','date');bind('ev-cost','cost');bind('ev-loc','location');bind('ev-desc','description');
+  document.getElementById('delEvt').onclick=async()=>{
+    if(confirm('Delete this event?')){
+      const id=ev.id;events=events.filter(x=>x.id!==id);activeEvt=null;
+      if(SERVER){try{await api('/events/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}else{saveEventsLocal()}
+      renderEvtList();renderEvtDetail();
+    }
+  };
+}
 
 /* ---------- login / storage mode ---------- */
 function applyStorageMode(){
