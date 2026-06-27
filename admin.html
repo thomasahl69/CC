@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Content Studio · Private</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF6EF;--paper-2:#F2EBDD;--ink:#33402E;--ink-soft:#5A6750;
+  --sage:#8FA483;--sage-deep:#5E7252;--blush:#E3BDB6;--rose:#C68C85;
+  --gold:#B79447;--line:#DED4C2;--danger:#B4584F;--shadow:rgba(51,64,46,.12);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Mulish',system-ui,sans-serif;--util:'Jost',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.1}
+button{font-family:var(--util);cursor:pointer}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px;border-radius:4px}
+.util{font-family:var(--util);text-transform:uppercase;letter-spacing:.14em;font-size:.72rem}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.5em;border:1px solid var(--sage-deep);background:var(--sage-deep);color:var(--paper);
+  padding:.6em 1.1em;border-radius:999px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}
+.btn:hover{background:#516247;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+.btn.tiny{padding:.4em .7em;font-size:.68rem}
+.btn.danger{border-color:var(--danger);background:transparent;color:var(--danger)}
+.btn.danger:hover{background:var(--danger);color:#fff}
+.btn svg{width:15px;height:15px}
+
+/* ===== LOGIN GATE ===== */
+.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:linear-gradient(160deg,var(--paper),#EBE3D2);padding:24px}
+.gate-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(28px,4vw,44px);max-width:420px;width:100%;box-shadow:0 30px 60px -30px var(--shadow);text-align:center}
+.gate-card .mark{width:46px;height:46px;color:var(--sage-deep);margin:0 auto 1rem}
+.gate-card h1{font-size:2rem;margin-bottom:.3rem}
+.gate-card p{color:var(--ink-soft);font-size:.9rem;margin:0 0 1.5rem}
+.gate-card input{width:100%;font-family:var(--sans);font-size:1rem;padding:.8rem 1rem;border:1px solid var(--line);border-radius:10px;background:var(--paper-2);margin-bottom:.9rem}
+.gate-card input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(143,164,131,.2)}
+.gate-card .btn{width:100%;justify-content:center}
+.gate-err{color:var(--danger);font-size:.82rem;min-height:1.2em;margin-bottom:.6rem;font-family:var(--util)}
+.gate-note{margin-top:1.3rem;font-size:.72rem;color:var(--ink-soft);line-height:1.5;text-align:left;background:var(--paper-2);border-radius:10px;padding:.8rem .9rem;border:1px solid var(--line)}
+
+/* ===== APP SHELL ===== */
+.app{display:none;min-height:100vh;flex-direction:column}
+.app.on{display:flex}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding:.8rem clamp(16px,3vw,28px);background:rgba(250,246,239,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .brand{display:flex;align-items:center;gap:.55rem;font-family:var(--serif);font-size:1.25rem;margin-right:auto}
+.topbar .brand svg{width:24px;height:24px;color:var(--sage-deep)}
+.topbar .brand small{display:block;font-family:var(--util);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sage-deep);line-height:1}
+.savestate{font-family:var(--util);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage-deep);display:flex;align-items:center;gap:.4em}
+.savestate .dot{width:8px;height:8px;border-radius:50%;background:var(--sage)}
+.savestate.dirty .dot{background:var(--gold)}
+
+.notice{background:var(--ink);color:rgba(250,246,239,.92);font-size:.8rem;padding:.7rem clamp(16px,3vw,28px);display:flex;gap:.6rem;align-items:flex-start;line-height:1.45}
+.notice svg{width:18px;flex:none;color:var(--blush);margin-top:1px}
+.notice b{color:var(--paper)}
+.notice a{color:var(--blush);text-decoration:underline;cursor:pointer}
+
+.layout{flex:1;display:grid;grid-template-columns:280px 1fr;min-height:0}
+/* sidebar */
+.sidebar{border-right:1px solid var(--line);background:var(--paper-2);padding:1rem;overflow:auto}
+.sidebar .shead{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.sidebar .shead span{font-family:var(--util);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.mod-item{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;transition:all .18s;font-family:var(--sans)}
+.mod-item:hover{background:var(--paper)}
+.mod-item.active{background:var(--paper);border-color:var(--sage);box-shadow:0 6px 16px -12px var(--shadow)}
+.mod-item .ic{width:32px;height:32px;border-radius:9px;background:var(--sage);color:var(--paper);display:grid;place-items:center;flex:none;font-family:var(--serif);font-size:1.1rem}
+.mod-item .mt{flex:1;min-width:0}
+.mod-item .mt strong{display:block;font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod-item .mt em{font-style:normal;font-size:.72rem;color:var(--ink-soft)}
+
+/* editor */
+.editor{overflow:auto;padding:clamp(18px,3vw,36px)}
+.empty{height:100%;display:grid;place-items:center;text-align:center;color:var(--ink-soft)}
+.empty svg{width:48px;color:var(--sage);opacity:.6;margin-bottom:1rem}
+.ed-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.fieldset{display:grid;gap:.4rem;margin-bottom:1.1rem}
+label.lbl{font-family:var(--util);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.inp,.ta{font-family:var(--sans);font-size:.95rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;width:100%}
+.inp:focus,.ta:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(143,164,131,.18)}
+.inp.big{font-family:var(--serif);font-size:1.5rem;padding:.5rem .7rem}
+.ta{resize:vertical;line-height:1.5}
+.ai-hint{background:#EEF2E9;border:1px solid #CBD8BF;border-radius:10px}
+.ai-hint .lbl{color:var(--sage-deep)}
+
+.sec-wrap{margin-top:1.6rem}
+.sec-wrap > .util{color:var(--ink-soft);display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.sec-wrap > .util::after{content:"";flex:1;height:1px;background:var(--line)}
+.section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1rem;margin-bottom:.9rem;position:relative}
+.section .srow{display:flex;gap:.6rem;align-items:center;margin-bottom:.6rem}
+.section .srow .inp{font-weight:600}
+.section .order{display:flex;flex-direction:column;gap:2px}
+.section .order button{border:1px solid var(--line);background:var(--paper-2);border-radius:6px;width:26px;height:20px;display:grid;place-items:center;color:var(--ink-soft)}
+.section .order button:hover{background:var(--sage);color:var(--paper)}
+.section .order button svg{width:12px;height:12px}
+.x-sec{position:absolute;top:.7rem;right:.7rem}
+.add-sec{width:100%;justify-content:center;border-style:dashed;background:transparent;color:var(--sage-deep)}
+.add-sec:hover{background:var(--paper-2)}
+
+/* preview drawer */
+.previewbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+
+dialog{border:none;border-radius:16px;padding:0;max-width:680px;width:92vw;box-shadow:0 40px 80px -30px rgba(51,64,46,.4)}
+dialog::backdrop{background:rgba(51,64,46,.4)}
+.dlg-in{padding:clamp(20px,3vw,32px)}
+.dlg-in h2{font-size:1.6rem;margin-bottom:.4rem}
+.dlg-in p{color:var(--ink-soft);font-size:.88rem}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;background:#2C3527;color:#E7E2D5;border-radius:10px;padding:1rem;overflow:auto;max-height:46vh;white-space:pre;line-height:1.5}
+.dlg-actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;flex-wrap:wrap}
+
+@media(max-width:780px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{border-right:0;border-bottom:1px solid var(--line);max-height:38vh}
+}
+
+/* view tabs */
+.viewtabs{display:flex;gap:.25rem;background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:3px;margin-right:.5rem}
+.vtab{border:0;background:transparent;border-radius:999px;padding:.45em 1em;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);display:inline-flex;align-items:center;gap:.45em}
+.vtab.active{background:var(--paper);color:var(--ink);box-shadow:0 2px 8px -4px var(--shadow)}
+.badge{background:var(--rose);color:#fff;border-radius:999px;font-size:.62rem;padding:.15em .5em;line-height:1;font-family:var(--util)}
+
+/* submission list items */
+.sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
+.sub-item:hover{background:var(--paper)}
+.sub-item.active{background:var(--paper);border-color:var(--sage);box-shadow:0 6px 16px -12px var(--shadow)}
+.sub-item .top{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.2rem}
+.sub-item .top strong{font-size:.92rem;font-weight:600}
+.sub-item .meta{font-size:.72rem;color:var(--ink-soft)}
+.pill{font-family:var(--util);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:.2em .55em;border-radius:999px;white-space:nowrap}
+.pill.new{background:#E9D9B0;color:#6b5418}
+.pill.in-progress{background:#CFE0F0;color:#1f4a72}
+.pill.responded{background:#CBE3C4;color:#2f5a2a}
+.pill.archived{background:#E3DACB;color:#6a5f4c}
+
+/* submission detail */
+.detail .dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.detail h2{font-size:1.8rem}
+.contact-chips{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 0}
+.chip{font-size:.8rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35em .8em;display:inline-flex;align-items:center;gap:.4em}
+.chip svg{width:13px;color:var(--sage-deep)}
+.chip a{color:var(--ink);text-decoration:none}
+.qa{margin-top:1.4rem}
+.qa .item{padding:.9rem 0;border-top:1px solid var(--line)}
+.qa .item .q{font-family:var(--serif);font-size:1.12rem;color:var(--ink);margin-bottom:.2rem}
+.qa .item .a{color:var(--ink-soft);white-space:pre-wrap}
+.qa .item .a.empty{color:var(--sage);font-style:italic}
+.statusrow{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+.statusrow select{width:auto}
+.respbox{margin-top:1.2rem}
+.ai-slot{margin-top:1rem;background:#EEF2E9;border:1px dashed #BFD0B0;border-radius:12px;padding:.9rem 1rem;color:var(--sage-deep);font-size:.85rem;display:flex;gap:.6rem;align-items:flex-start}
+.ai-slot svg{width:18px;flex:none;margin-top:1px}
+.saved-tick{font-family:var(--util);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-deep);opacity:0;transition:opacity .2s}
+.saved-tick.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN GATE ===== -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
+    <h1>Content Studio</h1>
+    <p>Private workspace · Authentic Joy in the Journey</p>
+    <form id="gateForm">
+      <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
+      <div class="gate-err" id="gateErr"></div>
+      <button class="btn" type="submit">Unlock</button>
+    </form>
+    <div class="gate-note">
+      <b>Heads up:</b> a password on a static page keeps casual visitors out, but it is <b>not</b> strong protection for private material. Anyone technical can still read page files. For real protection of this content and your AI keys, see the production notes in <b>README-admin.md</b>.
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
+      <span>Content Studio<small>Private workspace</small></span>
+    </div>
+    <div class="viewtabs" role="tablist">
+      <button class="vtab active" id="tabContent" role="tab">Content</button>
+      <button class="vtab" id="tabSubs" role="tab">Submissions <span class="badge" id="subBadge" hidden>0</span></button>
+    </div>
+    <span id="contentActions" style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <button class="btn ghost tiny" id="btnPreview">Preview JSON</button>
+      <button class="btn ghost tiny" id="btnExport">Export</button>
+      <button class="btn ghost tiny" id="btnImport">Import</button>
+    </span>
+    <span id="subActions" style="display:none;gap:.5rem;flex-wrap:wrap">
+      <button class="btn ghost tiny" id="btnSubExport">Export</button>
+      <button class="btn ghost tiny" id="btnSubImport">Import</button>
+    </span>
+    <div class="savestate" id="saveState"><span class="dot"></span><span id="saveText">Saved</span></div>
+    <button class="btn ghost tiny" id="btnPw">Password</button>
+    <button class="btn ghost tiny" id="btnLock">Lock</button>
+    <input type="file" id="fileIn" accept="application/json" hidden>
+    <input type="file" id="subFileIn" accept="application/json" hidden>
+  </div>
+
+  <div class="notice" id="contentNotice">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><b>Prototype storage.</b> Edits save to <b>this browser only</b>. They are not yet live to your AI engine and won't appear on another device. Use <a id="lnkExport">Export</a> to hand the knowledge base to your AI backend — see README-admin.md for the production setup that makes this real.</div>
+  </div>
+  <div class="notice" id="subNotice" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><b>Showing submissions saved in this browser.</b> A questionnaire sent from a visitor's own device won't appear here until the form posts to a shared backend. See README-admin.md to connect it — then this same screen reads live submissions.</div>
+  </div>
+
+  <!-- CONTENT VIEW -->
+  <div class="layout" id="contentView">
+    <aside class="sidebar">
+      <div class="shead"><span>Content Modules</span><button class="btn tiny" id="btnAdd">+ New</button></div>
+      <div id="modList"></div>
+    </aside>
+    <main class="editor" id="editor">
+      <div class="empty" id="emptyState">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+          <p>Select a module on the left to edit,<br>or create a new one.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SUBMISSIONS VIEW -->
+  <div class="layout" id="subsView" style="display:none">
+    <aside class="sidebar">
+      <div class="shead">
+        <span>Submissions</span>
+        <select id="subFilter" class="inp" style="width:auto;padding:.35rem .5rem;font-size:.72rem">
+          <option value="all">All</option>
+          <option value="new">New</option>
+          <option value="in-progress">In progress</option>
+          <option value="responded">Responded</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
+      <div id="subList"></div>
+    </aside>
+    <main class="editor" id="subEditor">
+      <div class="empty" id="subEmpty">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M8 9h8M8 13h8"/></svg>
+          <p>Select a submission to read and respond.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- preview dialog -->
+<dialog id="dlgPreview"><div class="dlg-in">
+  <h2>Knowledge base (JSON)</h2>
+  <p>This is exactly what your AI engine consumes. Copy it, or use Export to save a file.</p>
+  <pre class="code" id="jsonOut"></pre>
+  <div class="dlg-actions">
+    <button class="btn ghost" id="btnCopy">Copy</button>
+    <button class="btn" onclick="document.getElementById('dlgPreview').close()">Done</button>
+  </div>
+</div></dialog>
+
+<!-- password dialog -->
+<dialog id="dlgPw"><div class="dlg-in">
+  <h2>Change password</h2>
+  <p>Sets a new password for this browser. To make it permanent across devices, you'll move auth to a backend (see README-admin.md).</p>
+  <div class="fieldset"><label class="lbl">New password</label><input class="inp" id="newPw" type="password"></div>
+  <div class="dlg-actions">
+    <button class="btn ghost" onclick="document.getElementById('dlgPw').close()">Cancel</button>
+    <button class="btn" id="savePw">Save password</button>
+  </div>
+</div></dialog>
+
+<script>
+/* ============================================================
+   Content Studio — private admin for the AI knowledge base
+   Storage: localStorage (prototype). Real deployment = backend.
+   ============================================================ */
+const LS_DATA='ccs_content_v1';
+const LS_PW='ccs_pwhash_v1';
+const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
+
+async function sha256(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
+
+/* ---------- seed content (from the two source documents) ---------- */
+const SEED={version:1,updatedAt:new Date().toISOString(),modules:[
+  {
+    id:'the-framework',
+    title:'The Framework: REFRAME',
+    subtitle:'Finding Joy in the Real-Life Homeschool',
+    aiNote:'Use this as the primary lens for responding to discouraged or overwhelmed moms. Diagnose which letter of REFRAME best fits their struggle, lead with the matching Core Message, and offer one Practical Takeaway. Warm, mom-to-mom, never clinical. A memorable line can close the response.',
+    sections:[
+      {heading:'Overview',body:'This framework helps moms reinterpret what success actually looks like. Each section can include: a relatable story, a mindset shift, and one practical takeaway.'},
+      {heading:'R — Release the Picture-Perfect Homeschool',body:'Core Message: Most discouragement comes from grieving a homeschool that was never realistic.\n\nTalk About: comparison; social media pressure; trying to recreate school at home; unrealistic expectations; believing every moment must feel meaningful.\n\nPractical Takeaways: define YOUR family\u2019s priorities; create a \u201cminimum successful day\u201d; stop measuring success by completed checklists alone.\n\nMemorable Line: \u201cA peaceful homeschool is not the same thing as a perfect homeschool.\u201d'},
+      {heading:'E — Embrace the Season You\u2019re In',body:'Core Message: What works in one season often won\u2019t work in another.\n\nTalk About: little years vs teen years; survival seasons; newborns, illness, burnout, working from home; flexibility without guilt.\n\nPractical Takeaways: seasonal rhythms instead of rigid schedules; simplify during hard seasons; reevaluate expectations every year.\n\nAudience Connection: Have moms identify their current season in one word.'},
+      {heading:'F — Focus on Connection Before Performance',body:'Core Message: Children learn best when home feels emotionally safe.\n\nTalk About: relationship over constant productivity; fear-driven homeschooling; correcting without connection; atmosphere matters.\n\nPractical Takeaways: start the day relationally; one-on-one connection moments; repairing after hard days.\n\nMemorable Line: \u201cYour child will not thrive because your homeschool was impressive. They will thrive because they were known.\u201d'},
+      {heading:'R — Recognize What\u2019s Actually Working',body:'Core Message: Moms often overlook growth because it doesn\u2019t look dramatic.\n\nTalk About: invisible progress; emotional growth; character development; slow learning; faithfulness over outcomes.\n\nPractical Takeaways: keep a \u201cwins\u201d journal; notice non-academic growth; celebrate consistency.\n\nPowerful Story Moment: Tell a story where you realized growth later than expected.'},
+      {heading:'A — Allow Space for Imperfection',body:'Core Message: Joy disappears when every hard day feels like failure.\n\nTalk About: bad days; unfinished curriculum; sibling fights; burnout; apologizing to your kids.\n\nPractical Takeaways: reset routines; recovery days; simplify instead of quitting; \u201cgood enough\u201d systems.\n\nMemorable Line: \u201cHard days do not mean you\u2019re failing. They mean you\u2019re living with real people.\u201d'},
+      {heading:'M — Make Room for Joy in Ordinary Moments',body:'Core Message: The best parts of homeschooling are often unplanned.\n\nTalk About: conversations in the car; laughing during read-alouds; everyday discipleship; spontaneous learning.\n\nPractical Takeaways: margin in the schedule; less rushing; noticing small moments.\n\nEmotional Anchor: Paint vivid ordinary scenes people recognize immediately.'},
+      {heading:'E — End with the Long View',body:'Core Message: Homeschooling is built through years of faithful presence, not perfect execution.\n\nTalk About: planting seeds; long-term impact; trust; legacy.\n\nFinal Challenge: \u201cWhat if success is not having perfect homeschool days\u2026 but building a home where your children felt loved, safe, and guided over time?\u201d\n\nClosing Line: \u201cOne ordinary day rarely feels life-changing. But years of ordinary faithful days change everything.\u201d'}
+    ]
+  },
+  {
+    id:'layered-learning',
+    title:'The Art of Layered Learning',
+    subtitle:'Cultivating Attention, Wonder, and Lifelong Curiosity in the Homeschool Years',
+    aiNote:'Use this when a mom asks about how learning happens, attention/focus struggles, curriculum vs. curiosity, or building a learning culture. Anchor in the Evergreen Approach: education is happening everywhere; the job is to cultivate conditions where learning takes root. Favor short lessons, wonder, narration, and observation over pressure.',
+    sections:[
+      {heading:'The Evergreen Approach (Overview)',body:'Education is happening everywhere, all the time. Children learn from the books they read, the questions they ask, the conversations they hear, the places they go, and the habits they practice. Our job is not simply to deliver information \u2014 it is to cultivate the conditions where meaningful learning can take root. One of the most important conditions is attention: not perfect attention, but growing attention.'},
+      {heading:'1. Why Some Learning Sticks and Some Doesn\u2019t',body:'Ask: \u201cWhat lessons or experiences from your own childhood do you remember most?\u201d Most people remember great books, meaningful conversations, hands-on experiences, nature, and relationships \u2014 rarely worksheets. Learning roots when it is connected to wonder, story, and relationship.'},
+      {heading:'2. Understanding Attention Through the Lens of Growth',body:'Attention is \u201cthe ability to direct the mind toward something worthy.\u201d It is a habit, and it is developmental \u2014 it grows through maturity and practice. Much homeschool frustration comes from unmet expectations and assuming a child is capable of something they haven\u2019t matured into yet.\n\nPractical Tip: When a child struggles to focus, ask \u201cIs this defiance, lack of habit, or lack of maturity?\u201d Each needs a different response. A six-year-old who drifts during a read-aloud may need shorter lessons, not stricter discipline.'},
+      {heading:'3. Wonder: The Fuel for Attention',body:'Children attend more readily to things that spark wonder. Wonder creates engagement; engagement strengthens attention; attention deepens learning. Charlotte Mason understood this through living books, which spark curiosity, present ideas through story, and invite relationship with knowledge.\n\nInstead of \u201cToday we\u2019re studying birds,\u201d try \u201cWhy do you think geese fly in a V?\u201d Instead of assigning facts, ask questions. Wonder often begins with curiosity \u2014 through nature walks, seasonal studies, great books, art, and real-life experiences.'},
+      {heading:'4. Practical Ways to Build Attention at Home',body:'\u2022 Keep lessons short \u2014 attention grows when children experience success; leave them wanting more.\n\u2022 Use narration \u2014 \u201cTell me what you remember\u201d trains attention because children know they\u2019ll need to recall and process.\n\u2022 Follow interests without abandoning structure \u2014 a child fascinated by insects can practice reading, writing, observation, research, and science through that interest.\n\u2022 Create white space \u2014 children need time to think; boredom often precedes creativity.\n\u2022 Prioritize observation \u2014 nature study, art study, listening to music, simply noticing.\n\u2022 Reduce competing inputs \u2014 background TV, constant notifications, multitasking.\n\u2022 Model attention \u2014 children catch it before it is taught; let them see us reading, listening, observing, and fully present.'},
+      {heading:'5. Building a Culture of Learning',body:'The goal is bigger than academics \u2014 we are helping children become curious, thoughtful, observant, and engaged. A successful homeschool is not measured only by completed curriculum, but by growth: growth in character, habits, curiosity, and the ability to engage deeply with the world.'},
+      {heading:'6. Encouragement for Moms',body:'Learning unfolds in seasons \u2014 some feel productive, some feel slow, and both matter. Think of an evergreen tree: growth is happening even when you cannot see it. Attention grows, habits grow, children grow. Stay faithful to the process; the small practices you repeat every day are shaping your child more than you realize.'}
+    ]
+  }
+]};
+
+/* ---------- state ---------- */
+let data=loadData();
+let activeId=data.modules[0]?.id||null;
+let dirty=false;
+
+function loadData(){
+  const raw=lsGet(LS_DATA);
+  if(raw){try{return JSON.parse(raw)}catch(e){}}
+  return structuredClone(SEED);
+}
+function persist(){
+  data.updatedAt=new Date().toISOString();
+  const ok=lsSet(LS_DATA,JSON.stringify(data));
+  setSaved(ok?'Saved':'In memory only');
+}
+function setDirty(){dirty=true;document.getElementById('saveState').classList.add('dirty');document.getElementById('saveText').textContent='Saving\u2026';
+  clearTimeout(setDirty._t);setDirty._t=setTimeout(()=>{persist();dirty=false;document.getElementById('saveState').classList.remove('dirty')},500);}
+function setSaved(t){document.getElementById('saveText').textContent=t}
+
+/* ---------- render ---------- */
+const elList=document.getElementById('modList');
+const elEditor=document.getElementById('editor');
+
+function uid(t){return (t||'module').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)+'-'+Math.random().toString(36).slice(2,6)}
+
+function renderList(){
+  elList.innerHTML='';
+  data.modules.forEach(m=>{
+    const b=document.createElement('button');
+    b.className='mod-item'+(m.id===activeId?' active':'');
+    b.innerHTML=`<span class="ic">${(m.title||'?').trim().charAt(0)}</span>
+      <span class="mt"><strong>${esc(m.title||'Untitled')}</strong><em>${m.sections.length} section${m.sections.length!==1?'s':''}</em></span>`;
+    b.onclick=()=>{activeId=m.id;renderList();renderEditor()};
+    elList.appendChild(b);
+  });
+}
+
+function renderEditor(){
+  const m=data.modules.find(x=>x.id===activeId);
+  if(!m){elEditor.innerHTML='';elEditor.appendChild(document.getElementById('emptyState'));return}
+  elEditor.innerHTML='';
+  const wrap=document.createElement('div');
+  wrap.innerHTML=`
+    <div class="ed-head">
+      <div style="flex:1"><span class="util" style="color:var(--ink-soft)">Module ID · ${esc(m.id)}</span></div>
+      <button class="btn danger tiny" id="delMod">Delete module</button>
+    </div>
+    <div class="fieldset"><label class="lbl">Title</label><input class="inp big" id="f-title" value="${esc(m.title)}"></div>
+    <div class="fieldset"><label class="lbl">Subtitle</label><input class="inp" id="f-sub" value="${esc(m.subtitle||'')}"></div>
+    <div class="fieldset ai-hint" style="padding:.9rem"><label class="lbl">How the AI should use this content</label>
+      <textarea class="ta" id="f-ai" rows="3">${esc(m.aiNote||'')}</textarea></div>
+    <div class="sec-wrap">
+      <div class="util">Content sections</div>
+      <div id="secList"></div>
+      <button class="btn add-sec" id="addSec">+ Add section</button>
+    </div>`;
+  elEditor.appendChild(wrap);
+
+  wrap.querySelector('#f-title').oninput=e=>{m.title=e.target.value;renderList();setDirty()};
+  wrap.querySelector('#f-sub').oninput=e=>{m.subtitle=e.target.value;setDirty()};
+  wrap.querySelector('#f-ai').oninput=e=>{m.aiNote=e.target.value;setDirty()};
+  wrap.querySelector('#delMod').onclick=()=>{
+    if(confirm('Delete \u201c'+m.title+'\u201d? This cannot be undone.')){
+      data.modules=data.modules.filter(x=>x.id!==m.id);
+      activeId=data.modules[0]?.id||null;persist();renderList();renderEditor();
+    }
+  };
+  wrap.querySelector('#addSec').onclick=()=>{m.sections.push({heading:'New section',body:''});setDirty();renderSections(m)};
+  renderSections(m);
+}
+
+function renderSections(m){
+  const host=elEditor.querySelector('#secList');if(!host)return;
+  host.innerHTML='';
+  m.sections.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='section';
+    d.innerHTML=`
+      <button class="btn danger tiny x-sec" title="Remove">✕</button>
+      <div class="srow">
+        <div class="order">
+          <button data-up title="Move up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
+          <button data-down title="Move down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        </div>
+        <input class="inp" data-h placeholder="Section heading" value="${esc(s.heading)}">
+      </div>
+      <textarea class="ta" data-b rows="5" placeholder="Section content the AI can draw from\u2026">${esc(s.body)}</textarea>`;
+    d.querySelector('[data-h]').oninput=e=>{s.heading=e.target.value;setDirty()};
+    d.querySelector('[data-b]').oninput=e=>{s.body=e.target.value;setDirty();auto(e.target)};
+    d.querySelector('.x-sec').onclick=()=>{if(confirm('Remove this section?')){m.sections.splice(i,1);setDirty();renderSections(m);renderList()}};
+    d.querySelector('[data-up]').onclick=()=>{if(i>0){[m.sections[i-1],m.sections[i]]=[m.sections[i],m.sections[i-1]];setDirty();renderSections(m)}};
+    d.querySelector('[data-down]').onclick=()=>{if(i<m.sections.length-1){[m.sections[i+1],m.sections[i]]=[m.sections[i],m.sections[i+1]];setDirty();renderSections(m)}};
+    host.appendChild(d);auto(d.querySelector('[data-b]'));
+  });
+  renderList();
+}
+function auto(t){t.style.height='auto';t.style.height=Math.min(t.scrollHeight,420)+'px'}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+/* ---------- toolbar actions ---------- */
+document.getElementById('btnAdd').onclick=()=>{
+  const t='New Module';const m={id:uid(t),title:t,subtitle:'',aiNote:'',sections:[{heading:'Overview',body:''}]};
+  data.modules.push(m);activeId=m.id;persist();renderList();renderEditor();
+};
+function jsonText(){return JSON.stringify(data,null,2)}
+document.getElementById('btnPreview').onclick=()=>{document.getElementById('jsonOut').textContent=jsonText();document.getElementById('dlgPreview').showModal()};
+document.getElementById('btnCopy').onclick=async()=>{try{await navigator.clipboard.writeText(jsonText());document.getElementById('btnCopy').textContent='Copied!';setTimeout(()=>document.getElementById('btnCopy').textContent='Copy',1200)}catch(e){alert('Copy failed — select the text manually.')}};
+function doExport(){
+  const blob=new Blob([jsonText()],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='knowledge-base.json';a.click();URL.revokeObjectURL(a.href);
+}
+document.getElementById('btnExport').onclick=doExport;
+document.getElementById('lnkExport').onclick=doExport;
+document.getElementById('btnImport').onclick=()=>document.getElementById('fileIn').click();
+document.getElementById('fileIn').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const j=JSON.parse(r.result);if(!j.modules)throw 0;
+    if(confirm('Replace all current content with the imported file?')){data=j;activeId=data.modules[0]?.id||null;persist();renderList();renderEditor()}
+  }catch(err){alert('That file is not a valid knowledge-base export.')}};
+  r.readAsText(f);e.target.value='';
+};
+document.getElementById('btnLock').onclick=()=>{document.getElementById('app').classList.remove('on');document.getElementById('gate').style.display='grid';document.getElementById('pw').value=''};
+
+/* ---------- submissions ---------- */
+const SUBS_KEY='ccs_submissions_v1';
+let subs=loadSubs();
+let activeSub=null;
+let subFilter='all';
+
+function loadSubs(){try{return JSON.parse(lsGet(SUBS_KEY)||'[]')}catch(e){return []}}
+function saveSubs(){lsSet(SUBS_KEY,JSON.stringify(subs))}
+function updateSubBadge(){
+  const n=subs.filter(s=>s.status==='new').length;
+  const b=document.getElementById('subBadge');
+  if(n>0){b.textContent=n;b.hidden=false}else{b.hidden=true}
+}
+const STATUS_LABEL={'new':'New','in-progress':'In progress','responded':'Responded','archived':'Archived'};
+
+function showView(which){
+  const content=which==='content';
+  document.getElementById('contentView').style.display=content?'':'none';
+  document.getElementById('subsView').style.display=content?'none':'';
+  document.getElementById('contentNotice').style.display=content?'':'none';
+  document.getElementById('subNotice').style.display=content?'none':'';
+  document.getElementById('contentActions').style.display=content?'flex':'none';
+  document.getElementById('subActions').style.display=content?'none':'flex';
+  document.getElementById('tabContent').classList.toggle('active',content);
+  document.getElementById('tabSubs').classList.toggle('active',!content);
+  if(!content){subs=loadSubs();renderSubList();updateSubBadge()}
+}
+document.getElementById('tabContent').onclick=()=>showView('content');
+document.getElementById('tabSubs').onclick=()=>showView('subs');
+document.getElementById('subFilter').onchange=e=>{subFilter=e.target.value;renderSubList()};
+
+function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
+
+function renderSubList(){
+  const host=document.getElementById('subList');host.innerHTML='';
+  const list=subs.filter(s=>subFilter==='all'||s.status===subFilter);
+  if(list.length===0){host.innerHTML='<p style="color:var(--ink-soft);font-size:.82rem;padding:.4rem">No submissions'+(subFilter!=='all'?' with this status':' yet')+'.</p>';return}
+  list.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='sub-item'+(activeSub===s.id?' active':'');
+    b.innerHTML=`<div class="top"><strong>${esc(s.name||'(no name)')}</strong><span class="pill ${s.status}">${STATUS_LABEL[s.status]||s.status}</span></div>
+      <div class="meta">${fmtDate(s.createdAt)} · ${esc(s.preferredContact||'')}</div>`;
+    b.onclick=()=>{activeSub=s.id;renderSubList();renderSubDetail()};
+    host.appendChild(b);
+  });
+}
+
+function renderSubDetail(){
+  const host=document.getElementById('subEditor');
+  const s=subs.find(x=>x.id===activeSub);
+  if(!s){host.innerHTML='';host.appendChild(document.getElementById('subEmpty'));return}
+  host.innerHTML='';
+  const d=document.createElement('div');d.className='detail';
+  const qa=s.responses.map((r,i)=>`<div class="item"><div class="q">${esc(r.q)}</div><div class="a ${r.a?'':'empty'}">${r.a?esc(r.a):'— left blank —'}</div></div>`).join('');
+  d.innerHTML=`
+    <div class="dhead">
+      <div>
+        <span class="util" style="color:var(--ink-soft)">${esc(s.questionnaire||'Questionnaire')} · ${fmtDate(s.createdAt)}</span>
+        <h2>${esc(s.name||'(no name)')}</h2>
+        <div class="contact-chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5h14v14H5zM5 7l7 5 7-5"/></svg><a href="mailto:${esc(s.email)}">${esc(s.email||'—')}</a></span>
+          ${s.phone?`<span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a></span>`:''}
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/></svg>Prefers: ${esc(s.preferredContact||'—')}</span>
+        </div>
+      </div>
+      <button class="btn danger tiny" id="delSub">Delete</button>
+    </div>
+
+    <div class="qa">${qa}</div>
+
+    <div class="statusrow">
+      <div class="fieldset" style="margin:0">
+        <label class="lbl">Status</label>
+        <select class="inp" id="subStatus">
+          ${['new','in-progress','responded','archived'].map(v=>`<option value="${v}" ${s.status===v?'selected':''}>${STATUS_LABEL[v]}</option>`).join('')}
+        </select>
+      </div>
+      <span class="saved-tick" id="subTick">Saved ✓</span>
+    </div>
+
+    <div class="respbox">
+      <div class="fieldset" style="margin:0">
+        <label class="lbl">Your response ${s.respondedAt?'· last saved '+fmtDate(s.respondedAt):''}</label>
+        <textarea class="ta" id="subResp" rows="5" placeholder="Write your reply to ${esc(s.name||'her')} here…">${esc(s.response||'')}</textarea>
+      </div>
+      <div class="ai-slot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>
+        <div><b>Automated draft</b> — reserved for later. When the AI engine is connected, its suggested response will appear here for you to review, edit, and append to your reply.${s.aiDraft?'<br><br>'+esc(s.aiDraft):''}</div>
+      </div>
+    </div>`;
+  host.appendChild(d);
+
+  const tick=()=>{const t=document.getElementById('subTick');t.classList.add('show');clearTimeout(tick._t);tick._t=setTimeout(()=>t.classList.remove('show'),1200)};
+  d.querySelector('#subStatus').onchange=e=>{s.status=e.target.value;saveSubs();renderSubList();updateSubBadge();tick()};
+  d.querySelector('#subResp').oninput=e=>{
+    s.response=e.target.value;s.respondedAt=new Date().toISOString();
+    if(s.status==='new'&&s.response.trim()){s.status='in-progress';renderSubList();updateSubBadge();d.querySelector('#subStatus').value='in-progress'}
+    saveSubs();
+    clearTimeout(renderSubDetail._t);renderSubDetail._t=setTimeout(tick,400);
+  };
+  d.querySelector('#delSub').onclick=()=>{if(confirm('Delete this submission permanently?')){subs=subs.filter(x=>x.id!==s.id);activeSub=null;saveSubs();renderSubList();renderSubDetail();updateSubBadge()}};
+}
+
+/* submissions export / import */
+document.getElementById('btnSubExport').onclick=()=>{
+  const blob=new Blob([JSON.stringify(subs,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='submissions.json';a.click();URL.revokeObjectURL(a.href);
+};
+document.getElementById('btnSubImport').onclick=()=>document.getElementById('subFileIn').click();
+document.getElementById('subFileIn').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const j=JSON.parse(r.result);if(!Array.isArray(j))throw 0;
+    if(confirm('Merge '+j.length+' imported submission(s) with what\u2019s here? (Duplicates by id are skipped.)')){
+      const ids=new Set(subs.map(x=>x.id));j.forEach(x=>{if(!ids.has(x.id))subs.push(x)});
+      subs.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      saveSubs();renderSubList();updateSubBadge();
+    }
+  }catch(err){alert('That file is not a valid submissions export.')}};
+  r.readAsText(f);e.target.value='';
+};
+
+/* ---------- password ---------- */
+document.getElementById('btnPw').onclick=()=>document.getElementById('dlgPw').showModal();
+document.getElementById('savePw').onclick=async()=>{
+  const v=document.getElementById('newPw').value;if(v.length<4){alert('Use at least 4 characters.');return}
+  lsSet(LS_PW,await sha256(v));document.getElementById('newPw').value='';document.getElementById('dlgPw').close();
+  alert('Password updated for this browser.');
+};
+document.getElementById('gateForm').onsubmit=async(e)=>{
+  e.preventDefault();
+  const entered=await sha256(document.getElementById('pw').value);
+  const stored=lsGet(LS_PW)||DEFAULT_PW_HASH;
+  if(entered===stored){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').classList.add('on');
+    renderList();renderEditor();updateSubBadge();
+  }else{
+    document.getElementById('gateErr').textContent='Incorrect password. Try again.';
+    document.getElementById('pw').select();
+  }
+};
+</script>
+</body>
+</html>

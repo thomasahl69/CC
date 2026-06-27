@@ -313,6 +313,46 @@ form{display:grid;gap:1.1rem}
 }
 .field select:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(143,164,131,.2)}
 
+/* ============ INVITE CARD ============ */
+.invite-card{display:flex;flex-direction:column;gap:.2rem}
+.invite-kicker{font-family:var(--util);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);margin-bottom:.2rem}
+.invite-card h3{margin-bottom:.4rem}
+.invite-card p{color:var(--ink-soft);margin:0 0 1rem}
+.invite-list{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;gap:.55rem}
+.invite-list li{padding-left:1.5rem;position:relative;color:var(--ink-soft);font-size:.95rem}
+.invite-list li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--blush)}
+.invite-card .form-note{margin-top:.9rem}
+
+/* ============ QUESTIONNAIRE MODAL ============ */
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:flex-start;justify-content:center;
+  padding:clamp(12px,4vh,48px) 16px;overflow-y:auto;background:rgba(51,64,46,.55);backdrop-filter:blur(4px)}
+.modal.open{display:flex;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal-card{background:var(--paper);border-radius:22px;max-width:620px;width:100%;box-shadow:0 40px 90px -30px rgba(51,64,46,.5);
+  position:relative;overflow:hidden;animation:rise .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.modal.open,.modal-card{animation:none}}
+.modal-head{background:var(--paper-2);padding:clamp(22px,3vw,32px) clamp(22px,3vw,36px);border-bottom:1px solid var(--line);position:relative}
+.modal-head .eyebrow{margin-bottom:.7rem}
+.modal-head h2{font-size:clamp(1.7rem,3vw,2.3rem)}
+.modal-head p{margin:.5rem 0 0;color:var(--ink-soft);font-size:.95rem}
+.modal-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+  background:var(--paper);color:var(--ink-soft);cursor:pointer;display:grid;place-items:center;transition:all .2s}
+.modal-close:hover{background:var(--ink);color:var(--paper)}
+.modal-close svg{width:18px}
+.modal-body{padding:clamp(22px,3vw,36px)}
+.modal-body form{display:grid;gap:1.1rem}
+.modal-body .qnum{font-family:var(--util);font-size:.7rem;letter-spacing:.14em;color:var(--sage-deep)}
+.modal-body .field label{display:flex;justify-content:space-between;gap:1rem}
+.opt{text-transform:none;letter-spacing:0;color:var(--sage)}
+.modal-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:.4rem}
+.modal-success{display:none;text-align:center;padding:clamp(30px,5vw,56px) clamp(22px,3vw,36px)}
+.modal-success.show{display:block}
+.modal-success .ok{width:64px;height:64px;border-radius:50%;background:var(--sage-deep);color:var(--paper);display:grid;place-items:center;margin:0 auto 1.3rem}
+.modal-success .ok svg{width:32px}
+.modal-success h2{margin-bottom:.6rem}
+.modal-success p{color:var(--ink-soft);max-width:38ch;margin:0 auto 1.6rem}
+
 /* ============ RESPONSIVE ============ */
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr}
@@ -483,7 +523,7 @@ form{display:grid;gap:1.1rem}
     <p class="eyebrow">A Reminder for You</p>
     <h2>Even here, even now… you can bloom.</h2>
     <p>Wherever you are in your motherhood and home education journey — beginning, weary, or somewhere in between — there's room to grow right where you're planted.</p>
-    <a href="#advice" class="btn btn-solid">Ask Me a Question</a>
+    <a href="#advice" class="btn btn-solid" data-open-quiz>Ask Me a Question</a>
   </div>
 </section>
 
@@ -641,72 +681,18 @@ form{display:grid;gap:1.1rem}
     </div>
 
     <div class="reveal">
-      <!-- Connect to a form service (Formspree/Getform) via the form's action to receive entries. -->
-      <form class="advice-card" id="adviceForm" novalidate>
-        <div class="row-2">
-          <div class="field">
-            <label for="a-name">First name</label>
-            <input id="a-name" name="name" type="text" autocomplete="given-name" required>
-            <span class="err">Please add your name.</span>
-          </div>
-          <div class="field">
-            <label for="a-email">Email</label>
-            <input id="a-email" name="email" type="email" autocomplete="email" required>
-            <span class="err">Please add a valid email.</span>
-          </div>
-        </div>
-
-        <div class="row-2">
-          <div class="field">
-            <label for="a-stage">Where are you in the journey?</label>
-            <select id="a-stage" name="stage">
-              <option value="">Choose one…</option>
-              <option>Just considering homeschooling</option>
-              <option>Getting ready for our first year</option>
-              <option>A few years in</option>
-              <option>Seasoned, but needing a refresh</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="a-ages">Ages / grades of your kids</label>
-            <input id="a-ages" name="ages" type="text" placeholder="e.g. 6, 9, and 12">
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="a-style">Homeschool style you're drawn to <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(it's okay to be unsure)</span></label>
-          <select id="a-style" name="style">
-            <option value="">Not sure yet — help me figure it out</option>
-            <option>Classical</option>
-            <option>Charlotte Mason</option>
-            <option>Eclectic / a mix</option>
-            <option>Unit studies</option>
-            <option>Unschooling / interest-led</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="a-message">What's your biggest question or challenge right now?</label>
-          <textarea id="a-message" name="message" placeholder="Tell me what's on your mind — curriculum, confidence, routines, a tough season, anything." required></textarea>
-          <span class="err">Share a little about what you're facing.</span>
-        </div>
-
-        <div class="field">
-          <label for="a-connect">How would you like to connect?</label>
-          <select id="a-connect" name="connect">
-            <option>A thoughtful email reply</option>
-            <option>A free intro phone/video call</option>
-            <option>Tell me about one-on-one coaching</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-solid" style="justify-self:start">Send My Question</button>
-        <p class="form-note">Your note comes straight to Christina. You'll also receive the newsletter — unsubscribe anytime.</p>
-      </form>
-      <div class="form-success" id="adviceSuccess" role="status">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
-        <div><strong>Your question is on its way!</strong><br>I'll read it personally and get back to you soon. Take heart — you're not walking this alone.</div>
+      <div class="advice-card invite-card">
+        <span class="invite-kicker">A Few Reflection Questions</span>
+        <h3>Take a moment to reflect.</h3>
+        <p>Four short questions about attention, wonder, and growth in your home — plus the best way to reach you. It opens right here, so you won't lose your place on the page.</p>
+        <ul class="invite-list">
+          <li>What attention challenges are you facing?</li>
+          <li>What sparks wonder in your children?</li>
+          <li>Where have you seen surprising growth?</li>
+          <li>Which idea are you excited to try first?</li>
+        </ul>
+        <button type="button" class="btn btn-solid" data-open-quiz style="justify-self:start">Open the Questionnaire</button>
+        <p class="form-note">Takes about three minutes. Christina reads every response personally.</p>
       </div>
     </div>
   </div>
@@ -784,6 +770,83 @@ form{display:grid;gap:1.1rem}
   </div>
 </section>
 </main>
+
+<!-- ===== QUESTIONNAIRE MODAL (pop-out) ===== -->
+<div class="modal" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <button class="modal-close" id="quizClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <p class="eyebrow">Reflection Questionnaire</p>
+      <h2 id="quizTitle">A few questions, mom to mom.</h2>
+      <p>Share as much or as little as you'd like. Christina reads every response personally and will follow up the way you prefer.</p>
+    </div>
+
+    <div class="modal-body">
+      <!-- Prototype: saves locally so it appears in the admin Submissions tab on this browser.
+           For real submissions from any visitor, POST this to a backend/form service (see README-admin.md). -->
+      <form id="quizForm" novalidate>
+        <div class="row-2">
+          <div class="field">
+            <label for="q-name">Name</label>
+            <input id="q-name" name="name" type="text" autocomplete="name" required>
+            <span class="err">Please add your name.</span>
+          </div>
+          <div class="field">
+            <label for="q-email">Email</label>
+            <input id="q-email" name="email" type="email" autocomplete="email" required>
+            <span class="err">Please add a valid email.</span>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="q-phone">Phone <span class="opt">(optional)</span></label>
+            <input id="q-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="q-contact">Preferred way to reach you</label>
+            <select id="q-contact" name="preferredContact">
+              <option>Email</option>
+              <option>Phone call</option>
+              <option>Text message</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="q1"><span><span class="qnum">01 ·</span> What attention challenges are you currently facing?</span></label>
+          <textarea id="q1" name="q1" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="q2"><span><span class="qnum">02 ·</span> What sparks wonder in your children?</span></label>
+          <textarea id="q2" name="q2" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="q3"><span><span class="qnum">03 ·</span> Where have you seen growth that surprised you?</span></label>
+          <textarea id="q3" name="q3" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="q4"><span><span class="qnum">04 ·</span> Which practical idea are you excited to try first?</span></label>
+          <textarea id="q4" name="q4" rows="2"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-solid">Send My Responses</button>
+          <span class="form-note" style="margin:0">You'll also join the newsletter — unsubscribe anytime.</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-success" id="quizSuccess">
+      <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4 4L19 7"/></svg></div>
+      <h2>Thank you for sharing.</h2>
+      <p>Your responses are saved. Christina will read them personally and reach out the way you asked. Take heart — you're not walking this alone.</p>
+      <button type="button" class="btn btn-ghost" id="quizDone">Close</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
@@ -877,24 +940,75 @@ form.querySelectorAll('input').forEach(inp=>{
   inp.addEventListener('input',()=>inp.closest('.field').classList.remove('invalid'));
 });
 
-/* ----- advice form validation ----- */
-const advForm=document.getElementById('adviceForm');
-const advSuccess=document.getElementById('adviceSuccess');
-advForm.addEventListener('submit',(e)=>{
+/* ----- questionnaire pop-out modal ----- */
+const SUBMISSIONS_KEY='ccs_submissions_v1';
+const quiz=document.getElementById('quizModal');
+const quizForm=document.getElementById('quizForm');
+const quizSuccess=document.getElementById('quizSuccess');
+let lastFocus=null;
+
+function openQuiz(){
+  lastFocus=document.activeElement;
+  quizForm.style.display='';quizSuccess.classList.remove('show');
+  quiz.classList.add('open');document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('q-name').focus(),60);
+}
+function closeQuiz(){
+  quiz.classList.remove('open');document.body.style.overflow='';
+  if(lastFocus)lastFocus.focus();
+}
+document.querySelectorAll('[data-open-quiz]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();openQuiz()}));
+document.getElementById('quizClose').addEventListener('click',closeQuiz);
+document.getElementById('quizDone').addEventListener('click',closeQuiz);
+quiz.addEventListener('click',e=>{if(e.target===quiz)closeQuiz()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&quiz.classList.contains('open'))closeQuiz()});
+
+function saveSubmission(sub){
+  try{
+    const arr=JSON.parse(localStorage.getItem(SUBMISSIONS_KEY)||'[]');
+    arr.unshift(sub);
+    localStorage.setItem(SUBMISSIONS_KEY,JSON.stringify(arr));
+    return true;
+  }catch(e){return false}
+}
+
+quizForm.addEventListener('submit',(e)=>{
   e.preventDefault();
-  const name=document.getElementById('a-name');
-  const email=document.getElementById('a-email');
-  const msg=document.getElementById('a-message');
+  const name=document.getElementById('q-name');
+  const email=document.getElementById('q-email');
   let bad=false;
   bad=setInvalid(name.closest('.field'),name.value.trim()==='')||bad;
   bad=setInvalid(email.closest('.field'),!emailRe.test(email.value.trim()))||bad;
-  bad=setInvalid(msg.closest('.field'),msg.value.trim()==='')||bad;
-  if(bad){advForm.querySelector('.invalid input,.invalid textarea').focus();return}
-  advForm.style.display='none';
-  advSuccess.classList.add('show');
-  advSuccess.scrollIntoView({behavior:'smooth',block:'center'});
+  if(bad){quizForm.querySelector('.invalid input').focus();return}
+
+  const sub={
+    id:'sub_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    createdAt:new Date().toISOString(),
+    questionnaire:'The Art of Layered Learning',
+    name:name.value.trim(),
+    email:email.value.trim(),
+    phone:document.getElementById('q-phone').value.trim(),
+    preferredContact:document.getElementById('q-contact').value,
+    responses:[
+      {q:'What attention challenges are you currently facing?',a:document.getElementById('q1').value.trim()},
+      {q:'What sparks wonder in your children?',a:document.getElementById('q2').value.trim()},
+      {q:'Where have you seen growth that surprised you?',a:document.getElementById('q3').value.trim()},
+      {q:'Which practical idea are you excited to try first?',a:document.getElementById('q4').value.trim()}
+    ],
+    status:'new',
+    response:'',     /* Christina's reply, written in the admin */
+    aiDraft:'',      /* reserved for the future automated response */
+    respondedAt:null
+  };
+  saveSubmission(sub);
+  /* For real visitors, also POST `sub` to your backend/form service here. */
+
+  quizForm.reset();
+  quizForm.style.display='none';
+  quizSuccess.classList.add('show');
+  quiz.querySelector('.modal-card').scrollTop=0;
 });
-advForm.querySelectorAll('input,textarea').forEach(el=>{
+quizForm.querySelectorAll('input').forEach(el=>{
   el.addEventListener('input',()=>el.closest('.field').classList.remove('invalid'));
 });
 
