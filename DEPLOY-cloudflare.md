@@ -68,6 +68,22 @@ If you deployed with `wrangler pages deploy` and the `[[d1_databases]]` block in
 dashboard: **Pages project → Settings → Functions → D1 database bindings** →
 add binding **Variable name: `DB`**, **Database: `cc-db`**.
 
+## 4b. Image uploads (R2 storage) — optional but recommended
+
+Drag-and-drop uploads for event and gallery images store the files in Cloudflare
+R2. If you skip this, you can still paste image **links**; only the Upload buttons
+need R2.
+
+1. **Create the bucket.** Dashboard → **R2** → **Create bucket** → name it exactly
+   `cc-media`. (First time, Cloudflare may ask you to enable R2 / add a payment
+   method; R2 has a generous free tier.) CLI alternative: `npx wrangler r2 bucket create cc-media`.
+2. **Bind it.** The `[[r2_buckets]]` block in `wrangler.toml` (binding `BUCKET` →
+   `cc-media`) handles this on `wrangler pages deploy`. Dashboard alternative:
+   **Pages project → Settings → Functions → R2 bucket bindings** → add
+   **Variable name: `BUCKET`**, **Bucket: `cc-media`**.
+3. **Deploy** (next step). Uploaded images are served back through the site at
+   `/api/file/<key>`, so you don't need to make the bucket public.
+
 ## 5. Set the secrets
 
 ```bash
@@ -86,7 +102,7 @@ Dashboard alternative: **Settings → Variables and Secrets → add**, and mark 
 Secrets/bindings apply on the next deploy:
 
 ```bash
-npx wrangler pages deploy .
+npx wrangler pages deploy
 ```
 
 ## 7. Try it

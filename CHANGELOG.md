@@ -8,6 +8,22 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.6.0 — 2026-06-27
+
+- **Image uploads (drag-and-drop).** Event images and gallery images can now be
+  uploaded straight from your computer instead of only pasting links.
+  - Event editor: an **Upload** button next to the image field.
+  - Gallery: an **Upload images** button (pick several at once) and **drag-and-drop**
+    files onto the gallery area.
+- Uploaded files are stored in Cloudflare **R2** and served back through the site
+  at `/api/file/<key>`, so the bucket doesn't need to be public.
+- New functions: `POST /api/upload` (admin) and `GET /api/file/:key` (public).
+
+### Setup for this version
+Create an R2 bucket named `cc-media` and bind it as `BUCKET` (see
+DEPLOY-cloudflare.md §4b). Pasting image links still works without R2; only the
+Upload buttons need it.
+
 ## v1.5.0 — 2026-06-27
 
 - New **Gallery** manager in Content Studio: add, caption, reorder (arrows), and

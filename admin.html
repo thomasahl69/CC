@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.5.0 -->
+<!-- Content Studio (admin) — v1.6.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.5.0">
+<meta name="version" content="1.6.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -136,6 +136,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 
 /* gallery manager */
 .gallery-view{flex:1;overflow:auto;padding:clamp(18px,3vw,36px)}
+.gallery-view.drop{outline:2px dashed var(--sage);outline-offset:-12px;background:rgba(143,164,131,.07)}
 .gv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
 .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem}
 .img-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
@@ -199,7 +200,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.5.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.6.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -217,7 +218,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.5.0</span>
+      <span class="ver" id="appVer">v1.6.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -323,7 +324,11 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
         <span class="util" style="color:var(--ink-soft)">Bloom &amp; Blossom Conference · highlights</span>
         <h2 style="font-family:var(--serif);font-weight:500;font-size:1.7rem;margin:.2rem 0 0">Gallery images</h2>
       </div>
-      <button class="btn" id="btnAddImg">+ Add image</button>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn" id="btnUploadImg">Upload images</button>
+        <button class="btn ghost" id="btnAddImg">+ Add by link</button>
+        <input type="file" id="gal-file" accept="image/*" multiple hidden>
+      </div>
     </div>
     <div id="imgGrid" class="img-grid"></div>
   </div>
@@ -358,7 +363,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.5.0';
+const APP_VERSION='1.6.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -379,6 +384,22 @@ async function api(path,opts={}){
     headers:{'content-type':'application/json'},...opts});
   let body=null; try{body=await r.json()}catch(_){}
   return {ok:r.ok,status:r.status,body};
+}
+
+/* upload an image file to R2 storage; returns the URL to use, or null */
+async function uploadImageFile(file){
+  if(!SERVER){alert('Image uploads work on the published site (they need the server). For now you can paste an image link instead.');return null}
+  if(!file){return null}
+  if(!/^image\//i.test(file.type)){alert('Please choose an image file (jpg, png, gif, webp).');return null}
+  if(file.size>10*1024*1024){alert('That image is larger than 10 MB. Please choose a smaller one.');return null}
+  const fd=new FormData();fd.append('file',file);
+  try{
+    const r=await fetch('/api/upload',{method:'POST',credentials:'same-origin',body:fd});
+    const d=await r.json().catch(()=>null);
+    if(r.ok&&d&&d.ok)return d.url;
+    alert('Upload failed.\n\n'+((d&&d.error)||('Status '+r.status)));
+  }catch(e){alert('Upload failed — could not reach the server.')}
+  return null;
 }
 
 /* ---------- seed content (from the two source documents) ---------- */
@@ -832,7 +853,13 @@ function renderEvtDetail(){
       <div class="fieldset"><label class="lbl">Cost</label><input class="inp" id="ev-cost" placeholder="e.g. $58 or Free" value="${esc(ev.cost||'')}"></div>
     </div>
     <div class="fieldset"><label class="lbl">Location</label><input class="inp" id="ev-loc" placeholder="Venue, city, state" value="${esc(ev.location||'')}"></div>
-    <div class="fieldset"><label class="lbl">Image URL <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(paste a link to a photo — shows on the site)</span></label><input class="inp" id="ev-image" placeholder="https://\u2026" value="${esc(ev.image||'')}"></div>
+    <div class="fieldset"><label class="lbl">Image <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(upload a photo or paste a link)</span></label>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <input class="inp" id="ev-image" placeholder="https://\u2026" value="${esc(ev.image||'')}" style="flex:1">
+        <button type="button" class="btn ghost tiny" id="ev-upload">Upload</button>
+        <input type="file" id="ev-file" accept="image/*" hidden>
+      </div>
+    </div>
     <div id="ev-preview" style="margin:-.4rem 0 1.1rem"></div>
     <div class="fieldset"><label class="lbl">Description</label><textarea class="ta" id="ev-desc" rows="4" placeholder="A sentence or two about this gathering.">${esc(ev.description||'')}</textarea></div>
     <p class="form-note" id="evtSaved" style="color:var(--sage-deep);min-height:1.2em"></p>`;
@@ -842,6 +869,15 @@ function renderEvtDetail(){
   bind('ev-title','title');bind('ev-date','date');bind('ev-cost','cost');bind('ev-loc','location');bind('ev-desc','description');bind('ev-image','image');
   const prev=()=>{const p=document.getElementById('ev-preview');if(!p)return;p.innerHTML=ev.image&&ev.image.trim()?'<img src="'+esc(ev.image)+'" alt="preview" style="max-height:140px;border-radius:10px;border:1px solid var(--line)" onerror="this.style.display=\'none\'">':''};
   document.getElementById('ev-image').addEventListener('input',prev);prev();
+  const evFile=document.getElementById('ev-file'),evUp=document.getElementById('ev-upload');
+  evUp.onclick=()=>evFile.click();
+  evFile.onchange=async()=>{
+    const f=evFile.files&&evFile.files[0];if(!f)return;
+    evUp.textContent='Uploading\u2026';evUp.disabled=true;
+    const url=await uploadImageFile(f);
+    evUp.textContent='Upload';evUp.disabled=false;evFile.value='';
+    if(url){ev.image=url;document.getElementById('ev-image').value=url;scheduleEvtSave(ev);prev();renderEvtList()}
+  };
   document.getElementById('delEvt').onclick=async()=>{
     if(confirm('Delete this event?')){
       const id=ev.id;events=events.filter(x=>x.id!==id);activeEvt=null;
@@ -942,6 +978,26 @@ function renderGallery(){
   });
 }
 document.getElementById('btnAddImg').onclick=()=>addImage('');
+
+/* gallery uploads + drag-and-drop */
+async function addUploadedFiles(files){
+  const imgs=[...files].filter(f=>/^image\//i.test(f.type));
+  if(!imgs.length){if(files&&files.length)alert('Those didn\u2019t look like image files.');return}
+  const btn=document.getElementById('btnUploadImg');
+  if(btn){btn.textContent='Uploading\u2026';btn.disabled=true}
+  for(const f of imgs){const url=await uploadImageFile(f);if(url)await addImage(url)}
+  if(btn){btn.textContent='Upload images';btn.disabled=false}
+}
+(function(){
+  const fileInput=document.getElementById('gal-file'),upBtn=document.getElementById('btnUploadImg'),zone=document.getElementById('galleryView');
+  if(upBtn)upBtn.onclick=()=>fileInput.click();
+  if(fileInput)fileInput.onchange=async()=>{const fs=fileInput.files;fileInput.value='';await addUploadedFiles(fs)};
+  if(zone){
+    ['dragenter','dragover'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.add('drop')}));
+    ['dragleave','drop'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();if(ev==='drop'||e.target===zone)zone.classList.remove('drop')}));
+    zone.addEventListener('drop',async e=>{const dt=e.dataTransfer;if(dt&&dt.files&&dt.files.length)await addUploadedFiles(dt.files)});
+  }
+})();
 
 /* ---------- login / storage mode ---------- */
 function applyStorageMode(){
