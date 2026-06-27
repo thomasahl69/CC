@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.4.1 -->
+<!-- Content Studio (admin) — v1.5.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.4.1">
+<meta name="version" content="1.5.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -134,6 +134,29 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .ver{font-family:var(--util);font-size:.62rem;letter-spacing:.1em;color:var(--sage-deep);opacity:.85;align-self:flex-start;margin-top:3px;font-weight:500}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 
+/* gallery manager */
+.gallery-view{flex:1;overflow:auto;padding:clamp(18px,3vw,36px)}
+.gv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem}
+.img-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.img-card .thumb{aspect-ratio:4/3;background:var(--paper-2);position:relative;overflow:hidden}
+.img-card .thumb img{width:100%;height:100%;object-fit:cover}
+.img-card .thumb .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--sage);opacity:.5}
+.img-card .thumb .ph svg{width:40px}
+.img-card .pos{position:absolute;top:8px;left:8px;background:rgba(51,64,46,.7);color:var(--paper);font-family:var(--util);font-size:.62rem;letter-spacing:.08em;padding:.2em .55em;border-radius:999px}
+.img-card .meta{padding:.8rem;display:grid;gap:.5rem}
+.img-card .meta input{font-family:var(--sans);font-size:.85rem;color:var(--ink);background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:.5rem .6rem;width:100%}
+.img-card .meta input:focus{outline:none;border-color:var(--sage)}
+.img-card .acts{display:flex;justify-content:space-between;align-items:center;padding:.2rem .8rem .8rem}
+.img-card .acts .mv{display:flex;gap:.3rem}
+.img-card .acts button{border:1px solid var(--line);background:var(--paper-2);border-radius:7px;width:30px;height:26px;display:grid;place-items:center;color:var(--ink-soft);cursor:pointer}
+.img-card .acts button:hover{background:var(--sage);color:var(--paper)}
+.img-card .acts button svg{width:13px}
+.img-card .acts .del{color:var(--danger);border-color:transparent;width:auto;padding:0 .5rem;font-family:var(--util);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase}
+.img-card .acts .del:hover{background:var(--danger);color:#fff}
+.gv-empty{text-align:center;color:var(--ink-soft);padding:clamp(30px,5vw,60px);border:1px dashed var(--line);border-radius:16px}
+.gv-empty .btn{margin-top:1rem}
+
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
 .sub-item:hover{background:var(--paper)}
@@ -176,7 +199,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.4.1</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.5.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -194,12 +217,13 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.4.1</span>
+      <span class="ver" id="appVer">v1.5.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
       <button class="vtab" id="tabSubs" role="tab">Submissions <span class="badge" id="subBadge" hidden>0</span></button>
       <button class="vtab" id="tabEvents" role="tab">Events</button>
+      <button class="vtab" id="tabGallery" role="tab">Gallery</button>
     </div>
     <span id="contentActions" style="display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn ghost tiny" id="btnPreview">Preview JSON</button>
@@ -229,6 +253,10 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
   <div class="notice" id="eventsNotice" style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
     <div><b>These events feed the public site.</b> Anything dated today or later shows in the "Upcoming Gatherings" section automatically; past dates drop off the site but stay here as history.</div>
+  </div>
+  <div class="notice" id="galleryNotice" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><b>These photos appear in the "Highlights" gallery on the Bloom &amp; Blossom Conference page.</b> Paste an image link for each, drag the order with the arrows, and add a caption if you like.</div>
   </div>
 
   <!-- CONTENT VIEW -->
@@ -287,6 +315,18 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
       </div>
     </main>
   </div>
+
+  <!-- GALLERY VIEW -->
+  <div class="gallery-view" id="galleryView" style="display:none">
+    <div class="gv-head">
+      <div>
+        <span class="util" style="color:var(--ink-soft)">Bloom &amp; Blossom Conference · highlights</span>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:1.7rem;margin:.2rem 0 0">Gallery images</h2>
+      </div>
+      <button class="btn" id="btnAddImg">+ Add image</button>
+    </div>
+    <div id="imgGrid" class="img-grid"></div>
+  </div>
 </div>
 
 <!-- preview dialog -->
@@ -318,7 +358,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.4.1';
+const APP_VERSION='1.5.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -539,24 +579,29 @@ function updateSubBadge(){
 const STATUS_LABEL={'new':'New','in-progress':'In progress','responded':'Responded','archived':'Archived'};
 
 async function showView(which){
-  const isC=which==='content', isS=which==='subs', isE=which==='events';
+  const isC=which==='content', isS=which==='subs', isE=which==='events', isG=which==='gallery';
   document.getElementById('contentView').style.display=isC?'':'none';
   document.getElementById('subsView').style.display=isS?'':'none';
   document.getElementById('eventsView').style.display=isE?'':'none';
+  document.getElementById('galleryView').style.display=isG?'':'none';
   document.getElementById('contentNotice').style.display=isC?'':'none';
   document.getElementById('subNotice').style.display=isS?'':'none';
   document.getElementById('eventsNotice').style.display=isE?'':'none';
+  document.getElementById('galleryNotice').style.display=isG?'':'none';
   document.getElementById('contentActions').style.display=isC?'flex':'none';
   document.getElementById('subActions').style.display=isS?'flex':'none';
   document.getElementById('tabContent').classList.toggle('active',isC);
   document.getElementById('tabSubs').classList.toggle('active',isS);
   document.getElementById('tabEvents').classList.toggle('active',isE);
+  document.getElementById('tabGallery').classList.toggle('active',isG);
   if(isS){await refreshSubs();renderSubList();updateSubBadge()}
   if(isE){await refreshEvents();renderEvtList()}
+  if(isG){await refreshGallery();renderGallery()}
 }
 document.getElementById('tabContent').onclick=()=>showView('content');
 document.getElementById('tabSubs').onclick=()=>showView('subs');
 document.getElementById('tabEvents').onclick=()=>showView('events');
+document.getElementById('tabGallery').onclick=()=>showView('gallery');
 document.getElementById('subFilter').onchange=e=>{subFilter=e.target.value;renderSubList()};
 
 function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
@@ -805,6 +850,98 @@ function renderEvtDetail(){
     }
   };
 }
+
+/* ---------- gallery ---------- */
+const GAL_KEY='ccs_gallery_v1';
+const GAL_DEFAULTS=['8b9cc0a256a74b4794bed1324ebbb9e1','80a4417b162b4908afb7262bd719dfbb','03f8e448ac0a4ef8a6656de39329b02f','1c7f4a56a6b34914901d97f008f27694','7d94271c5aa04df6ac1f973e2b45f599','df3e4aada25041519a720d62ef20cd0b']
+  .map(h=>'https://static.wixstatic.com/media/20ae10_'+h+'~mv2.jpg/v1/fill/w_600,h_600,al_c,q_80,enc_auto/p.jpg');
+let gallery=[];
+function loadGalleryLocal(){try{return JSON.parse(lsGet(GAL_KEY)||'[]')}catch(e){return []}}
+function saveGalleryLocal(){lsSet(GAL_KEY,JSON.stringify(gallery))}
+async function refreshGallery(){
+  if(SERVER){
+    try{const r=await api('/gallery');if(r.ok&&r.body&&Array.isArray(r.body.images)){gallery=r.body.images;return}}
+    catch(e){console.warn('gallery load failed',e)}
+    gallery=[];
+  }else{gallery=loadGalleryLocal()}
+}
+let galSaveTimer=null;
+function scheduleGalSave(img){clearTimeout(galSaveTimer);galSaveTimer=setTimeout(()=>commitImage(img),500)}
+async function commitImage(img){
+  if(SERVER){try{await api('/gallery/'+encodeURIComponent(img.id),{method:'PATCH',body:JSON.stringify({url:img.url,caption:img.caption,sortOrder:img.sortOrder})})}catch(e){}}
+  else{saveGalleryLocal()}
+}
+async function addImage(url){
+  const order=gallery.length?Math.max(...gallery.map(g=>g.sortOrder||0))+1:0;
+  if(SERVER){
+    try{const r=await api('/gallery',{method:'POST',body:JSON.stringify({url:url||'',caption:'',sortOrder:order})});
+      if(r.ok&&r.body&&r.body.ok){await refreshGallery();renderGallery();return}
+      alert('Could not add image.\n\n'+((r.body&&r.body.error)||('Status '+r.status)));}
+    catch(e){alert('Could not reach the server to add the image.')}
+    return;
+  }
+  gallery.push({id:'img_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),createdAt:new Date().toISOString(),url:url||'',caption:'',sortOrder:order});
+  saveGalleryLocal();renderGallery();
+}
+async function importDefaults(){
+  if(SERVER){
+    let order=gallery.length;
+    for(const url of GAL_DEFAULTS){try{await api('/gallery',{method:'POST',body:JSON.stringify({url,caption:'',sortOrder:order++})})}catch(e){}}
+    await refreshGallery();renderGallery();
+  }else{
+    let order=gallery.length;
+    GAL_DEFAULTS.forEach(url=>gallery.push({id:'img_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),createdAt:new Date().toISOString(),url,caption:'',sortOrder:order++}));
+    saveGalleryLocal();renderGallery();
+  }
+}
+async function moveImage(i,dir){
+  const j=i+dir;if(j<0||j>=gallery.length)return;
+  [gallery[i],gallery[j]]=[gallery[j],gallery[i]];
+  gallery.forEach((g,idx)=>g.sortOrder=idx);
+  if(SERVER){try{await Promise.all(gallery.map(g=>api('/gallery/'+encodeURIComponent(g.id),{method:'PATCH',body:JSON.stringify({sortOrder:g.sortOrder})})))}catch(e){}}
+  else{saveGalleryLocal()}
+  renderGallery();
+}
+async function deleteImage(id){
+  if(!confirm('Remove this image from the gallery?'))return;
+  gallery=gallery.filter(g=>g.id!==id);
+  if(SERVER){try{await api('/gallery/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}
+  else{saveGalleryLocal()}
+  renderGallery();
+}
+function renderGallery(){
+  const host=document.getElementById('imgGrid');if(!host)return;
+  gallery.sort((a,b)=>(a.sortOrder||0)-(b.sortOrder||0));
+  if(!gallery.length){
+    host.innerHTML='<div class="gv-empty"><p>No gallery images yet.</p><button class="btn" id="impDef">Import the original highlight photos</button></div>';
+    document.getElementById('impDef').onclick=importDefaults;
+    return;
+  }
+  host.innerHTML='';
+  gallery.forEach((img,i)=>{
+    const hasUrl=img.url&&img.url.trim();
+    const card=document.createElement('div');card.className='img-card';
+    card.innerHTML=
+      '<div class="thumb"><span class="pos">'+(i+1)+'</span>'
+      +'<div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="m4 15 4-4 5 5M14 13l2-2 4 4"/><circle cx="9" cy="9" r="1.5"/></svg></div>'
+      +'<img class="gi-thumb" alt="" style="display:'+(hasUrl?'block':'none')+'" '+(hasUrl?'src="'+esc(img.url)+'" ':'')+'onerror="this.style.display=\'none\'">'
+      +'</div>'
+      +'<div class="meta"><input class="gi-url" placeholder="Image URL (https://…)" value="'+esc(img.url||'')+'"><input class="gi-cap" placeholder="Caption (optional)" value="'+esc(img.caption||'')+'"></div>'
+      +'<div class="acts"><div class="mv">'
+      +'<button class="up" title="Move earlier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>'
+      +'<button class="down" title="Move later"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>'
+      +'</div><button class="del">Remove</button></div>';
+    host.appendChild(card);
+    const urlIn=card.querySelector('.gi-url'),capIn=card.querySelector('.gi-cap'),thumb=card.querySelector('.gi-thumb');
+    urlIn.addEventListener('input',e=>{img.url=e.target.value;scheduleGalSave(img);
+      if(img.url.trim()){thumb.src=img.url;thumb.style.display='block'}else{thumb.style.display='none'}});
+    capIn.addEventListener('input',e=>{img.caption=e.target.value;scheduleGalSave(img)});
+    card.querySelector('.up').onclick=()=>moveImage(i,-1);
+    card.querySelector('.down').onclick=()=>moveImage(i,1);
+    card.querySelector('.del').onclick=()=>deleteImage(img.id);
+  });
+}
+document.getElementById('btnAddImg').onclick=()=>addImage('');
 
 /* ---------- login / storage mode ---------- */
 function applyStorageMode(){

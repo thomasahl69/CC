@@ -8,6 +8,29 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.5.0 — 2026-06-27
+
+- New **Gallery** manager in Content Studio: add, caption, reorder (arrows), and
+  remove the highlight photos that appear on the Bloom & Blossom Conference page.
+  Each image has a live preview. Includes an "Import the original highlight photos"
+  button to start from the six that were on the page.
+- The conference page gallery now loads from this manager (`/api/gallery`), falling
+  back to the originals if the backend isn't reachable.
+- Adds a `gallery` table to the database.
+
+### Migration for this version
+Run once in the D1 console:
+```
+CREATE TABLE IF NOT EXISTS gallery (
+  id TEXT PRIMARY KEY,
+  created_at TEXT NOT NULL,
+  url TEXT,
+  caption TEXT,
+  sort_order INTEGER DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_gallery_order ON gallery(sort_order);
+```
+
 ## v1.4.1 — 2026-06-27
 
 - Fixed the conference page highlights gallery: a quote-escaping bug in the image

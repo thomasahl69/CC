@@ -36,3 +36,12 @@ CREATE TABLE IF NOT EXISTS events (
   image       TEXT                                    -- image URL for the event
 );
 CREATE INDEX IF NOT EXISTS idx_events_date ON events(date);
+
+CREATE TABLE IF NOT EXISTS gallery (
+  id          TEXT PRIMARY KEY,
+  created_at  TEXT NOT NULL,
+  url         TEXT,                                   -- image URL
+  caption     TEXT,
+  sort_order  INTEGER DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_gallery_order ON gallery(sort_order);
