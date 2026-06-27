@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+<!-- Content Studio (admin) — v1.0.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="version" content="1.0.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -128,6 +130,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .vtab{border:0;background:transparent;border-radius:999px;padding:.45em 1em;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);display:inline-flex;align-items:center;gap:.45em}
 .vtab.active{background:var(--paper);color:var(--ink);box-shadow:0 2px 8px -4px var(--shadow)}
 .badge{background:var(--rose);color:#fff;border-radius:999px;font-size:.62rem;padding:.15em .5em;line-height:1;font-family:var(--util)}
+.ver{font-family:var(--util);font-size:.6rem;letter-spacing:.1em;color:var(--ink-soft);opacity:.55;align-self:flex-start;margin-top:3px}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -188,6 +191,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
+      <span class="ver" id="appVer">v1.0.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -289,6 +293,8 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
+const APP_VERSION='1.0.0';
+try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
 
 async function sha256(str){
