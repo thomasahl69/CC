@@ -8,6 +8,18 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.1.2 — 2026-06-27
+
+- Admin login now trims surrounding whitespace from the password and the stored
+  `ADMIN_PASSWORD` secret before comparing, so an accidental trailing newline or
+  space (a common secret-setting mistake) no longer blocks login.
+
+## v1.1.1 — 2026-06-27
+
+- Admin login now shows the *real* reason a login fails (e.g. "Server is missing
+  ADMIN_PASSWORD" vs "Incorrect password") instead of always saying "Incorrect
+  password" — makes setup problems obvious.
+
 ## v1.1.0 — 2026-06-27
 
 - New **Events** manager in the admin: add/edit/delete upcoming events with

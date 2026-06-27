@@ -7,12 +7,14 @@ export async function onRequestPost(context) {
   }
   let body = {};
   try { body = await request.json(); } catch {}
-  const pw = (body.password || "").toString();
+  // trim to forgive accidental trailing newlines/spaces (common when setting secrets)
+  const pw = (body.password || "").toString().trim();
+  const expected = env.ADMIN_PASSWORD.trim();
 
   // length-independent comparison
-  let ok = pw.length === env.ADMIN_PASSWORD.length;
+  let ok = pw.length === expected.length;
   for (let i = 0; i < pw.length; i++) {
-    if (pw.charCodeAt(i) !== env.ADMIN_PASSWORD.charCodeAt(i)) ok = false;
+    if (pw.charCodeAt(i) !== expected.charCodeAt(i)) ok = false;
   }
   if (!ok) return json({ ok: false, error: "Incorrect password." }, 401);
 
