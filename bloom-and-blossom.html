@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Bloom & Blossom Conference — page v1.7.0 -->
+<!-- Bloom & Blossom Conference — page v1.8.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.7.0">
+<meta name="version" content="1.8.0">
 <title>Bloom &amp; Blossom Conference | Authentic Joy in the Journey</title>
 <meta name="description" content="The Bloom and Blossom Conference is a gathering for mothers to be encouraged, equipped, empowered, and inspired on their motherhood and home education journey.">
 <meta property="og:title" content="Bloom &amp; Blossom Conference">
@@ -179,7 +179,7 @@ section{padding-block:clamp(60px,8vw,116px)}
       <img src="favicon-192.png" alt="" onerror="this.style.display='none'">
       Bloom <span>&amp; Blossom</span>
     </a>
-    <span class="site-ver">v1.7.0</span>
+    <span class="site-ver">v1.8.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -414,10 +414,13 @@ document.getElementById('year').textContent=new Date().getFullYear();
       const d=new Date(ev.date);
       const thumb=ev.image?'<img class="ethumb" src="'+esc(ev.image)+'" alt="" loading="lazy">':'';
       const loc=[ev.location?esc(ev.location):'',ev.cost?esc(ev.cost):''].filter(Boolean).join(' · ');
+      const cta=ev.ticketUrl&&ev.ticketUrl.trim()
+        ? '<a href="'+esc(ev.ticketUrl)+'" target="_blank" rel="noopener" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Buy Tickets</a>'
+        : '<a href="index.html#events" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Register</a>';
       return '<div class="event">'+thumb
         +'<div class="event-date"><div class="m">'+MON[d.getMonth()]+'</div><div class="d">'+d.getDate()+'</div></div>'
         +'<div><h3 style="font-size:1.4rem">'+esc(ev.title||'Event')+'</h3>'+(loc?'<p class="loc">'+loc+'</p>':'')+'</div>'
-        +'<a href="index.html#events" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Register</a></div>';
+        +cta+'</div>';
     }).join('');
   }).catch(()=>{});
 })();

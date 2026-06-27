@@ -1,6 +1,6 @@
 import { json, requireAuth } from "../_lib.js";
 
-const COLS = { title: "title", date: "date", location: "location", description: "description", cost: "cost", image: "image" };
+const COLS = { title: "title", date: "date", location: "location", description: "description", cost: "cost", image: "image", ticketUrl: "ticket_url" };
 
 // ADMIN: update an event
 export async function onRequestPatch(context) {

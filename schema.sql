@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS events (
   location    TEXT,
   description TEXT,
   cost        TEXT,                                   -- free text, e.g. "$58" or "Free"
-  image       TEXT                                    -- image URL for the event
+  image       TEXT,                                   -- image URL for the event
+  ticket_url  TEXT                                    -- external ticketing/registration link (Eventbrite, Stripe, etc.)
 );
 CREATE INDEX IF NOT EXISTS idx_events_date ON events(date);
 

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Authentic Joy in the Journey — site v1.7.0 -->
+<!-- Authentic Joy in the Journey — site v1.8.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.7.0">
+<meta name="version" content="1.8.0">
 <title>Authentic Joy in the Journey | Christina Carpenter</title>
 <meta name="description" content="Authentic Joy in the Journey and the Bloom and Blossom Conference encourage, equip, and empower mothers on their motherhood and home education journey.">
 <meta property="og:title" content="Authentic Joy in the Journey | Christina Carpenter">
@@ -423,7 +423,7 @@ form{display:grid;gap:1.1rem}
       </span>
       Christina <span>Carpenter</span>
     </a>
-    <span class="site-ver">v1.7.0</span>
+    <span class="site-ver">v1.8.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#story">About</a></li>
@@ -1081,13 +1081,16 @@ document.getElementById('year').textContent=new Date().getFullYear();
     const locBits=[ev.location?esc(ev.location):'', valid?d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+timeStr(d):''].filter(Boolean).join(' · ');
     const cost=ev.cost?'<span class="event-tag">'+esc(ev.cost)+'</span>':'';
     const thumb=ev.image&&ev.image.trim()?'<img class="event-thumb" src="'+esc(ev.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'';
+    const cta=ev.ticketUrl&&ev.ticketUrl.trim()
+      ? '<a href="'+esc(ev.ticketUrl)+'" target="_blank" rel="noopener" class="btn btn-solid btn-sm">Buy Tickets</a>'
+      : '<a href="#contact" class="btn btn-solid btn-sm" data-open-quiz>Register</a>';
     return '<div class="event reveal in">'
       +'<div class="event-lead">'+thumb+'<div class="event-date">'+chip+'</div></div>'
       +'<div class="event-body"><h3>'+esc(ev.title||'Event')+' '+cost+'</h3>'
       +(locBits?'<p class="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="width:15px"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'+locBits+'</p>':'')
       +(ev.description?'<p class="loc" style="opacity:.8">'+esc(ev.description)+'</p>':'')
       +'</div>'
-      +'<a href="#contact" class="btn btn-solid btn-sm" data-open-quiz>Register</a>'
+      +cta
       +'</div>';
   }
   fetch('/api/events',{credentials:'same-origin'})

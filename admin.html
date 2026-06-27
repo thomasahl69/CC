@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.7.0 -->
+<!-- Content Studio (admin) — v1.8.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.7.0">
+<meta name="version" content="1.8.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -212,7 +212,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.7.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.8.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -230,7 +230,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.7.0</span>
+      <span class="ver" id="appVer">v1.8.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -394,7 +394,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.7.0';
+const APP_VERSION='1.8.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -830,12 +830,12 @@ function scheduleEvtSave(ev){clearTimeout(evtSaveTimer);evtSaveTimer=setTimeout(
 async function commitEvt(ev){
   if(SERVER){
     try{await api('/events/'+encodeURIComponent(ev.id),{method:'PATCH',
-      body:JSON.stringify({title:ev.title,date:ev.date,location:ev.location,description:ev.description,cost:ev.cost,image:ev.image})})}
+      body:JSON.stringify({title:ev.title,date:ev.date,location:ev.location,description:ev.description,cost:ev.cost,image:ev.image,ticketUrl:ev.ticketUrl})})}
     catch(e){console.warn('event save failed',e)}
   }else{saveEventsLocal()}
 }
 async function addEvt(){
-  const draft={title:'New event',date:'',location:'',description:'',cost:'',image:''};
+  const draft={title:'New event',date:'',location:'',description:'',cost:'',image:'',ticketUrl:''};
   if(SERVER){
     try{
       const r=await api('/events',{method:'POST',body:JSON.stringify(draft)});
@@ -892,12 +892,13 @@ function renderEvtDetail(){
       </div>
     </div>
     <div id="ev-preview" style="margin:-.4rem 0 1.1rem"></div>
+    <div class="fieldset"><label class="lbl">Ticket / registration link <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(Eventbrite, Stripe, etc. — turns the button into "Buy Tickets")</span></label><input class="inp" id="ev-ticket" placeholder="https://\u2026 (leave blank to use the interest form)" value="${esc(ev.ticketUrl||'')}"></div>
     <div class="fieldset"><label class="lbl">Description</label><textarea class="ta" id="ev-desc" rows="4" placeholder="A sentence or two about this gathering.">${esc(ev.description||'')}</textarea></div>
     <p class="form-note" id="evtSaved" style="color:var(--sage-deep);min-height:1.2em"></p>`;
   host.appendChild(d);
   const mark=()=>{const e=document.getElementById('evtSaved');if(!e)return;e.textContent='Saved \u2713';clearTimeout(mark._t);mark._t=setTimeout(()=>{e.textContent=''},1200)};
   const bind=(id,prop)=>{const el=document.getElementById(id);el.oninput=e=>{ev[prop]=e.target.value;scheduleEvtSave(ev);renderEvtList();clearTimeout(bind._t);bind._t=setTimeout(mark,540)}};
-  bind('ev-title','title');bind('ev-date','date');bind('ev-cost','cost');bind('ev-loc','location');bind('ev-desc','description');bind('ev-image','image');
+  bind('ev-title','title');bind('ev-date','date');bind('ev-cost','cost');bind('ev-loc','location');bind('ev-desc','description');bind('ev-image','image');bind('ev-ticket','ticketUrl');
   const prev=()=>{const p=document.getElementById('ev-preview');if(!p)return;p.innerHTML=ev.image&&ev.image.trim()?'<img src="'+esc(ev.image)+'" alt="preview" style="max-height:140px;border-radius:10px;border:1px solid var(--line)" onerror="this.style.display=\'none\'">':''};
   document.getElementById('ev-image').addEventListener('input',prev);prev();
   const evFile=document.getElementById('ev-file'),evUp=document.getElementById('ev-upload');

@@ -8,6 +8,21 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.8.0 — 2026-06-27
+
+- **Event ticket links.** Each event now has a "Ticket / registration link" field
+  in the admin. Paste your Eventbrite or Stripe checkout link and the event's
+  button becomes "Buy Tickets" (opens in a new tab); leave it blank and it stays
+  the "Register" interest form. Applies on the home page and conference page.
+- Payments and the paid attendee list are handled by your ticketing provider
+  (Route A). Adds a `ticket_url` column to the `events` table.
+
+### Migration for this version
+Run once in the D1 console:
+```
+ALTER TABLE events ADD COLUMN ticket_url TEXT;
+```
+
 ## v1.7.0 — 2026-06-27
 
 - **Team photos** for the conference page (Christina & Kelly) can now be uploaded

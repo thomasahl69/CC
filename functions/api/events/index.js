@@ -5,7 +5,7 @@ const clip = (v, n) => (v == null ? "" : String(v)).slice(0, n);
 function rowToEvent(r) {
   return {
     id: r.id, createdAt: r.created_at, title: r.title, date: r.date,
-    location: r.location, description: r.description, cost: r.cost, image: r.image,
+    location: r.location, description: r.description, cost: r.cost, image: r.image, ticketUrl: r.ticket_url,
   };
 }
 
@@ -27,10 +27,10 @@ export async function onRequestPost(context) {
   const now = new Date().toISOString();
   try {
     await context.env.DB.prepare(
-      "INSERT INTO events (id, created_at, title, date, location, description, cost, image) VALUES (?,?,?,?,?,?,?,?)"
+      "INSERT INTO events (id, created_at, title, date, location, description, cost, image, ticket_url) VALUES (?,?,?,?,?,?,?,?,?)"
     ).bind(
       id, now, clip(b.title, 200), clip(b.date, 40),
-      clip(b.location, 300), clip(b.description, 4000), clip(b.cost, 80), clip(b.image, 600)
+      clip(b.location, 300), clip(b.description, 4000), clip(b.cost, 80), clip(b.image, 600), clip(b.ticketUrl, 600)
     ).run();
   } catch (e) {
     const msg = String(e && e.message || e);
