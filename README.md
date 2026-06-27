@@ -44,7 +44,7 @@ Follow **DEPLOY-cloudflare.md**. Short version:
 
 1. `npx wrangler d1 create cc-db` → paste the id into `wrangler.toml`
 2. `npx wrangler d1 execute cc-db --remote --file=./schema.sql`
-3. `npx wrangler pages deploy .`
+3. `npx wrangler pages deploy`
 4. Set secrets `ADMIN_PASSWORD` and `SESSION_SECRET`
 5. Confirm the `DB` binding → redeploy → log in at `/admin.html`
 

@@ -44,18 +44,22 @@ npx wrangler d1 execute cc-db --remote --file=./schema.sql
 
 ## 3. Create the Pages project and deploy
 
-From this folder:
+From this folder (the one containing `wrangler.toml` and `functions/`):
 
 ```bash
-npx wrangler pages deploy .
+npx wrangler pages deploy
 ```
+
+It's **`pages deploy`**, not `deploy`. `wrangler deploy` is the *Workers* command
+and will fail with "Missing entry-point to Worker script or to assets directory" —
+this project is a *Pages* project (it uses the `functions/` folder). You don't pass
+a directory because `wrangler.toml` already sets `pages_build_output_dir = "."`.
 
 The first run will ask to create a project (give it a name, e.g. `cc`). It uploads
 the static pages **and** the `functions/` API together.
 
-> Prefer the dashboard / GitHub? You can instead connect this folder as a repo in
-> **Cloudflare Pages → Create application → Pages**. Build command: none. Output
-> directory: `/` (root).
+> Prefer the dashboard / GitHub? Create the project under **Workers & Pages →
+> Create → Pages** (not Workers). Build command: none. Output directory: `/` (root).
 
 ## 4. Bind the D1 database to the site
 
@@ -96,8 +100,27 @@ npx wrangler pages deploy .
 
 ## Updating later
 
-Edit files, run `npx wrangler pages deploy .` again. Database contents (submissions
+Edit files, run `npx wrangler pages deploy` again. Database contents (submissions
 and your edited knowledge base) stay put — deploys don't touch the data.
+
+## Troubleshooting
+
+**"Missing entry-point to Worker script or to assets directory"**
+You ran `wrangler deploy` (the Workers command). Use `npx wrangler pages deploy`
+instead, from the folder that contains `wrangler.toml` and `functions/`. If a stray
+empty Workers project got created, you can ignore or delete it — attach your D1
+binding and secrets to the **Pages** project, not the Worker.
+
+**Changes don't show up after deploy**
+Hard-refresh (Ctrl/Cmd+Shift+R) or open an incognito window — browsers cache pages.
+The version in the footer / admin login screen tells you which build is live.
+
+**The site serves your docs publicly**
+Because the output directory is the whole folder, files like `README*.md`,
+`schema.sql`, and `wrangler.toml` are uploaded too. They're not security-critical
+(real secrets live in Cloudflare, never in files), but if you'd rather not expose
+them, keep only `index.html`, `admin.html`, the favicons, and `functions/` in the
+deploy folder and move the docs elsewhere — or ask and I'll restructure the bundle.
 
 ## The automated AI response (now built)
 
