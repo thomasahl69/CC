@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Bloom & Blossom Conference — page v1.6.0 -->
+<!-- Bloom & Blossom Conference — page v1.7.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.6.0">
+<meta name="version" content="1.7.0">
 <title>Bloom &amp; Blossom Conference | Authentic Joy in the Journey</title>
 <meta name="description" content="The Bloom and Blossom Conference is a gathering for mothers to be encouraged, equipped, empowered, and inspired on their motherhood and home education journey.">
 <meta property="og:title" content="Bloom &amp; Blossom Conference">
@@ -118,6 +118,7 @@ section{padding-block:clamp(60px,8vw,116px)}
 .member{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:clamp(26px,3vw,38px)}
 .member .top{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.2rem}
 .avatar{width:84px;height:84px;border-radius:50%;flex:none;object-fit:cover;border:2px solid var(--blush);background:var(--paper)}
+.av-slot{display:contents}
 .avatar.mono{display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:var(--sage-deep);background:linear-gradient(150deg,var(--paper),#E7DFCE)}
 .member h3{margin:0}
 .member .role{font-family:var(--util);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);margin-top:.3rem}
@@ -178,7 +179,7 @@ section{padding-block:clamp(60px,8vw,116px)}
       <img src="favicon-192.png" alt="" onerror="this.style.display='none'">
       Bloom <span>&amp; Blossom</span>
     </a>
-    <span class="site-ver">v1.6.0</span>
+    <span class="site-ver">v1.7.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -292,7 +293,7 @@ section{padding-block:clamp(60px,8vw,116px)}
     <div class="team-grid">
       <article class="member reveal">
         <div class="top">
-          <img class="avatar" src="https://static.wixstatic.com/media/20ae10_528298a67d114c5da3807f74075d4ff2~mv2.jpg/v1/fill/w_180,h_180,al_c,q_85,enc_auto/christina.jpg" alt="Christina Carpenter" onerror="this.outerHTML='&lt;div class=&quot;avatar mono&quot;&gt;C&lt;/div&gt;'">
+          <span class="av-slot" id="avChristina"></span>
           <div><h3>Christina Carpenter</h3><div class="role">Founder &amp; Director</div></div>
         </div>
         <p>Hi, I'm Christina! A PNW native transferred to the Midwest, and the mother of two dynamic girls and two lively boys. My husband and I love curating family memories around travel and new adventures, and I'm passionate about home education and family culture.</p>
@@ -300,7 +301,7 @@ section{padding-block:clamp(60px,8vw,116px)}
       </article>
       <article class="member reveal">
         <div class="top">
-          <div class="avatar mono">K</div>
+          <span class="av-slot" id="avKelly"></span>
           <div><h3>Kelly Taylor</h3><div class="role">Co-Director</div></div>
         </div>
         <p>I'm Kelly — follower of Jesus, wife to Matt, mom to teen girls and a wild little boy. An extra-extrovert (I have to be careful not to exhaust my family with my love of travel and socializing!), my passion is to encourage those around me — my kids to pursue their purpose, my friends to shine the light I see in them.</p>
@@ -418,6 +419,27 @@ document.getElementById('year').textContent=new Date().getFullYear();
         +'<div><h3 style="font-size:1.4rem">'+esc(ev.title||'Event')+'</h3>'+(loc?'<p class="loc">'+loc+'</p>':'')+'</div>'
         +'<a href="index.html#events" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Register</a></div>';
     }).join('');
+  }).catch(()=>{});
+})();
+/* team photos — defaults shown immediately, overridden by /api/team if set */
+(function(){
+  const DEF_CHRISTINA='https://static.wixstatic.com/media/20ae10_528298a67d114c5da3807f74075d4ff2~mv2.jpg/v1/fill/w_180,h_180,al_c,q_85,enc_auto/christina.jpg';
+  function setAvatar(id,url,initial,name){
+    const host=document.getElementById(id);if(!host)return;
+    host.innerHTML='';
+    if(url&&url.trim()){
+      const img=document.createElement('img');img.className='avatar';img.src=url;img.alt=name;
+      img.addEventListener('error',()=>{host.innerHTML='<div class="avatar mono">'+initial+'</div>'});
+      host.appendChild(img);
+    }else{host.innerHTML='<div class="avatar mono">'+initial+'</div>'}
+  }
+  setAvatar('avChristina',DEF_CHRISTINA,'C','Christina Carpenter');
+  setAvatar('avKelly','','K','Kelly Taylor');
+  fetch('/api/team',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{
+    if(d&&d.ok&&d.team){
+      if(d.team.christina)setAvatar('avChristina',d.team.christina,'C','Christina Carpenter');
+      if(d.team.kelly)setAvatar('avKelly',d.team.kelly,'K','Kelly Taylor');
+    }
   }).catch(()=>{});
 })();
 </script>

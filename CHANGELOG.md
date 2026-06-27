@@ -8,6 +8,15 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.7.0 — 2026-06-27
+
+- **Team photos** for the conference page (Christina & Kelly) can now be uploaded
+  or replaced from Content Studio → Gallery tab → "Team photos." Each has Upload
+  and "Use monogram" options; the conference page shows the photo or a tasteful
+  monogram fallback.
+- Stored in the existing `content` table via `GET/PUT /api/team` — no database
+  migration needed.
+
 ## v1.6.0 — 2026-06-27
 
 - **Image uploads (drag-and-drop).** Event images and gallery images can now be

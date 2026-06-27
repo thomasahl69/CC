@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.6.0 -->
+<!-- Content Studio (admin) — v1.7.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.6.0">
+<meta name="version" content="1.7.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -157,6 +157,18 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .img-card .acts .del:hover{background:var(--danger);color:#fff}
 .gv-empty{text-align:center;color:var(--ink-soft);padding:clamp(30px,5vw,60px);border:1px dashed var(--line);border-radius:16px}
 .gv-empty .btn{margin-top:1rem}
+.team-panel{margin-bottom:1.8rem;padding-bottom:1.6rem;border-bottom:1px solid var(--line)}
+.team-panel h3{font-family:var(--serif);font-weight:500;font-size:1.25rem;margin:0 0 1rem}
+.team-slots{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.team-slot{display:flex;gap:1rem;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1rem}
+.ts-photo{width:72px;height:72px;border-radius:50%;overflow:hidden;flex:none;background:var(--paper-2)}
+.ts-photo img{width:100%;height:100%;object-fit:cover}
+.ts-mono{width:100%;height:100%;display:grid;place-items:center;font-family:var(--serif);font-size:1.8rem;color:var(--sage-deep);background:linear-gradient(150deg,var(--paper),#E7DFCE)}
+.ts-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.ts-info strong{font-size:.95rem}
+.ts-info span{font-family:var(--util);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rose)}
+.ts-acts{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
+@media(max-width:640px){.team-slots{grid-template-columns:1fr}}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -200,7 +212,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.6.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.7.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -218,7 +230,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.6.0</span>
+      <span class="ver" id="appVer">v1.7.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -330,6 +342,25 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
         <input type="file" id="gal-file" accept="image/*" multiple hidden>
       </div>
     </div>
+    <div id="teamPanel" class="team-panel">
+      <h3>Team photos</h3>
+      <div class="team-slots">
+        <div class="team-slot" data-member="christina">
+          <div class="ts-photo" id="ts-christina"></div>
+          <div class="ts-info"><strong>Christina Carpenter</strong><span>Founder &amp; Director</span>
+            <div class="ts-acts"><button type="button" class="btn ghost tiny ts-upload">Upload</button><button type="button" class="btn ghost tiny ts-clear">Use monogram</button></div>
+          </div>
+          <input type="file" accept="image/*" hidden class="ts-file">
+        </div>
+        <div class="team-slot" data-member="kelly">
+          <div class="ts-photo" id="ts-kelly"></div>
+          <div class="ts-info"><strong>Kelly Taylor</strong><span>Co-Director</span>
+            <div class="ts-acts"><button type="button" class="btn ghost tiny ts-upload">Upload</button><button type="button" class="btn ghost tiny ts-clear">Use monogram</button></div>
+          </div>
+          <input type="file" accept="image/*" hidden class="ts-file">
+        </div>
+      </div>
+    </div>
     <div id="imgGrid" class="img-grid"></div>
   </div>
 </div>
@@ -363,7 +394,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.6.0';
+const APP_VERSION='1.7.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -617,7 +648,7 @@ async function showView(which){
   document.getElementById('tabGallery').classList.toggle('active',isG);
   if(isS){await refreshSubs();renderSubList();updateSubBadge()}
   if(isE){await refreshEvents();renderEvtList()}
-  if(isG){await refreshGallery();renderGallery()}
+  if(isG){await refreshGallery();renderGallery();await refreshTeam();renderTeam()}
 }
 document.getElementById('tabContent').onclick=()=>showView('content');
 document.getElementById('tabSubs').onclick=()=>showView('subs');
@@ -998,6 +1029,41 @@ async function addUploadedFiles(files){
     zone.addEventListener('drop',async e=>{const dt=e.dataTransfer;if(dt&&dt.files&&dt.files.length)await addUploadedFiles(dt.files)});
   }
 })();
+
+/* team photos */
+let team={christina:'',kelly:''};
+async function refreshTeam(){
+  if(SERVER){try{const r=await api('/team');if(r.ok&&r.body&&r.body.team){team=r.body.team;return}}catch(e){}}
+  try{team=JSON.parse(lsGet('ccs_team_v1')||'{}')}catch(e){team={}}
+  team.christina=team.christina||'';team.kelly=team.kelly||'';
+}
+async function saveTeam(){
+  if(SERVER){try{await api('/team',{method:'PUT',body:JSON.stringify(team)})}catch(e){}}
+  else{lsSet('ccs_team_v1',JSON.stringify(team))}
+}
+function setTeamSlot(member,initial){
+  const host=document.getElementById('ts-'+member);if(!host)return;
+  host.innerHTML='';
+  const url=team[member];
+  if(url&&url.trim()){
+    const img=document.createElement('img');img.src=url;img.alt='';
+    img.addEventListener('error',()=>{host.innerHTML='<div class="ts-mono">'+initial+'</div>'});
+    host.appendChild(img);
+  }else{host.innerHTML='<div class="ts-mono">'+initial+'</div>'}
+}
+function renderTeam(){setTeamSlot('christina','C');setTeamSlot('kelly','K')}
+document.querySelectorAll('.team-slot').forEach(slot=>{
+  const member=slot.dataset.member,fileInput=slot.querySelector('.ts-file'),upBtn=slot.querySelector('.ts-upload');
+  upBtn.onclick=()=>fileInput.click();
+  fileInput.onchange=async()=>{
+    const f=fileInput.files&&fileInput.files[0];fileInput.value='';if(!f)return;
+    upBtn.textContent='Uploading\u2026';upBtn.disabled=true;
+    const url=await uploadImageFile(f);
+    upBtn.textContent='Upload';upBtn.disabled=false;
+    if(url){team[member]=url;await saveTeam();renderTeam()}
+  };
+  slot.querySelector('.ts-clear').onclick=async()=>{team[member]='';await saveTeam();renderTeam()};
+});
 
 /* ---------- login / storage mode ---------- */
 function applyStorageMode(){
