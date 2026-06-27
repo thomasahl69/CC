@@ -1,4 +1,4 @@
-import { json, requireAuth, rowToSub } from "./_lib.js";
+import { json, requireAuth, rowToSub } from "../_lib.js";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const clip = (v, n) => (v == null ? "" : String(v)).slice(0, n);
