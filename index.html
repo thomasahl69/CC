@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Authentic Joy in the Journey — site v1.2.1 -->
+<!-- Authentic Joy in the Journey — site v1.3.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.2.1">
+<meta name="version" content="1.3.0">
 <title>Authentic Joy in the Journey | Christina Carpenter</title>
 <meta name="description" content="Authentic Joy in the Journey and the Bloom and Blossom Conference encourage, equip, and empower mothers on their motherhood and home education journey.">
 <meta property="og:title" content="Authentic Joy in the Journey | Christina Carpenter">
@@ -205,6 +205,8 @@ section{padding-block:clamp(64px,9vw,128px)}
 }
 .event:last-child{border-bottom:1px solid rgba(250,246,239,.16)}
 .event-date{text-align:center;min-width:78px}
+.event-lead{display:flex;align-items:center;gap:16px}
+.event-thumb{width:74px;height:74px;border-radius:12px;object-fit:cover;flex:none}
 .event-date .m{font-family:var(--util);text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:var(--blush)}
 .event-date .d{font-family:var(--serif);font-size:2.6rem;line-height:1}
 .event-date .y{font-family:var(--util);font-size:.7rem;letter-spacing:.14em;opacity:.6}
@@ -421,8 +423,8 @@ form{display:grid;gap:1.1rem}
     <ul class="nav-links" id="navLinks">
       <li><a href="#story">About</a></li>
       <li><a href="#spaces">What I Offer</a></li>
+      <li><a href="bloom-and-blossom.html">Conference</a></li>
       <li><a href="#events">Events</a></li>
-      <li><a href="#advice">Get Advice</a></li>
       <li><a href="#words">Praise</a></li>
       <li><a href="#contact">Contact</a></li>
       <li class="nav-cta"><a href="#events" class="btn btn-solid btn-sm">Register</a></li>
@@ -743,8 +745,11 @@ form{display:grid;gap:1.1rem}
         <a href="https://www.instagram.com/bloom.and.blossom.conference" aria-label="Bloom and Blossom Conference on Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener">
+        <a href="https://www.facebook.com/Authentic-Joy-in-the-Journey-849021365441395" aria-label="Authentic Joy in the Journey on Facebook" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 8h2.5V4.5H14c-2 0-3.5 1.5-3.5 3.5v2H8v3.5h2.5V21H14v-7.5h2.5L17 10h-3V8z"/></svg>
+        </a>
+        <a href="https://twitter.com/intent/tweet?text=Authentic%20Joy%20in%20the%20Journey&url=https://www.christinacarpenter.org" aria-label="Share on X / Twitter" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 3h3.3l-7.2 8.2L23 21h-6.6l-5.2-6.8L5.3 21H2l7.7-8.8L1.7 3h6.8l4.7 6.2L18.2 3zm-1.2 16h1.8L7.1 4.9H5.2L17 19z"/></svg>
         </a>
       </div>
     </div>
@@ -893,7 +898,7 @@ form{display:grid;gap:1.1rem}
     </div>
     <div class="footer-bottom">
       <span>© <span id="year"></span> Bloom and Blossom · Authentic Joy in the Journey</span>
-      <span>Springfield, Missouri · <span style="opacity:.6">v1.2.1</span></span>
+      <span>Springfield, Missouri · <span style="opacity:.6">v1.3.0</span></span>
     </div>
   </div>
 </footer>
@@ -1070,8 +1075,9 @@ document.getElementById('year').textContent=new Date().getFullYear();
       : '<div class="m">TBA</div><div class="d">—</div><div class="y"></div>';
     const locBits=[ev.location?esc(ev.location):'', valid?d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+timeStr(d):''].filter(Boolean).join(' · ');
     const cost=ev.cost?'<span class="event-tag">'+esc(ev.cost)+'</span>':'';
+    const thumb=ev.image&&ev.image.trim()?'<img class="event-thumb" src="'+esc(ev.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'';
     return '<div class="event reveal in">'
-      +'<div class="event-date">'+chip+'</div>'
+      +'<div class="event-lead">'+thumb+'<div class="event-date">'+chip+'</div></div>'
       +'<div class="event-body"><h3>'+esc(ev.title||'Event')+' '+cost+'</h3>'
       +(locBits?'<p class="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="width:15px"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'+locBits+'</p>':'')
       +(ev.description?'<p class="loc" style="opacity:.8">'+esc(ev.description)+'</p>':'')

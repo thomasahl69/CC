@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS events (
   date        TEXT,                                   -- ISO datetime, e.g. 2026-10-11T08:00
   location    TEXT,
   description TEXT,
-  cost        TEXT                                    -- free text, e.g. "$58" or "Free"
+  cost        TEXT,                                   -- free text, e.g. "$58" or "Free"
+  image       TEXT                                    -- image URL for the event
 );
 CREATE INDEX IF NOT EXISTS idx_events_date ON events(date);

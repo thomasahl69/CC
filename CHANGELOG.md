@@ -8,6 +8,24 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.3.0 — 2026-06-27
+
+- New **Bloom & Blossom Conference** page (`bloom-and-blossom.html`): about/heart,
+  "is this you" checklist, FAQ accordion, highlights gallery, meet-the-team bios,
+  and upcoming dates pulled from the events API. Linked from the home nav.
+- **Event images**: events now have an image (managed in the admin Events editor
+  with a live preview). Images show on the home events list and the conference
+  page. Adds an `image` column to the `events` table.
+- Home page social links: real Facebook profile added, plus an X/Twitter share
+  link. (There's no standalone Twitter/X account — only a share link existed on the
+  original site — so the X icon shares the page rather than linking a profile.)
+
+### Migration for this version
+Existing databases need the new column (run once in the D1 console):
+```
+ALTER TABLE events ADD COLUMN image TEXT;
+```
+
 ## v1.2.1 — 2026-06-27
 
 - Saving an event now reports the real reason if it fails (e.g. a missing `events`
