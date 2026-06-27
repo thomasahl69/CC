@@ -20,3 +20,4 @@ database_id = "07f3d742-77a0-4918-b5a1-eeb6fe0652d1"
 #
 # Optional plain variable (not secret):
 #   AI_MODEL = claude-sonnet-4-6   (default if unset; see docs.claude.com for current models)
+#   SESSION_HOURS = 720            (how long admin login lasts, in hours; default 720 = 30 days)

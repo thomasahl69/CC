@@ -8,6 +8,15 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.2.0 — 2026-06-27
+
+- The admin now **stays logged in**: on load it checks for a valid session and
+  skips the password screen instead of prompting every time.
+- Session length is now **30 days by default** (was 12 hours) and configurable via
+  an optional `SESSION_HOURS` variable.
+- Added a `GET /api/session` endpoint used for the auto-resume check.
+- "Lock" still ends the session immediately when you want to sign out.
+
 ## v1.1.2 — 2026-06-27
 
 - Admin login now trims surrounding whitespace from the password and the stored

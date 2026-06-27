@@ -18,6 +18,7 @@ export async function onRequestPost(context) {
   }
   if (!ok) return json({ ok: false, error: "Incorrect password." }, 401);
 
-  const token = await makeToken(env);
-  return json({ ok: true }, 200, { "Set-Cookie": sessionCookie(token) });
+  const hours = parseInt(env.SESSION_HOURS, 10) || 720; // default 30 days
+  const token = await makeToken(env, hours);
+  return json({ ok: true }, 200, { "Set-Cookie": sessionCookie(token, hours) });
 }
