@@ -8,6 +8,16 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.4.0 — 2026-06-27
+
+- Version number moved to the **top-left** (next to the logo) on the home and
+  conference pages, instead of the footer.
+- New **Newsletter CSV** export in the admin (Submissions tab): downloads a
+  de-duplicated list of names and emails from all signups (questionnaire and
+  contact form), with source and date. Opens in Excel/Google Sheets.
+- Renamed the submissions JSON buttons to **Backup** / **Restore** for clarity
+  (the CSV is the one for your newsletter tool).
+
 ## v1.3.0 — 2026-06-27
 
 - New **Bloom & Blossom Conference** page (`bloom-and-blossom.html`): about/heart,
