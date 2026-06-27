@@ -13,5 +13,10 @@ database_id = "07f3d742-77a0-4918-b5a1-eeb6fe0652d1"
 # Secrets (DO NOT put real values here — set them in the dashboard or with wrangler):
 #   npx wrangler pages secret put ADMIN_PASSWORD
 #   npx wrangler pages secret put SESSION_SECRET
+#   npx wrangler pages secret put AI_API_KEY        (your Anthropic API key)
 # ADMIN_PASSWORD  = the admin login password
 # SESSION_SECRET  = any long random string used to sign the login cookie
+# AI_API_KEY      = Anthropic API key for the automated draft responses
+#
+# Optional plain variable (not secret):
+#   AI_MODEL = claude-sonnet-4-6   (default if unset; see docs.claude.com for current models)

@@ -576,12 +576,10 @@ function renderSubDetail(){
         <label class="lbl">Your response ${s.respondedAt?'· last saved '+fmtDate(s.respondedAt):''}</label>
         <textarea class="ta" id="subResp" rows="5" placeholder="Write your reply to ${esc(s.name||'her')} here…">${esc(s.response||'')}</textarea>
       </div>
-      <div class="ai-slot">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>
-        <div><b>Automated draft</b> — reserved for later. When the AI engine is connected, its suggested response will appear here for you to review, edit, and append to your reply.${s.aiDraft?'<br><br>'+esc(s.aiDraft):''}</div>
-      </div>
+      <div class="ai-slot" id="aiSlot"></div>
     </div>`;
   host.appendChild(d);
+  renderAiSlot(s);
 
   const tick=()=>{const t=document.getElementById('subTick');t.classList.add('show');clearTimeout(tick._t);tick._t=setTimeout(()=>t.classList.remove('show'),1200)};
   d.querySelector('#subStatus').onchange=e=>{s.status=e.target.value;commitSub(s);renderSubList();updateSubBadge();tick()};
@@ -595,6 +593,47 @@ function renderSubDetail(){
     if(SERVER){try{await api('/submissions/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}else{saveSubs()}
     renderSubList();renderSubDetail();updateSubBadge();
   }};
+}
+
+/* AI draft slot */
+function renderAiSlot(s){
+  const slot=document.getElementById('aiSlot');if(!slot)return;
+  const hasDraft=!!(s.aiDraft&&s.aiDraft.trim());
+  let html='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>'
+    +'<div style="flex:1"><div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap"><b>Automated draft</b>';
+  if(SERVER){
+    html+='<span style="display:flex;gap:.4rem">'
+      +'<button class="btn tiny" id="genAi">'+(hasDraft?'Regenerate':'Generate draft')+'</button>'
+      +(hasDraft?'<button class="btn ghost tiny" id="appendAi">Append to reply</button>':'')+'</span>';
+  }
+  html+='</div>';
+  if(hasDraft){
+    html+='<div id="aiText" style="margin-top:.7rem;white-space:pre-wrap;color:var(--ink)">'+esc(s.aiDraft)+'</div>';
+  }else{
+    html+='<div style="margin-top:.5rem">'+(SERVER
+      ?'No draft yet. Click \u201cGenerate draft\u201d to write one from your knowledge base, then review and append it.'
+      :'AI drafts generate on the deployed site (they need the server). Not available in local preview.')+'</div>';
+  }
+  html+='</div>';
+  slot.innerHTML=html;
+
+  const gen=document.getElementById('genAi');
+  if(gen)gen.onclick=async()=>{
+    gen.disabled=true;const old=gen.textContent;gen.textContent='Thinking\u2026';
+    try{
+      const r=await api('/respond',{method:'POST',body:JSON.stringify({id:s.id})});
+      if(r.ok&&r.body&&r.body.ok){s.aiDraft=r.body.aiDraft;renderAiSlot(s);}
+      else{alert('Could not generate a draft. '+((r.body&&r.body.error)||''));gen.disabled=false;gen.textContent=old;}
+    }catch(e){alert('Could not reach the server.');gen.disabled=false;gen.textContent=old;}
+  };
+  const app=document.getElementById('appendAi');
+  if(app)app.onclick=()=>{
+    const ta=document.getElementById('subResp');if(!ta)return;
+    ta.value=(ta.value.trim()?ta.value.trim()+'\n\n':'')+s.aiDraft;
+    s.response=ta.value;s.respondedAt=new Date().toISOString();
+    if(s.status==='new'){s.status='in-progress';const sel=document.getElementById('subStatus');if(sel)sel.value='in-progress';renderSubList();updateSubBadge();}
+    commitSub(s);ta.focus();
+  };
 }
 
 /* submissions export / import */

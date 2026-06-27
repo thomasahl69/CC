@@ -99,19 +99,36 @@ npx wrangler pages deploy .
 Edit files, run `npx wrangler pages deploy .` again. Database contents (submissions
 and your edited knowledge base) stay put — deploys don't touch the data.
 
-## How the AI engine will plug in (next step)
+## The automated AI response (now built)
 
-When you're ready for the automated response:
+The function `functions/api/respond.js` is live as `POST /api/respond`. When you
+open a submission in the admin and click **Generate draft**, it:
 
-1. Add one function, e.g. `functions/api/respond.js`, that runs after a submission
-   (or on a button in the admin).
-2. It reads the `content` table (your knowledge base), sends it plus the mom's
-   answers to the AI model, and writes the result into that submission's
-   `ai_draft` column.
-3. The admin already has the **Automated draft** slot waiting to show it.
+1. loads that submission and your knowledge base from D1,
+2. asks Claude (Anthropic API) to write a warm, on-brand reply grounded in your
+   Framework + Layered Learning materials, and
+3. saves the result into the submission's `ai_draft` column and shows it in the
+   **Automated draft** slot, where you can read it and click **Append to reply**.
 
-The model's API key would be another secret (e.g. `AI_API_KEY`) set the same way in
-step 5 — so it lives only on the server, never in the page.
+To turn it on, add your Anthropic API key as a secret:
+
+```bash
+npx wrangler pages secret put AI_API_KEY
+# (paste your Anthropic API key from console.anthropic.com)
+```
+
+Optional — choose the model (defaults to `claude-sonnet-4-6`):
+
+```bash
+# Pages → Settings → Variables and Secrets → add a plain variable
+AI_MODEL = claude-sonnet-4-6
+```
+
+Notes:
+- The key lives only on the server; it is never sent to the browser.
+- Only a logged-in admin can trigger a draft, so visitors can't spend your tokens.
+- Drafts are suggestions for you to review and edit — nothing is sent automatically.
+- For the current list of model names, see https://docs.claude.com/en/docs/about-claude/models.
 
 ## Security notes (still true, now improved)
 
