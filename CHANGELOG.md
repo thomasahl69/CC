@@ -8,6 +8,13 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.17.1 — 2026-06-27
+
+- Made the **Adolphe Millot field plate** easy to find: the Journeys page nav now has
+  a "The Plate" link (to the `#plate` section), the home page's Guided Journeys image
+  links straight to it with a "View the field plate →" caption, and the home footer
+  lists "The Field Plate."
+
 ## v1.17.0 — 2026-06-27
 
 - **Two trails per park**, both built on the same gentle rhythm — **Rest · Review ·
