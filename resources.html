@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- Resources / Provisions — page v1.16.0 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="version" content="1.16.0">
+<title>Provisions for the Journey | Authentic Joy in the Journey</title>
+<meta name="description" content="Christina's curated shelf of homeschool books, read-alouds, and resources — provisions for every stage of your journey.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#FAF6EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF6EF;--paper-2:#F2EBDD;--ink:#33402E;--ink-soft:#5A6750;
+  --sage:#8FA483;--sage-deep:#5E7252;--blush:#E3BDB6;--rose:#C68C85;
+  --gold:#B79447;--line:#DED4C2;--shadow:rgba(51,64,46,.10);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Mulish',system-ui,sans-serif;--util:'Jost',system-ui,sans-serif;
+  --maxw:1120px;--gutter:clamp(20px,5vw,64px);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:clamp(16px,1.05vw,17px);line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.1;margin:0}
+h1{font-size:clamp(2.6rem,6vw,4.4rem)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.eyebrow{font-family:var(--util);text-transform:uppercase;letter-spacing:.28em;font-size:.72rem;color:var(--sage-deep);display:inline-flex;align-items:center;gap:.7em;margin:0 0 1.1rem}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--sage);display:inline-block}
+.eyebrow.center{justify-content:center}
+.btn{font-family:var(--util);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.6em;padding:.95em 1.8em;border-radius:999px;border:1px solid var(--sage-deep);cursor:pointer;background:none;color:var(--ink);transition:transform .25s,background .25s,color .25s}
+.btn-solid{background:var(--sage-deep);color:var(--paper)}
+.btn-solid:hover{background:#516247;transform:translateY(-2px)}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px;border-radius:6px}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(250,246,239,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand-wrap{display:flex;align-items:flex-start;gap:.45rem}
+.brand{font-family:var(--serif);font-size:1.4rem;display:flex;align-items:center;gap:.5rem}
+.brand img{width:30px;height:30px;object-fit:contain;border-radius:50%}
+.brand span{color:var(--sage-deep)}
+.site-ver{font-family:var(--util);font-size:.58rem;letter-spacing:.1em;color:var(--sage-deep);opacity:.6;margin-top:4px}
+.nav a.home{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
+.topnav{display:flex;gap:clamp(.9rem,2.5vw,1.6rem)}
+.topnav a{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
+.topnav a:hover{color:var(--ink)}
+.hero{text-align:center;padding:clamp(48px,7vw,92px) 0 clamp(20px,3vw,36px)}
+.hero .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.2vw,1.7rem);color:var(--ink-soft);max-width:40ch;margin:1.2rem auto 1.4rem}
+.disclosure{font-size:.82rem;color:var(--ink-soft);max-width:60ch;margin:1.2rem auto 0;font-style:italic}
+section{padding-block:clamp(30px,4vw,52px)}
+.filters{display:flex;flex-direction:column;gap:.8rem;align-items:center;margin-bottom:clamp(24px,3vw,40px)}
+.filt-row{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.filt{font-family:var(--util);font-size:.74rem;letter-spacing:.04em;border:1.5px solid var(--line);background:var(--paper-2);border-radius:999px;padding:.5em 1em;cursor:pointer;color:var(--ink);transition:all .2s}
+.filt:hover{border-color:var(--sage)}
+.filt.sel{background:var(--sage-deep);color:#fff;border-color:var(--sage-deep)}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.3rem}
+.res-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+.res-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -28px var(--shadow)}
+.res-thumb{aspect-ratio:4/3;background:var(--paper-2);position:relative;overflow:hidden}
+.res-thumb img{width:100%;height:100%;object-fit:cover}
+.res-thumb .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--sage);opacity:.5}
+.res-thumb .ph svg{width:40px}
+.res-cat{position:absolute;top:10px;left:10px;font-family:var(--util);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(250,246,239,.92);color:var(--sage-deep);padding:.25em .6em;border-radius:999px}
+.res-body{padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.res-title{font-family:var(--serif);font-size:1.35rem;line-height:1.15}
+.res-author{font-family:var(--util);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.res-note{font-size:.92rem;color:var(--ink-soft);margin:.2rem 0 0}
+.res-park{font-size:.72rem;color:var(--sage-deep);margin-top:.2rem}
+.res-cta{margin-top:auto;padding-top:.8rem}
+.res-cta a{display:inline-flex;align-items:center;gap:.5em;font-family:var(--util);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--gold);border-radius:999px;padding:.6em 1.1em}
+.res-cta a:hover{filter:brightness(.94)}
+.empty{text-align:center;color:var(--ink-soft);padding:clamp(40px,6vw,80px);border:1px dashed var(--line);border-radius:18px;max-width:620px;margin:0 auto}
+.footer{background:#20281c;color:rgba(250,246,239,.72);padding:clamp(40px,5vw,60px) 0 28px;text-align:center;margin-top:clamp(30px,4vw,52px)}
+.footer a{color:var(--blush)}
+.footer .fbrand{font-family:var(--serif);font-size:1.4rem;color:var(--paper)}
+.footer-bottom{margin-top:1.2rem;font-family:var(--util);font-size:.78rem;opacity:.7}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <div class="brand-wrap">
+      <a href="index.html" class="brand"><img src="favicon-192.png" alt="" onerror="this.style.display='none'">Authentic <span>Joy</span></a>
+      <span class="site-ver">v1.16.0</span>
+    </div>
+    <nav class="topnav">
+      <a href="index.html">Home</a>
+      <a href="journeys.html">Journeys</a>
+      <a href="bloom-and-blossom.html">Conference</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow center">Provisions for the Journey</p>
+    <h1>Christina's shelf.</h1>
+    <p class="tagline">The books, read-alouds, and resources she reaches for again and again — gathered for every stage of the trail.</p>
+    <div id="storefrontCta"></div>
+    <p class="disclosure" id="disclosure">As an Amazon Associate, Christina earns from qualifying purchases.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="filters" id="filters"></div>
+    <div class="res-grid" id="resGrid"></div>
+    <div id="resEmpty"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <a href="index.html" class="fbrand">Authentic Joy <span style="color:var(--blush)">in the Journey</span></a>
+    <div class="footer-bottom">© <span id="year"></span> · <a href="index.html">Home</a> · <a href="journeys.html">Journeys</a> · <a href="bloom-and-blossom.html">Conference</a></div>
+  </div>
+</footer>
+
+<script>
+const PARK_NAMES={yellowstone:'Yellowstone',acadia:'Acadia',zion:'Zion',denali:'Denali',smoky:'Great Smoky Mtns',any:'For everyone'};
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+let RES=[],parkFilter='all',catFilter='all';
+const grid=document.getElementById('resGrid'),emptyEl=document.getElementById('resEmpty'),filtersEl=document.getElementById('filters');
+
+function render(){
+  const parks=[...new Set(RES.map(r=>r.park).filter(Boolean))];
+  const cats=[...new Set(RES.map(r=>r.category).filter(Boolean))];
+  filtersEl.innerHTML='';
+  if(parks.length>1||cats.length>1){
+    let html='';
+    if(cats.length>1){
+      html+='<div class="filt-row"><button class="filt'+(catFilter==='all'?' sel':'')+'" data-c="all">All resources</button>'
+        +cats.map(c=>'<button class="filt'+(catFilter===c?' sel':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>').join('')+'</div>';
+    }
+    if(parks.length>1){
+      html+='<div class="filt-row"><button class="filt'+(parkFilter==='all'?' sel':'')+'" data-p="all">Every trail</button>'
+        +parks.map(p=>'<button class="filt'+(parkFilter===p?' sel':'')+'" data-p="'+esc(p)+'">'+(PARK_NAMES[p]||esc(p))+'</button>').join('')+'</div>';
+    }
+    filtersEl.innerHTML=html;
+    filtersEl.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{catFilter=b.getAttribute('data-c');render()});
+    filtersEl.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{parkFilter=b.getAttribute('data-p');render()});
+  }
+  const list=RES.filter(r=>(catFilter==='all'||r.category===catFilter)&&(parkFilter==='all'||r.park===parkFilter));
+  if(!RES.length){
+    grid.innerHTML='';emptyEl.innerHTML='<div class="empty"><p>Christina is gathering her shelf. Check back soon for her favorite books and resources.</p></div>';return;
+  }
+  emptyEl.innerHTML='';
+  grid.innerHTML=list.map(r=>{
+    const hasImg=r.image&&r.image.trim();
+    const thumb='<div class="res-thumb">'+(r.category?'<span class="res-cat">'+esc(r.category)+'</span>':'')
+      +(hasImg?'<img src="'+esc(r.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\'">':'')
+      +'<div class="ph" style="display:'+(hasImg?'none':'grid')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></div></div>';
+    const cta=r.url?'<div class="res-cta"><a href="'+esc(r.url)+'" target="_blank" rel="sponsored noopener nofollow">View on Amazon →</a></div>':'';
+    const park=r.park&&r.park!=='any'?'<div class="res-park">Fits the '+(PARK_NAMES[r.park]||esc(r.park))+' trail</div>':'';
+    return '<div class="res-card">'+thumb+'<div class="res-body">'
+      +'<div class="res-title">'+esc(r.title||'Untitled')+'</div>'
+      +(r.author?'<div class="res-author">'+esc(r.author)+'</div>':'')
+      +(r.note?'<p class="res-note">'+esc(r.note)+'</p>':'')+park+cta+'</div></div>';
+  }).join('');
+  if(!list.length)grid.innerHTML='<p style="color:var(--ink-soft)">Nothing in this filter yet.</p>';
+}
+
+fetch('/api/store',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{
+  if(d&&d.ok&&d.store){
+    if(d.store.disclosure)document.getElementById('disclosure').textContent=d.store.disclosure;
+    if(d.store.storefrontUrl)document.getElementById('storefrontCta').innerHTML='<a class="btn btn-solid" href="'+esc(d.store.storefrontUrl)+'" target="_blank" rel="sponsored noopener nofollow">Visit Christina\u2019s Amazon store</a>';
+  }
+}).catch(()=>{});
+fetch('/api/resources',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{
+  if(d&&d.ok&&Array.isArray(d.resources))RES=d.resources;
+  render();
+}).catch(()=>render());
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.8.0 -->
+<!-- Content Studio (admin) — v1.16.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.8.0">
+<meta name="version" content="1.16.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -169,6 +169,11 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .ts-info span{font-family:var(--util);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rose)}
 .ts-acts{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
 @media(max-width:640px){.team-slots{grid-template-columns:1fr}}
+.store-bar{background:var(--paper-2);border-bottom:1px solid var(--line);padding:.85rem clamp(12px,2vw,20px)}
+.store-bar-in{display:flex;gap:.8rem;align-items:flex-end;flex-wrap:wrap}
+.field-inline{display:flex;flex-direction:column;gap:.25rem;flex:1;min-width:220px}
+.field-inline label{font-family:var(--util);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.field-inline label span{text-transform:none;letter-spacing:0;color:var(--sage)}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -177,6 +182,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .sub-item .top{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.2rem}
 .sub-item .top strong{font-size:.92rem;font-weight:600}
 .sub-item .meta{font-size:.72rem;color:var(--ink-soft)}
+.sub-item .meta .ttag{font-family:var(--util);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:var(--paper-2);border:1px solid var(--line);color:var(--sage-deep);padding:.05em .45em;border-radius:999px}
 .pill{font-family:var(--util);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:.2em .55em;border-radius:999px;white-space:nowrap}
 .pill.new{background:#E9D9B0;color:#6b5418}
 .pill.in-progress{background:#CFE0F0;color:#1f4a72}
@@ -212,7 +218,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.8.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.16.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -230,13 +236,14 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.8.0</span>
+      <span class="ver" id="appVer">v1.16.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
       <button class="vtab" id="tabSubs" role="tab">Submissions <span class="badge" id="subBadge" hidden>0</span></button>
       <button class="vtab" id="tabEvents" role="tab">Events</button>
       <button class="vtab" id="tabGallery" role="tab">Gallery</button>
+      <button class="vtab" id="tabResources" role="tab">Resources</button>
     </div>
     <span id="contentActions" style="display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn ghost tiny" id="btnPreview">Preview JSON</button>
@@ -270,6 +277,10 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
   <div class="notice" id="galleryNotice" style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
     <div><b>These photos appear in the "Highlights" gallery on the Bloom &amp; Blossom Conference page.</b> Paste an image link for each, drag the order with the arrows, and add a caption if you like.</div>
+  </div>
+  <div class="notice" id="resourcesNotice" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><b>Your curated shelf — the Resources page and each journey park’s "provisions."</b> Paste Amazon affiliate links from SiteStripe (they already include your tag). Tie an item to a park to have it recommended on that trail.</div>
   </div>
 
   <!-- CONTENT VIEW -->
@@ -363,6 +374,32 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     </div>
     <div id="imgGrid" class="img-grid"></div>
   </div>
+
+  <!-- RESOURCES VIEW -->
+  <div id="resourcesView" style="display:none;flex-direction:column;flex:1">
+    <div class="store-bar">
+      <div class="store-bar-in">
+        <div class="field-inline"><label>Amazon storefront URL <span>(the "Visit my store" button)</span></label><input class="inp" id="st-url" placeholder="https://www.amazon.com/shop/\u2026"></div>
+        <div class="field-inline"><label>Affiliate disclosure <span>(shown on the Resources page)</span></label><input class="inp" id="st-disc" placeholder="As an Amazon Associate, Christina earns from qualifying purchases."></div>
+        <button class="btn ghost tiny" id="btnSaveStore">Save store settings</button>
+        <span id="storeSaved" class="form-note" style="color:var(--sage-deep)"></span>
+      </div>
+    </div>
+    <div class="layout" style="flex:1">
+      <aside class="sidebar">
+        <div class="shead"><span>Resources</span><button class="btn tiny" id="btnAddRes">+ New</button></div>
+        <div id="resList"></div>
+      </aside>
+      <main class="editor" id="resEditor">
+        <div class="empty" id="resEmpty">
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>
+            <p>Select a resource to edit,<br>or add a new one.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
 </div>
 
 <!-- preview dialog -->
@@ -394,7 +431,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.8.0';
+const APP_VERSION='1.16.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -629,31 +666,37 @@ function updateSubBadge(){
   if(n>0){b.textContent=n;b.hidden=false}else{b.hidden=true}
 }
 const STATUS_LABEL={'new':'New','in-progress':'In progress','responded':'Responded','archived':'Archived'};
+const TYPE_LABEL={'rsvp':'Notify','contact':'Contact','questionnaire':'Questionnaire'};
 
 async function showView(which){
-  const isC=which==='content', isS=which==='subs', isE=which==='events', isG=which==='gallery';
+  const isC=which==='content', isS=which==='subs', isE=which==='events', isG=which==='gallery', isR=which==='resources';
   document.getElementById('contentView').style.display=isC?'':'none';
   document.getElementById('subsView').style.display=isS?'':'none';
   document.getElementById('eventsView').style.display=isE?'':'none';
   document.getElementById('galleryView').style.display=isG?'':'none';
+  document.getElementById('resourcesView').style.display=isR?'flex':'none';
   document.getElementById('contentNotice').style.display=isC?'':'none';
   document.getElementById('subNotice').style.display=isS?'':'none';
   document.getElementById('eventsNotice').style.display=isE?'':'none';
   document.getElementById('galleryNotice').style.display=isG?'':'none';
+  document.getElementById('resourcesNotice').style.display=isR?'':'none';
   document.getElementById('contentActions').style.display=isC?'flex':'none';
   document.getElementById('subActions').style.display=isS?'flex':'none';
   document.getElementById('tabContent').classList.toggle('active',isC);
   document.getElementById('tabSubs').classList.toggle('active',isS);
   document.getElementById('tabEvents').classList.toggle('active',isE);
   document.getElementById('tabGallery').classList.toggle('active',isG);
+  document.getElementById('tabResources').classList.toggle('active',isR);
   if(isS){await refreshSubs();renderSubList();updateSubBadge()}
   if(isE){await refreshEvents();renderEvtList()}
   if(isG){await refreshGallery();renderGallery();await refreshTeam();renderTeam()}
+  if(isR){await refreshStore();await refreshResources();renderResList()}
 }
 document.getElementById('tabContent').onclick=()=>showView('content');
 document.getElementById('tabSubs').onclick=()=>showView('subs');
 document.getElementById('tabEvents').onclick=()=>showView('events');
 document.getElementById('tabGallery').onclick=()=>showView('gallery');
+document.getElementById('tabResources').onclick=()=>showView('resources');
 document.getElementById('subFilter').onchange=e=>{subFilter=e.target.value;renderSubList()};
 
 function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
@@ -666,7 +709,7 @@ function renderSubList(){
     const b=document.createElement('button');
     b.className='sub-item'+(activeSub===s.id?' active':'');
     b.innerHTML=`<div class="top"><strong>${esc(s.name||'(no name)')}</strong><span class="pill ${s.status}">${STATUS_LABEL[s.status]||s.status}</span></div>
-      <div class="meta">${fmtDate(s.createdAt)} · ${esc(s.preferredContact||'')}</div>`;
+      <div class="meta">${TYPE_LABEL[s.type]?'<span class="ttag">'+TYPE_LABEL[s.type]+'</span> · ':''}${fmtDate(s.createdAt)} · ${esc(s.preferredContact||'')}</div>`;
     b.onclick=()=>{activeSub=s.id;renderSubList();renderSubDetail()};
     host.appendChild(b);
   });
@@ -1065,6 +1108,99 @@ document.querySelectorAll('.team-slot').forEach(slot=>{
   };
   slot.querySelector('.ts-clear').onclick=async()=>{team[member]='';await saveTeam();renderTeam()};
 });
+
+/* ---------- resources / store ---------- */
+const RES_KEY='ccs_resources_v1';
+const PARK_OPTS=[['any','For everyone'],['yellowstone','Yellowstone'],['acadia','Acadia'],['zion','Zion'],['denali','Denali'],['smoky','Great Smoky Mtns']];
+let store={storefrontUrl:'',disclosure:''};
+let resources=[];
+let activeRes=null;
+async function refreshStore(){
+  if(SERVER){try{const r=await api('/store');if(r.ok&&r.body&&r.body.store){store=r.body.store}}catch(e){}}
+  else{try{store=JSON.parse(lsGet('ccs_store_v1')||'{}')}catch(e){store={}}}
+  document.getElementById('st-url').value=store.storefrontUrl||'';
+  document.getElementById('st-disc').value=store.disclosure||'';
+}
+document.getElementById('btnSaveStore').onclick=async()=>{
+  store={storefrontUrl:document.getElementById('st-url').value.trim(),disclosure:document.getElementById('st-disc').value.trim()};
+  if(SERVER){try{await api('/store',{method:'PUT',body:JSON.stringify(store)})}catch(e){}}
+  else{lsSet('ccs_store_v1',JSON.stringify(store))}
+  const s=document.getElementById('storeSaved');s.textContent='Saved ✓';setTimeout(()=>s.textContent='',1400);
+};
+function loadResLocal(){try{return JSON.parse(lsGet(RES_KEY)||'[]')}catch(e){return []}}
+function saveResLocal(){lsSet(RES_KEY,JSON.stringify(resources))}
+async function refreshResources(){
+  if(SERVER){
+    try{const r=await api('/resources');if(r.ok&&r.body&&Array.isArray(r.body.resources)){resources=r.body.resources;return}}catch(e){}
+    resources=[];
+  }else{resources=loadResLocal()}
+}
+let resSaveTimer=null;
+function scheduleResSave(x){clearTimeout(resSaveTimer);resSaveTimer=setTimeout(()=>commitRes(x),500)}
+async function commitRes(x){
+  if(SERVER){try{await api('/resources/'+encodeURIComponent(x.id),{method:'PATCH',body:JSON.stringify({title:x.title,author:x.author,note:x.note,image:x.image,url:x.url,category:x.category,park:x.park})})}catch(e){}}
+  else{saveResLocal()}
+}
+async function addResource(){
+  const order=resources.length;
+  const draft={title:'New resource',author:'',note:'',image:'',url:'',category:'Books',park:'any',sortOrder:order};
+  if(SERVER){
+    try{const r=await api('/resources',{method:'POST',body:JSON.stringify(draft)});
+      if(r.ok&&r.body&&r.body.ok){await refreshResources();activeRes=r.body.id;renderResList();renderResDetail();return}
+      alert('Could not add resource.\n\n'+((r.body&&r.body.error)||('Status '+r.status)));}
+    catch(e){alert('Could not reach the server.')}
+    return;
+  }
+  const x={id:'res_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),createdAt:new Date().toISOString(),...draft};
+  resources.push(x);saveResLocal();activeRes=x.id;renderResList();renderResDetail();
+}
+document.getElementById('btnAddRes').onclick=addResource;
+function renderResList(){
+  const host=document.getElementById('resList');if(!host)return;host.innerHTML='';
+  if(!resources.length){host.innerHTML='<p style="color:var(--ink-soft);font-size:.82rem;padding:.4rem">No resources yet. Click + New.</p>';return}
+  resources.forEach(x=>{
+    const b=document.createElement('button');
+    b.className='mod-item'+(x.id===activeRes?' active':'');
+    const pk=(PARK_OPTS.find(o=>o[0]===x.park)||[])[1]||'';
+    b.innerHTML='<span class="ic" style="font-size:.7rem">'+esc((x.category||'?').slice(0,4))+'</span><span class="mt"><strong>'+esc(x.title||'Untitled')+'</strong><em>'+esc(x.author||'')+(pk?' · '+esc(pk):'')+'</em></span>';
+    b.onclick=()=>{activeRes=x.id;renderResList();renderResDetail()};
+    host.appendChild(b);
+  });
+}
+function renderResDetail(){
+  const host=document.getElementById('resEditor');
+  const x=resources.find(r=>r.id===activeRes);
+  if(!x){host.innerHTML='';host.appendChild(document.getElementById('resEmpty'));return}
+  host.innerHTML='';
+  const parkOpts=PARK_OPTS.map(o=>'<option value="'+o[0]+'"'+(x.park===o[0]?' selected':'')+'>'+o[1]+'</option>').join('');
+  const d=document.createElement('div');
+  d.innerHTML=`
+    <div class="ed-head"><span class="util" style="color:var(--ink-soft)">Resource · shows on the Resources page</span><button class="btn danger tiny" id="delRes">Delete</button></div>
+    <div class="fieldset"><label class="lbl">Title</label><input class="inp big" id="rs-title" value="${esc(x.title||'')}"></div>
+    <div class="row2">
+      <div class="fieldset"><label class="lbl">Author / brand</label><input class="inp" id="rs-author" value="${esc(x.author||'')}"></div>
+      <div class="fieldset"><label class="lbl">Category</label><input class="inp" id="rs-cat" placeholder="Books, Read-Alouds, Supplies…" value="${esc(x.category||'')}"></div>
+    </div>
+    <div class="fieldset"><label class="lbl">Tie to a park <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(recommended on that trail)</span></label><select class="inp" id="rs-park">${parkOpts}</select></div>
+    <div class="fieldset"><label class="lbl">Amazon link <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(paste from SiteStripe — includes your tag)</span></label><input class="inp" id="rs-url" placeholder="https://www.amazon.com/…" value="${esc(x.url||'')}"></div>
+    <div class="fieldset"><label class="lbl">Image <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(upload or paste a link)</span></label>
+      <div style="display:flex;gap:.5rem;align-items:center"><input class="inp" id="rs-image" placeholder="https://…" value="${esc(x.image||'')}" style="flex:1"><button type="button" class="btn ghost tiny" id="rs-upload">Upload</button><input type="file" id="rs-file" accept="image/*" hidden></div>
+    </div>
+    <div id="rs-preview" style="margin:-.3rem 0 1rem"></div>
+    <div class="fieldset"><label class="lbl">Note <span style="text-transform:none;letter-spacing:0;color:var(--sage)">(why you love it)</span></label><textarea class="ta" id="rs-note" rows="3">${esc(x.note||'')}</textarea></div>
+    <p class="form-note" id="resSaved" style="color:var(--sage-deep);min-height:1.2em"></p>`;
+  host.appendChild(d);
+  const mark=()=>{const e=document.getElementById('resSaved');if(!e)return;e.textContent='Saved ✓';clearTimeout(mark._t);mark._t=setTimeout(()=>{e.textContent=''},1200)};
+  const bind=(id,prop)=>{const el=document.getElementById(id);el.oninput=e=>{x[prop]=e.target.value;scheduleResSave(x);renderResList();clearTimeout(bind._t);bind._t=setTimeout(mark,540)}};
+  bind('rs-title','title');bind('rs-author','author');bind('rs-cat','category');bind('rs-url','url');bind('rs-image','image');bind('rs-note','note');
+  document.getElementById('rs-park').onchange=e=>{x.park=e.target.value;scheduleResSave(x);renderResList()};
+  const prev=()=>{const p=document.getElementById('rs-preview');if(!p)return;p.innerHTML=x.image&&x.image.trim()?'<img src="'+esc(x.image)+'" alt="" style="max-height:120px;border-radius:8px;border:1px solid var(--line)" onerror="this.style.display=\'none\'">':''};
+  document.getElementById('rs-image').addEventListener('input',prev);prev();
+  const rf=document.getElementById('rs-file'),ru=document.getElementById('rs-upload');
+  ru.onclick=()=>rf.click();
+  rf.onchange=async()=>{const f=rf.files&&rf.files[0];if(!f)return;ru.textContent='Uploading…';ru.disabled=true;const url=await uploadImageFile(f);ru.textContent='Upload';ru.disabled=false;rf.value='';if(url){x.image=url;document.getElementById('rs-image').value=url;scheduleResSave(x);prev()}};
+  document.getElementById('delRes').onclick=async()=>{if(confirm('Delete this resource?')){const id=x.id;resources=resources.filter(r=>r.id!==id);activeRes=null;if(SERVER){try{await api('/resources/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}else{saveResLocal()}renderResList();renderResDetail()}};
+}
 
 /* ---------- login / storage mode ---------- */
 function applyStorageMode(){

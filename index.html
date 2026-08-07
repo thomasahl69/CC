@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Authentic Joy in the Journey — site v1.8.0 -->
+<!-- Authentic Joy in the Journey — site v1.16.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.8.0">
+<meta name="version" content="1.16.0">
 <title>Authentic Joy in the Journey | Christina Carpenter</title>
 <meta name="description" content="Authentic Joy in the Journey and the Bloom and Blossom Conference encourage, equip, and empower mothers on their motherhood and home education journey.">
 <meta property="og:title" content="Authentic Joy in the Journey | Christina Carpenter">
@@ -182,6 +182,11 @@ section{padding-block:clamp(64px,9vw,128px)}
 /* ============ TWO SPACES ============ */
 .spaces-head{text-align:center;max-width:60ch;margin:0 auto clamp(40px,5vw,64px)}
 .cards-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,32px)}
+.jfeature{background:var(--paper-2)}
+.jf-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,68px);align-items:center}
+.jf-art img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 60px -36px var(--shadow)}
+.jf-parks{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.3rem}
+.jf-parks span{font-family:var(--util);font-size:.7rem;letter-spacing:.04em;color:var(--sage-deep);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:.4em .9em}
 .space-card{
   background:var(--paper);border:1px solid var(--line);border-radius:18px;
   padding:clamp(28px,3.5vw,44px);position:relative;overflow:hidden;
@@ -376,6 +381,7 @@ form{display:grid;gap:1.1rem}
   .story-grid{grid-template-columns:1fr}
   .story-photo{max-width:420px}
   .cards-2{grid-template-columns:1fr}
+  .jf-grid{grid-template-columns:1fr}
   .offer-grid{grid-template-columns:1fr 1fr}
   .t-track{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
@@ -423,14 +429,15 @@ form{display:grid;gap:1.1rem}
       </span>
       Christina <span>Carpenter</span>
     </a>
-    <span class="site-ver">v1.8.0</span>
+    <span class="site-ver">v1.16.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#story">About</a></li>
       <li><a href="#spaces">What I Offer</a></li>
+      <li><a href="journeys.html">Journeys</a></li>
+      <li><a href="resources.html">Resources</a></li>
       <li><a href="bloom-and-blossom.html">Conference</a></li>
       <li><a href="#events">Events</a></li>
-      <li><a href="#words">Praise</a></li>
       <li><a href="#contact">Contact</a></li>
       <li class="nav-cta"><a href="#events" class="btn btn-solid btn-sm">Register</a></li>
     </ul>
@@ -596,6 +603,36 @@ form{display:grid;gap:1.1rem}
         </ul>
         <a href="#events" class="btn btn-solid btn-sm">See Upcoming Events</a>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GUIDED JOURNEYS (feature) ===== -->
+<section class="jfeature" id="journeys-home">
+  <div class="wrap jf-grid">
+    <div class="reveal">
+      <p class="eyebrow">New · Guided Journeys</p>
+      <h2>Find your trail.</h2>
+      <p style="color:var(--ink-soft);margin-top:1rem">
+        Not sure where to begin — or where to go next? The <b>Compass Guide</b> asks a few gentle
+        questions about where you are in your homeschool story, then matches your family to a
+        national-park journey made for this season: <em>Yellowstone</em> for wonder and foundations,
+        <em>Acadia</em> for curiosity and independence, and more.
+      </p>
+      <p style="color:var(--ink-soft)">
+        Each park is a trail you paint your own way — keep what fits, wander down a
+        <b>rabbit trail</b>, and gather the very books and resources Christina recommends for your stage.
+      </p>
+      <div class="jf-parks">
+        <span>Yellowstone</span><span>Acadia</span><span>Zion</span><span>Denali</span><span>Great Smoky Mts.</span>
+      </div>
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem">
+        <a href="journeys.html" class="btn btn-solid">Begin the Compass Guide</a>
+        <a href="resources.html" class="btn btn-ghost btn-sm">Christina's shelf →</a>
+      </div>
+    </div>
+    <div class="reveal jf-art">
+      <img src="parks-plate.svg" alt="A field-plate illustration of the five park journeys" loading="lazy">
     </div>
   </div>
 </section>
@@ -871,8 +908,51 @@ form{display:grid;gap:1.1rem}
   </div>
 </div>
 
+<!-- ===== NOTIFY ME MODAL ===== -->
+<div class="modal" id="notifyModal" role="dialog" aria-modal="true" aria-labelledby="notifyTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <button class="modal-close" id="notifyClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <p class="eyebrow">Be the First to Know</p>
+      <h2 id="notifyTitle">Notify me</h2>
+      <p id="notifySub">Leave your name and email and we'll let you know the moment tickets open.</p>
+    </div>
+    <div class="modal-body">
+      <form id="notifyForm" novalidate>
+        <div class="row-2">
+          <div class="field">
+            <label for="n-name">Name</label>
+            <input id="n-name" name="name" type="text" autocomplete="name" required>
+            <span class="err">Please add your name.</span>
+          </div>
+          <div class="field">
+            <label for="n-email">Email</label>
+            <input id="n-email" name="email" type="email" autocomplete="email" required>
+            <span class="err">Please add a valid email.</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="n-phone">Phone <span class="opt">(optional)</span></label>
+          <input id="n-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-solid">Notify Me</button>
+          <span class="form-note" style="margin:0">You'll also join the newsletter — unsubscribe anytime.</span>
+        </div>
+      </form>
+    </div>
+    <div class="modal-success" id="notifySuccess">
+      <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4 4L19 7"/></svg></div>
+      <h2>You're on the list.</h2>
+      <p>We'll reach out as soon as this gathering opens for registration. Keep an eye on your inbox.</p>
+      <button type="button" class="btn btn-ghost" id="notifyDone">Close</button>
+    </div>
+  </div>
+</div>
 
-<!-- ===== FOOTER ===== -->
+
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
@@ -887,8 +967,16 @@ form{display:grid;gap:1.1rem}
             <li><a href="#story">About</a></li>
             <li><a href="#spaces">What I Offer</a></li>
             <li><a href="#events">Events</a></li>
-            <li><a href="#advice">Get Advice</a></li>
             <li><a href="#words">Praise</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Journeys</h4>
+          <ul>
+            <li><a href="journeys.html">Guided Journeys</a></li>
+            <li><a href="journeys.html#rabbit">Rabbit Trails</a></li>
+            <li><a href="resources.html">Resources &amp; Shelf</a></li>
+            <li><a href="bloom-and-blossom.html">Bloom &amp; Blossom</a></li>
           </ul>
         </div>
         <div>
@@ -1062,6 +1150,52 @@ quizForm.querySelectorAll('input').forEach(el=>{
 
 document.getElementById('year').textContent=new Date().getFullYear();
 
+/* ----- "notify me" modal (for events not yet on sale) ----- */
+const notify=document.getElementById('notifyModal');
+const notifyForm=document.getElementById('notifyForm');
+const notifySuccess=document.getElementById('notifySuccess');
+let notifyEvent='this event';let notifyLastFocus=null;
+function openNotify(title){
+  notifyEvent=title||'this event';
+  notifyLastFocus=document.activeElement;
+  document.getElementById('notifyTitle').textContent='Notify me about '+notifyEvent;
+  document.getElementById('notifySub').textContent='Leave your name and email and we\u2019ll let you know the moment '+notifyEvent+' opens for registration.';
+  notifyForm.style.display='';notifySuccess.classList.remove('show');
+  notify.classList.add('open');document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('n-name').focus(),60);
+}
+function closeNotify(){notify.classList.remove('open');document.body.style.overflow='';if(notifyLastFocus)notifyLastFocus.focus()}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-notify]');if(t){e.preventDefault();openNotify(t.getAttribute('data-notify'));}});
+document.getElementById('notifyClose').addEventListener('click',closeNotify);
+document.getElementById('notifyDone').addEventListener('click',closeNotify);
+notify.addEventListener('click',e=>{if(e.target===notify)closeNotify()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&notify.classList.contains('open'))closeNotify()});
+notifyForm.addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  const name=document.getElementById('n-name'),email=document.getElementById('n-email');
+  let bad=false;
+  bad=setInvalid(name.closest('.field'),name.value.trim()==='')||bad;
+  bad=setInvalid(email.closest('.field'),!emailRe.test(email.value.trim()))||bad;
+  if(bad){notifyForm.querySelector('.invalid input').focus();return}
+  const sub={
+    type:'rsvp',
+    questionnaire:'Notify me — '+notifyEvent,
+    name:name.value.trim(),
+    email:email.value.trim(),
+    phone:document.getElementById('n-phone').value.trim(),
+    preferredContact:'Email',
+    responses:[{q:'Wants to be notified about',a:notifyEvent}]
+  };
+  const btn=notifyForm.querySelector('button[type=submit]');
+  const label=btn.textContent;btn.disabled=true;btn.textContent='Sending…';
+  const result=await postSubmission(sub);
+  btn.disabled=false;btn.textContent=label;
+  if(typeof result==='string'&&result.startsWith('error:')){alert('Sorry — '+result.slice(6)+' Please try again.');return}
+  notifyForm.reset();notifyForm.style.display='none';notifySuccess.classList.add('show');
+  notify.querySelector('.modal-card').scrollTop=0;
+});
+notifyForm.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>el.closest('.field').classList.remove('invalid')));
+
 /* ----- upcoming events (from /api/events, with the static markup as fallback) ----- */
 (function(){
   const host=document.getElementById('eventsList');
@@ -1083,7 +1217,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
     const thumb=ev.image&&ev.image.trim()?'<img class="event-thumb" src="'+esc(ev.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'';
     const cta=ev.ticketUrl&&ev.ticketUrl.trim()
       ? '<a href="'+esc(ev.ticketUrl)+'" target="_blank" rel="noopener" class="btn btn-solid btn-sm">Buy Tickets</a>'
-      : '<a href="#contact" class="btn btn-solid btn-sm" data-open-quiz>Register</a>';
+      : '<button type="button" class="btn btn-solid btn-sm" data-notify="'+esc(ev.title||'this event')+'">Notify me</button>';
     return '<div class="event reveal in">'
       +'<div class="event-lead">'+thumb+'<div class="event-date">'+chip+'</div></div>'
       +'<div class="event-body"><h3>'+esc(ev.title||'Event')+' '+cost+'</h3>'

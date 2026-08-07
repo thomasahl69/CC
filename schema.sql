@@ -46,3 +46,17 @@ CREATE TABLE IF NOT EXISTS gallery (
   sort_order  INTEGER DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_gallery_order ON gallery(sort_order);
+
+CREATE TABLE IF NOT EXISTS resources (
+  id          TEXT PRIMARY KEY,
+  created_at  TEXT NOT NULL,
+  title       TEXT,
+  author      TEXT,
+  note        TEXT,
+  image       TEXT,
+  url         TEXT,                                   -- Amazon affiliate link (paste from SiteStripe)
+  category    TEXT,                                   -- e.g. Books, Read-Alouds, Curriculum, Supplies
+  park        TEXT,                                   -- park id to tie to a journey, or 'any'
+  sort_order  INTEGER DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_resources_order ON resources(sort_order);

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Bloom & Blossom Conference — page v1.8.0 -->
+<!-- Bloom & Blossom Conference — page v1.16.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.8.0">
+<meta name="version" content="1.16.0">
 <title>Bloom &amp; Blossom Conference | Authentic Joy in the Journey</title>
 <meta name="description" content="The Bloom and Blossom Conference is a gathering for mothers to be encouraged, equipped, empowered, and inspired on their motherhood and home education journey.">
 <meta property="og:title" content="Bloom &amp; Blossom Conference">
@@ -179,14 +179,15 @@ section{padding-block:clamp(60px,8vw,116px)}
       <img src="favicon-192.png" alt="" onerror="this.style.display='none'">
       Bloom <span>&amp; Blossom</span>
     </a>
-    <span class="site-ver">v1.8.0</span>
+    <span class="site-ver">v1.16.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
+      <li><a href="journeys.html">Journeys</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#team">The Team</a></li>
-      <li><a href="index.html#events">Dates</a></li>
+      <li><a href="resources.html">Resources</a></li>
       <li class="nav-cta"><a href="index.html#events" class="btn btn-solid" style="padding:.6em 1.3em;font-size:.74rem">Register</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -353,6 +354,8 @@ section{padding-block:clamp(60px,8vw,116px)}
           <h4 style="font-family:var(--util);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blush);margin:0 0 1rem">More</h4>
           <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.6rem;font-size:.92rem">
             <li><a href="index.html">Home</a></li>
+            <li><a href="journeys.html">Guided Journeys</a></li>
+            <li><a href="resources.html">Resources</a></li>
             <li><a href="index.html#spaces">Coaching</a></li>
             <li><a href="index.html#contact">Contact</a></li>
           </ul>
@@ -416,7 +419,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
       const loc=[ev.location?esc(ev.location):'',ev.cost?esc(ev.cost):''].filter(Boolean).join(' · ');
       const cta=ev.ticketUrl&&ev.ticketUrl.trim()
         ? '<a href="'+esc(ev.ticketUrl)+'" target="_blank" rel="noopener" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Buy Tickets</a>'
-        : '<a href="index.html#events" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Register</a>';
+        : '<a href="index.html#events" class="btn btn-solid" style="padding:.6em 1.2em;font-size:.72rem">Notify me</a>';
       return '<div class="event">'+thumb
         +'<div class="event-date"><div class="m">'+MON[d.getMonth()]+'</div><div class="d">'+d.getDate()+'</div></div>'
         +'<div><h3 style="font-size:1.4rem">'+esc(ev.title||'Event')+'</h3>'+(loc?'<p class="loc">'+loc+'</p>':'')+'</div>'

@@ -8,6 +8,105 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.16.0 — 2026-06-27
+
+- **Site-wide update tying the new pages and concepts together.**
+  - Home page now features a **Guided Journeys** section (the Compass Guide, the five
+    parks, rabbit trails, and the field-plate artwork) with calls to action into the
+    journey and the resources shelf.
+  - **Consistent navigation** across the whole site: Home, Journeys, Resources, and
+    Conference now cross-link from every page's header, and the home footer gained a
+    "Journeys" column (Guided Journeys, Rabbit Trails, Resources, Bloom & Blossom).
+
+## v1.15.0 — 2026-06-27
+
+- **Field plate illustration** (`parks-plate.svg`) — an original artwork in the style
+  of Adolphe Millot's vintage natural-history plates: the five parks drawn as
+  labeled "specimens" on aged parchment, with botanical accents (fern, feather,
+  pinecone, oak, songbird) and a title cartouche. Featured on the Guided Journeys
+  page as "A Field Plate," with a download button.
+
+## v1.14.0 — 2026-06-27
+
+- **Amazon store + media list, tied into the journey.**
+  - New **Resources** manager in Content Studio: curate books/read-alouds/supplies
+    with title, author, category, image (upload or link), Amazon affiliate link, a
+    note, and a **park tag**. Plus store settings for your Amazon **storefront URL**
+    and the affiliate **disclosure** text.
+  - New public **Resources page** (`resources.html`) — Christina's shelf, filterable
+    by category and park, with a "Visit Christina's Amazon store" button and the
+    required Associates disclosure. Affiliate links use `rel="sponsored nofollow"`.
+  - **Journey tie-in:** each park result now shows "Provisions for the trail" —
+    resources tagged to that park (or to everyone) — with a link to the full shelf.
+  - Linked from the home nav as "Resources."
+
+### Migration for this version
+Run once in the D1 console:
+```
+CREATE TABLE IF NOT EXISTS resources (
+  id TEXT PRIMARY KEY, created_at TEXT NOT NULL,
+  title TEXT, author TEXT, note TEXT, image TEXT, url TEXT,
+  category TEXT, park TEXT, sort_order INTEGER DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_resources_order ON resources(sort_order);
+```
+(Store settings reuse the existing content table — no other change.)
+
+## v1.13.0 — 2026-06-27
+
+- **Rabbit Trails** added to Guided Journeys — short, delightful detours off the main
+  trail that honor curiosity-led learning. First one built: **Bible Weekly**, with
+  eight weekly topics (God is Creator, Good, Faithful, Love, Provider, Refuge, Light,
+  Keeps His Promises). Pick a week to see an anchor verse plus a supporting verse
+  reference and short prompt for each day; the current calendar week is flagged
+  "This week." References only (read in your own translation) — framework is ready
+  for more rabbit trails (nature study, artist study, hymn a week).
+
+## v1.12.0 — 2026-06-27
+
+- **Illustrated trail map** on the Guided Journeys result. Each park now renders as
+  a themed map (mountains, coast, or canyon terrain tinted to the park, with a
+  winding trail and compass rose) and the viewing points appear as **numbered pins
+  plotted along the trail**. Tapping a pin jumps to that stop; pins recolor live to
+  match how each stop is painted (on path / maybe later / set aside), with a legend.
+
+## v1.11.0 — 2026-06-27
+
+- **Guided Journeys — "paint your own masterpiece."** The trail is now something
+  each parent shapes rather than follows:
+  - New Compass Guide question — "how do you like to travel?" (a clear path / wander
+    and veer / a bit of both) — that tunes the tone of the result.
+  - Each viewing point can be marked **On my path / Maybe later / Not for us**, so
+    parents curate their own version of the trail; a running "your painted trail"
+    summary reflects it.
+  - Permission-to-wander language throughout, plus a nudge to borrow viewing points
+    from other parks. Travel style and painted choices are included in the compass
+    submission Christina receives.
+
+## v1.10.0 — 2026-06-27
+
+- **New page: Guided Journeys** (`journeys.html`) — a national-park-themed
+  onboarding experience. A **Compass Guide** intake (journey stage, child age,
+  crew size, longings, values, and philosophy) matches each parent to a **park**
+  built for where they are, shown as a **trail with viewing points** they can enter
+  or exit at any stage.
+  - Two parks fully built per the concept — **Yellowstone** (wonder & foundations,
+    ages 4–10) and **Acadia** (curiosity & independence, ages 8–12) — plus three
+    proposed to cover the whole journey: **Zion** (rhythm for many ages),
+    **Denali** (teens & launching), and **Great Smoky Mountains** (the seasoned
+    trail). Names, ages, and content are all easy to adjust.
+  - Optional "send me my trail" capture posts to Submissions (type **compass**)
+    with the recommended park and all answers — no database migration.
+- Linked from the home navigation as "Journeys."
+
+## v1.9.0 — 2026-06-27
+
+- **"Notify me" capture** for events that aren't on sale yet. Events without a
+  ticket link now show a **Notify me** button that opens a short name + email form
+  tied to that specific event. Requests land in the Submissions tab tagged
+  **Notify**, with the event name shown, and they're included in the Newsletter CSV.
+- No database change — reuses the existing submissions store.
+
 ## v1.8.0 — 2026-06-27
 
 - **Event ticket links.** Each event now has a "Ticket / registration link" field

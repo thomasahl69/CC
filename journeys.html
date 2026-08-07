@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<!-- Guided Journeys — Compass Guide — page v1.16.0 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="version" content="1.16.0">
+<title>Guided Journeys | Authentic Joy in the Journey</title>
+<meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
+<meta property="og:title" content="Guided Journeys — Find Your Trail">
+<meta property="og:description" content="A Compass Guide that matches your family to a national-park homeschool journey.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#FAF6EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF6EF;--paper-2:#F2EBDD;--ink:#33402E;--ink-soft:#5A6750;
+  --sage:#8FA483;--sage-deep:#5E7252;--blush:#E3BDB6;--rose:#C68C85;
+  --gold:#B79447;--line:#DED4C2;--shadow:rgba(51,64,46,.10);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Mulish',system-ui,sans-serif;--util:'Jost',system-ui,sans-serif;
+  --maxw:1120px;--gutter:clamp(20px,5vw,64px);
+  --pk:#5E7252;--pk2:#8FA483; /* active park accents, overridden on result */
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:clamp(16px,1.05vw,17px);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.1;margin:0}
+h1{font-size:clamp(2.6rem,6.5vw,4.6rem)}
+h2{font-size:clamp(1.9rem,4vw,2.9rem)}
+h3{font-size:clamp(1.3rem,2.3vw,1.7rem)}
+p{margin:0 0 1.1em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.eyebrow{font-family:var(--util);text-transform:uppercase;letter-spacing:.28em;font-size:.72rem;color:var(--sage-deep);display:inline-flex;align-items:center;gap:.7em;margin:0 0 1.1rem}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--sage);display:inline-block}
+.eyebrow.center{justify-content:center}
+.btn{font-family:var(--util);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.6em;padding:.95em 1.8em;border-radius:999px;border:1px solid var(--sage-deep);cursor:pointer;background:none;color:var(--ink);transition:transform .25s,background .25s,color .25s,box-shadow .25s}
+.btn-solid{background:var(--sage-deep);color:var(--paper);border-color:var(--sage-deep)}
+.btn-solid:hover{background:#516247;transform:translateY(-2px);box-shadow:0 10px 22px var(--shadow)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+.btn-pk{background:var(--pk);border-color:var(--pk);color:#fff}
+.btn-pk:hover{filter:brightness(.92);transform:translateY(-2px)}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(250,246,239,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand-wrap{display:flex;align-items:flex-start;gap:.45rem}
+.brand{font-family:var(--serif);font-size:1.4rem;display:flex;align-items:center;gap:.5rem}
+.brand img{width:30px;height:30px;object-fit:contain;border-radius:50%}
+.brand span{color:var(--sage-deep)}
+.site-ver{font-family:var(--util);font-size:.58rem;letter-spacing:.1em;color:var(--sage-deep);opacity:.6;margin-top:4px}
+.nav a.home{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
+.nav a.home:hover{color:var(--ink)}
+.topnav{display:flex;gap:clamp(.9rem,2.5vw,1.6rem)}
+.topnav a{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
+.topnav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{position:relative;text-align:center;padding:clamp(50px,7vw,96px) 0 clamp(30px,4vw,54px);overflow:hidden}
+.ridge{position:absolute;left:0;right:0;bottom:0;height:120px;color:var(--paper-2);z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero h1 .accent{font-style:italic;color:var(--rose)}
+.hero .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,2.2vw,1.75rem);color:var(--ink-soft);max-width:36ch;margin:1.3rem auto .4rem}
+.hero .sub{max-width:52ch;margin:1rem auto 2rem;color:var(--ink-soft)}
+
+/* section */
+section{padding-block:clamp(46px,6vw,84px)}
+.compass{background:var(--paper-2)}
+
+/* compass guide (quiz) */
+.cg{max-width:760px;margin:0 auto}
+.cg-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.4rem}
+.cg-step{font-family:var(--util);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-deep)}
+.cg-bar{flex:1;height:4px;background:var(--line);border-radius:99px;overflow:hidden;margin-left:1rem;max-width:280px}
+.cg-bar i{display:block;height:100%;background:var(--sage-deep);border-radius:99px;transition:width .4s cubic-bezier(.3,.7,.2,1)}
+.cg-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3.5vw,44px);box-shadow:0 20px 50px -34px var(--shadow)}
+.cg-q{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;margin:0 0 .4rem}
+.cg-help{color:var(--ink-soft);font-size:.95rem;margin:0 0 1.5rem}
+.opts{display:grid;gap:.7rem}
+.opt{display:flex;gap:.9rem;align-items:flex-start;text-align:left;width:100%;background:var(--paper-2);border:1.5px solid var(--line);border-radius:14px;padding:1rem 1.1rem;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;font:inherit;color:inherit}
+.opt:hover{border-color:var(--sage);transform:translateX(3px)}
+.opt.sel{border-color:var(--sage-deep);background:#fff;box-shadow:inset 3px 0 0 var(--sage-deep)}
+.opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--sage);flex:none;margin-top:2px;position:relative}
+.opt.sel .dot{border-color:var(--sage-deep);background:var(--sage-deep)}
+.opt.sel .dot::after{content:"";position:absolute;inset:4px;background:#fff;border-radius:50%}
+.opt.multi .dot{border-radius:6px}
+.opt.multi.sel .dot::after{inset:3px;border-radius:2px}
+.opt b{font-weight:600;font-size:1rem;display:block}
+.opt span{color:var(--ink-soft);font-size:.88rem}
+.cg-actions{display:flex;justify-content:space-between;align-items:center;margin-top:1.6rem;gap:1rem}
+.cg-actions .hint{font-size:.82rem;color:var(--ink-soft)}
+.linkbtn{background:none;border:0;color:var(--sage-deep);font-family:var(--util);letter-spacing:.06em;font-size:.8rem;cursor:pointer;padding:.4rem}
+.linkbtn:hover{color:var(--ink)}
+
+/* result */
+.result{max-width:1000px;margin:0 auto}
+.rec-hero{border-radius:26px;overflow:hidden;border:1px solid var(--line);background:
+  radial-gradient(120% 120% at 15% 0%, color-mix(in srgb,var(--pk) 22%, #fff) 0%, var(--paper) 60%);
+  position:relative;padding:clamp(28px,4vw,52px)}
+.rec-badge{font-family:var(--util);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pk)}
+.rec-name{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4rem);line-height:1;margin:.5rem 0 .2rem}
+.rec-sub{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--ink-soft)}
+.rec-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0}
+.chip{font-family:var(--util);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.6);border:1px solid var(--line);color:var(--ink-soft);padding:.35em .8em;border-radius:999px}
+.rec-why{max-width:60ch;font-size:1.05rem;margin:1rem 0 1.6rem}
+.rec-why b{color:var(--pk)}
+.rec-cta{display:flex;gap:.8rem;flex-wrap:wrap}
+.runner{margin-top:1.2rem;font-size:.92rem;color:var(--ink-soft)}
+.runner a{color:var(--pk);text-decoration:underline;cursor:pointer}
+
+/* trail */
+.trail-wrap{margin-top:clamp(34px,4vw,56px)}
+.trail-intro{max-width:60ch;margin:0 auto clamp(28px,3vw,44px);text-align:center;color:var(--ink-soft)}
+.trail{position:relative;max-width:820px;margin:0 auto;padding:10px 0}
+.trail::before{content:"";position:absolute;left:31px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(var(--pk),var(--pk) 6px,transparent 6px,transparent 12px);opacity:.5}
+.vp{position:relative;padding:0 0 1.5rem 74px;opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.vp.in{opacity:1;transform:none}
+.vp .marker{position:absolute;left:16px;top:2px;width:34px;height:34px;border-radius:50%;background:var(--pk);color:#fff;display:grid;place-items:center;font-family:var(--util);font-size:.8rem;box-shadow:0 0 0 5px color-mix(in srgb,var(--pk) 18%, transparent)}
+.vp .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.3rem;transition:box-shadow .25s,border-color .25s}
+.vp .card:hover{border-color:var(--pk);box-shadow:0 14px 30px -22px var(--shadow)}
+.vp .vp-name{font-family:var(--util);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pk)}
+.vp .vp-title{font-family:var(--serif);font-size:1.3rem;margin:.15rem 0 .4rem}
+.vp .vp-body{color:var(--ink-soft);font-size:.96rem;margin:0}
+.vp .enter{margin-top:.7rem}
+.enter-tag{display:inline-flex;align-items:center;gap:.4em;font-family:var(--util);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pk);cursor:default}
+.trail-note{max-width:60ch;margin:1.4rem auto 0;text-align:center;font-style:italic;font-family:var(--serif);font-size:1.15rem;color:var(--ink-soft)}
+
+/* paint-your-own-trail */
+.manifesto{max-width:62ch;margin:0 auto clamp(24px,3vw,40px);text-align:center;background:color-mix(in srgb,var(--pk) 8%, var(--paper));border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.4rem}
+.manifesto .m-eye{font-family:var(--util);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pk)}
+.manifesto p{margin:.5rem 0 0;font-family:var(--serif);font-size:clamp(1.15rem,2vw,1.4rem);line-height:1.4;color:var(--ink)}
+.manifesto .style-note{margin:.7rem 0 0;font-family:var(--sans);font-size:.92rem;color:var(--ink-soft);font-style:normal}
+.vp-marks{display:flex;gap:.4rem;margin-top:.85rem;flex-wrap:wrap}
+.vpm{font-family:var(--util);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-soft);border-radius:999px;padding:.4em .85em;cursor:pointer;transition:all .18s}
+.vpm:hover{border-color:var(--pk);color:var(--ink)}
+.vp .card.marked-on{border-color:var(--pk);box-shadow:inset 3px 0 0 var(--pk)}
+.vp .card.marked-skip{opacity:.5}
+.vpm.act[data-m=on]{background:var(--pk);color:#fff;border-color:var(--pk)}
+.vpm.act[data-m=later]{background:var(--gold);color:#fff;border-color:var(--gold)}
+.vpm.act[data-m=skip]{background:var(--ink-soft);color:#fff;border-color:var(--ink-soft)}
+.painted{max-width:60ch;margin:1.4rem auto 0;text-align:center;font-size:.92rem;color:var(--ink-soft)}
+.painted b{color:var(--pk)}
+.veer{max-width:60ch;margin:1.1rem auto 0;text-align:center;font-size:.95rem;color:var(--ink-soft)}
+.veer a{color:var(--pk);text-decoration:underline;cursor:pointer}
+
+/* park trail map */
+.map-head{text-align:center;margin:0 auto .9rem}
+.map-head .mh-eye{font-family:var(--util);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pk)}
+.map-head h3{margin:.2rem 0 0}
+.parkmap{width:100%;height:auto;display:block;border-radius:18px;border:1px solid var(--line);background:#fff;box-shadow:0 22px 54px -34px var(--shadow);margin:0 auto clamp(22px,3vw,34px);max-width:860px}
+.pin{cursor:pointer}
+.pin .pnum{font-family:var(--util);font-weight:600;fill:#fff;font-size:13px;text-anchor:middle;dominant-baseline:central}
+.pin .plabel{fill:var(--ink);font-size:12.5px;font-weight:600;text-anchor:middle;font-family:var(--util);paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
+.pin .ring{fill:#fff}
+.pin:hover .pinbg{filter:brightness(1.12)}
+.pin:hover .plabel{fill:var(--pk)}
+.map-legend{display:flex;gap:1.1rem;justify-content:center;flex-wrap:wrap;margin:-.4rem auto 1.4rem;font-family:var(--util);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.map-legend span{display:inline-flex;align-items:center;gap:.4em}
+.map-legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.vp.flash .card{animation:flashcard 1.3s ease}
+@keyframes flashcard{0%,100%{box-shadow:0 14px 30px -22px var(--shadow)}25%{box-shadow:0 0 0 3px var(--pk)}}
+/* provisions (journey tie-in to the shop) */
+.prov{margin-top:clamp(30px,4vw,50px);border-top:1px solid var(--line);padding-top:clamp(26px,3vw,40px)}
+.prov-head{text-align:center;margin-bottom:1.4rem}
+.prov-head .m-eye{font-family:var(--util);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pk)}
+.prov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem}
+.prov-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.prov-thumb{aspect-ratio:4/3;background:var(--paper-2);overflow:hidden}
+.prov-thumb img{width:100%;height:100%;object-fit:cover}
+.prov-ph{width:100%;height:100%;display:grid;place-items:center;color:var(--sage);opacity:.5}
+.prov-ph svg{width:38px}
+.prov-b{padding:.8rem .9rem;display:flex;flex-direction:column;gap:.25rem}
+.prov-t{font-family:var(--serif);font-size:1.15rem;line-height:1.15}
+.prov-a{font-family:var(--util);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.prov-buy{margin-top:.4rem;font-family:var(--util);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--gold);border-radius:999px;padding:.5em .9em;align-self:flex-start}
+.prov-buy:hover{filter:brightness(.94)}
+.prov-disc{text-align:center;font-size:.8rem;color:var(--ink-soft);font-style:italic;margin:1.1rem auto 0;max-width:56ch}
+
+/* capture */
+.capture{max-width:640px;margin:clamp(34px,4vw,54px) auto 0;background:var(--paper-2);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,3vw,38px)}
+.capture h3{margin:0 0 .3rem}
+.capture p{color:var(--ink-soft);font-size:.95rem}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.field label{font-family:var(--util);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.field input,.field textarea{font:inherit;font-size:.95rem;padding:.7rem .85rem;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--sage)}
+.field.bad input{border-color:var(--rose)}
+.cap-done{display:none}
+.cap-done.show{display:block;text-align:center}
+.cap-done .ok{width:54px;height:54px;border-radius:50%;background:var(--pk);color:#fff;display:grid;place-items:center;margin:0 auto 1rem}
+.cap-done .ok svg{width:26px}
+
+/* all parks */
+.parks{background:var(--ink);color:var(--paper)}
+.parks h2{color:var(--paper)}
+.parks .eyebrow{color:var(--blush)}.parks .eyebrow::before{background:var(--rose)}
+.park-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;margin-top:clamp(30px,4vw,48px)}
+.park-tile{border-radius:18px;padding:1.4rem;background:rgba(250,246,239,.05);border:1px solid rgba(250,246,239,.14);cursor:pointer;transition:transform .25s,background .25s;border-top:3px solid var(--tp,#8FA483)}
+.park-tile:hover{transform:translateY(-4px);background:rgba(250,246,239,.09)}
+.park-tile .pn{font-family:var(--serif);font-size:1.5rem}
+.park-tile .ps{font-family:var(--serif);font-style:italic;color:var(--blush);font-size:1rem;margin:.1rem 0 .5rem}
+.park-tile .pa{font-family:var(--util);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,246,239,.6)}
+.park-tile .pd{font-size:.9rem;color:rgba(250,246,239,.8);margin:.7rem 0 0}
+
+/* footer */
+.footer{background:#20281c;color:rgba(250,246,239,.72);padding:clamp(40px,5vw,60px) 0 28px;text-align:center}
+.footer a{color:var(--blush)}
+.footer .fbrand{font-family:var(--serif);font-size:1.4rem;color:var(--paper)}
+.footer-bottom{margin-top:1.4rem;font-family:var(--util);font-size:.78rem;letter-spacing:.04em;opacity:.7}
+
+.hidden{display:none!important}
+
+/* rabbit trails */
+.rabbit{background:var(--paper-2)}
+.rt-concept{max-width:62ch;margin:0 auto clamp(28px,3vw,44px);text-align:center;color:var(--ink-soft)}
+.rt-card{max-width:820px;margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3.5vw,40px);box-shadow:0 20px 50px -34px var(--shadow)}
+.rt-head{display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem}
+.rt-head svg{width:30px;color:var(--sage-deep)}
+.rt-title{font-family:var(--serif);font-size:1.7rem}
+.rt-sub{color:var(--ink-soft);font-size:.95rem;margin:0 0 1.3rem}
+.rt-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.rt-pill{font-family:var(--util);font-size:.78rem;border:1.5px solid var(--line);background:var(--paper-2);border-radius:999px;padding:.55em 1.05em;cursor:pointer;position:relative;transition:all .2s;color:var(--ink)}
+.rt-pill:hover{border-color:var(--sage)}
+.rt-pill.sel{background:var(--sage-deep);color:#fff;border-color:var(--sage-deep)}
+.rt-pill .now{position:absolute;top:-9px;right:-6px;background:var(--rose);color:#fff;font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;padding:.2em .5em;border-radius:999px}
+.rt-anchor{background:color-mix(in srgb,var(--sage) 13%, var(--paper));border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:1.3rem}
+.rt-anchor .lbl{font-family:var(--util);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-deep)}
+.rt-anchor .ref{font-family:var(--serif);font-size:1.5rem;color:var(--ink);margin:.15rem 0 .15rem}
+.rt-anchor .thm{color:var(--ink-soft);font-size:.95rem;margin:0}
+.rt-days{display:grid;gap:0}
+.rt-day{display:flex;gap:1rem;align-items:flex-start;padding:.8rem .1rem;border-top:1px solid var(--line)}
+.rt-day .dnum{flex:none;width:88px;font-family:var(--util);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage-deep);padding-top:3px}
+.rt-day .dref{font-weight:600;color:var(--ink)}
+.rt-day .dnote{color:var(--ink-soft);font-size:.92rem;margin:.15rem 0 0}
+.rt-foot{margin-top:1.4rem;font-size:.86rem;color:var(--ink-soft);font-style:italic}
+
+@media(max-width:640px){.row-2{grid-template-columns:1fr}.cg-bar{display:none}.rt-day{flex-direction:column;gap:.15rem}.rt-day .dnum{width:auto}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <div class="brand-wrap">
+      <a href="index.html" class="brand"><img src="favicon-192.png" alt="" onerror="this.style.display='none'">Authentic <span>Joy</span></a>
+      <span class="site-ver">v1.16.0</span>
+    </div>
+    <nav class="topnav">
+      <a href="index.html">Home</a>
+      <a href="resources.html">Resources</a>
+      <a href="bloom-and-blossom.html">Conference</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="ridge" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 120 L0 70 L180 30 L340 78 L520 20 L700 74 L880 34 L1060 82 L1240 40 L1440 78 L1440 120 Z"/></svg>
+  <div class="wrap">
+    <p class="eyebrow center">Guided Journeys</p>
+    <h1>Find your <span class="accent">trail</span>.</h1>
+    <p class="tagline">Every family's homeschool is its own wild, beautiful country.</p>
+    <p class="sub">Answer a few questions and the Compass Guide will match you to a national-park journey built for right where you are. Then you paint it your own way — keep what fits, save some for later, veer off-trail. Some of us follow the path; some of us (hi) splash the color where it lands. Both make a masterpiece.</p>
+    <button class="btn btn-solid" id="startBtn">Begin with the Compass Guide</button>
+    <div style="margin-top:1rem"><a href="#rabbit" style="font-family:var(--util);font-size:.8rem;letter-spacing:.06em;color:var(--sage-deep);text-decoration:underline">or wander a rabbit trail →</a></div>
+  </div>
+</section>
+
+<!-- COMPASS GUIDE -->
+<section class="compass" id="compass">
+  <div class="wrap">
+    <div class="cg" id="cg">
+      <div class="cg-top">
+        <span class="cg-step" id="cgStep">The Compass Guide</span>
+        <div class="cg-bar"><i id="cgBar" style="width:0%"></i></div>
+      </div>
+      <div class="cg-card">
+        <div id="cgStage"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL PARKS -->
+<section class="parks" id="parks">
+  <div class="wrap">
+    <p class="eyebrow center">The Trail Map</p>
+    <h2 style="text-align:center;max-width:20ch;margin:0 auto">All the parks on the map.</h2>
+    <p style="text-align:center;color:rgba(250,246,239,.75);max-width:56ch;margin:1rem auto 0">Curious where you might land? Every journey has its own country. Tap one to preview its trail — or let the Compass Guide choose for you.</p>
+    <div class="park-grid" id="parkGrid"></div>
+  </div>
+</section>
+
+<!-- FIELD PLATE -->
+<section id="plate" style="background:var(--paper)">
+  <div class="wrap" style="text-align:center">
+    <p class="eyebrow center">A Field Plate</p>
+    <h2 style="max-width:22ch;margin:0 auto .4rem">The parks, drawn as a keepsake.</h2>
+    <p style="max-width:58ch;margin:0 auto 1.6rem;color:var(--ink-soft)">In the spirit of the old natural-history plates — every park a specimen, every family its own field study.</p>
+    <img src="parks-plate.svg" alt="An illustrated natural-history plate of the five parks, in the style of a vintage botanical field plate" style="width:100%;max-width:860px;border-radius:14px;border:1px solid var(--line);box-shadow:0 24px 60px -36px var(--shadow);margin:0 auto" loading="lazy">
+    <div style="margin-top:1.1rem"><a class="btn" href="parks-plate.svg" download>Download the plate</a></div>
+  </div>
+</section>
+
+<!-- RABBIT TRAILS -->
+<section class="rabbit" id="rabbit">
+  <div class="wrap">
+    <p class="eyebrow center">Rabbit Trails</p>
+    <h2 style="text-align:center;max-width:22ch;margin:0 auto">Little paths worth wandering.</h2>
+    <p class="rt-concept">Some of the richest learning happens when you chase a rabbit — a question, a wonder, a thread that pulls you happily off the main trail. Rabbit trails are those short, delightful detours you take together. Here's one to begin with: a gentle weekly walk through who God is, one verse a day.</p>
+    <div class="rt-card">
+      <div class="rt-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 13c-1-3-3-4-3-7a2 2 0 0 1 4 0c0 2-1 4 0 7"/><path d="M13 13c1-3 1-5 0-7a2 2 0 0 1 4 0c0 3-2 4-3 7"/><ellipse cx="11" cy="17" rx="5" ry="4"/><circle cx="9.3" cy="16.5" r=".6" fill="currentColor"/><circle cx="12.7" cy="16.5" r=".6" fill="currentColor"/></svg><div class="rt-title">Bible Weekly</div></div>
+      <p class="rt-sub">Pick a week. Each has an anchor verse to hide in your heart, plus a supporting verse for each day. Read them in your family's own Bible and translation.</p>
+      <div class="rt-pills" id="rtPills"></div>
+      <div id="rtDetail"></div>
+      <p class="rt-foot">More rabbit trails — a nature study, an artist study, a hymn a week — can join this warren over time.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <a href="index.html" class="fbrand">Authentic Joy <span style="color:var(--blush)">in the Journey</span></a>
+    <p style="max-width:40ch;margin:1rem auto 0;font-size:.92rem">Guided by Christina Carpenter — walking alongside mothers on the motherhood and home-education journey.</p>
+    <div class="footer-bottom">© <span id="year"></span> Authentic Joy in the Journey · <a href="index.html">Home</a> · <a href="resources.html">Resources</a> · <a href="bloom-and-blossom.html">Conference</a></div>
+  </div>
+</footer>
+
+<script>
+/* ---------------- park data ---------------- */
+const PARKS=[
+  {id:'yellowstone',name:'Yellowstone',sub:'Wonder & Foundations',ages:'Ages 4–10',tp:'#C48A2C',pk:'#B07E28',pk2:'#3E8078',
+   short:'First steps into homeschooling — wonder, habit, story, and strong roots at a gentle pace.',
+   fit:{stage:['first','footing'],age:['4-7','8-10'],need:['wonder'],crew:['one','two'],values:['nature','books','faith','relationship']},
+   why:'You’re standing at the trailhead, and these early years aren’t about doing everything — they’re about <b>awe, warm rhythms, and a few strong roots</b>. Yellowstone keeps the days short, the wonder big, and the pressure low.',
+   trail:[
+     {n:'Trailhead',t:'Beginning with wonder',b:'Trade the pressure for delight. We set a gentle first rhythm and a short, doable day you can actually keep.'},
+     {n:'Old Faithful',t:'Small, steady habits',b:'A few reliable habits — morning time, a read-aloud, time outside — that quietly hold the whole week together.'},
+     {n:'The Meadow',t:'Story & living books',b:'Beautiful books and narration do the heavy lifting. You read, they retell, and understanding grows on its own.'},
+     {n:'Riverside',t:'Nature & noticing',b:'Regular time outdoors becomes science, art, and calm all at once — no lesson plan required.'},
+     {n:'The Overlook',t:'Confidence for the year',b:'Look back at how far you’ve come, and step into the year ahead sure-footed and unhurried.'}
+   ]},
+  {id:'acadia',name:'Acadia',sub:'Curiosity & Independence',ages:'Ages 8–12',tp:'#3E7CA8',pk:'#356F97',pk2:'#5E9B6B',
+   short:'Following curiosity outward as a child grows more capable and independent.',
+   fit:{stage:['footing','confident'],age:['8-10','11-13'],need:['curiosity'],crew:['one','two','four'],values:['nature','handson','books']},
+   why:'Your learner is reaching for more. Acadia is about <b>following curiosity, hands-on discovery, and handing over the reins</b> a little at a time — from tide pools to summiting on their own.',
+   trail:[
+     {n:'Sand Beach',t:'Following curiosity',b:'Start where their questions already are. Interests become the on-ramp to real learning.'},
+     {n:'The Tide Pools',t:'Hands-on discovery',b:'Experiments, projects, and getting messy — understanding that comes through the hands.'},
+     {n:'Carriage Roads',t:'Learning to work solo',b:'Introduce independent work in gentle loops, so focus and follow-through grow without a fight.'},
+     {n:'Cadillac Summit',t:'Owning the learning',b:'Your child begins to set goals and carry them — you shift from leading to walking beside.'},
+     {n:'The Lookout',t:'Ready for more',b:'Confidence and independence take root, and the next stretch of trail comes into view.'}
+   ]},
+  {id:'zion',name:'Zion',sub:'Rhythm for Many Ages',ages:'A full, mixed crew',tp:'#B4693F',pk:'#A65E38',pk2:'#5E8A63',
+   short:'Combining ages and finding a sustainable family rhythm when the crew is full.',
+   fit:{stage:['confident','seasoned'],age:['range','8-10','11-13'],need:['rhythm'],crew:['four','full'],values:['structure','relationship','faith']},
+   why:'With a canyon full of different ages and stages, the trail is about <b>rhythm, combining what you can, and a pace that lasts</b>. Zion helps you teach the many without losing yourself.',
+   trail:[
+     {n:'The Narrows',t:'Combining the ages',b:'Loop subjects like history, nature, and read-alouds so everyone travels together, at their own depth.'},
+     {n:'The Watchman',t:'A rhythm that holds',b:'Build a weekly rhythm and simple routines that keep a busy household from tipping into chaos.'},
+     {n:'Angels Landing',t:'The hard stretches',b:'Strategies for the tricky ages, the resistant days, and the subjects that scare you.'},
+     {n:'Emerald Pools',t:'Rest & renewal',b:'Margin, mother-culture, and rest built into the plan — because a burned-out guide helps no one.'}
+   ]},
+  {id:'denali',name:'Denali',sub:'The Summit — Teens & Launching',ages:'Ages 13–18',tp:'#5C79B0',pk:'#4E6A9F',pk2:'#8AA7C9',
+   short:'High school, depth, mastery, and launching a young adult well.',
+   fit:{stage:['seasoned','summiting'],age:['14-18','11-13'],need:['depth'],crew:['one','two','four'],values:['structure','books']},
+   why:'The air is thin and the views are long. Denali is about <b>depth, mastery, real independence, and a strong launch</b> — high-school planning without the panic.',
+   trail:[
+     {n:'Base Camp',t:'Mapping high school',b:'Credits, transcripts, and a four-year plan that fits your teen’s actual goals — demystified.'},
+     {n:'The Ridge',t:'Depth & mastery',b:'Go deep in a few things that matter. Rigor with meaning, not busywork.'},
+     {n:'High Camp',t:'Independence & ownership',b:'Your teen runs more of their own learning; you become mentor and consultant.'},
+     {n:'The Summit',t:'Launching well',b:'Life skills, next steps, and a confident hand-off into adulthood and calling.'}
+   ]},
+  {id:'smoky',name:'Great Smoky Mountains',sub:'The Seasoned Trail',ages:'Veteran & mentoring',tp:'#6C8C86',pk:'#5E7F79',pk2:'#9BB6A0',
+   short:'For the seasoned guide — sustaining joy, mentoring others, finishing well.',
+   fit:{stage:['seasoned','summiting'],age:['range','14-18'],need:['renewal'],crew:['full','four','two'],values:['relationship','faith','books']},
+   why:'You’ve walked these ridges for years. The Smokies are about <b>the long view, keeping the joy, and pouring into others</b> — whether you’re finishing strong or helping newer moms find their trail.',
+   trail:[
+     {n:'The Old Growth',t:'What you’ve learned',b:'Name the wisdom you’ve gathered — and the ruts worth leaving behind.'},
+     {n:'Clingmans Dome',t:'The long view',b:'Zoom out on the whole journey; recalibrate around what actually matters now.'},
+     {n:'The Footbridge',t:'Mentoring & giving back',b:'Come alongside newer mamas — your story becomes someone else’s courage.'},
+     {n:'The Homecoming',t:'Finishing with joy',b:'End each child’s journey with gratitude, celebration, and peace.'}
+   ]}
+];
+
+/* ---------------- compass guide steps ---------------- */
+const STEPS=[
+  {key:'stage',q:'Where are you on the journey?',help:'There’s no wrong answer — every trail starts somewhere.',type:'single',options:[
+    {v:'first',b:'Taking my first steps',s:'New to this — maybe a little anxious'},
+    {v:'footing',b:'Finding our footing',s:'A year or two in, still settling'},
+    {v:'confident',b:'Confident and exploring',s:'We’ve hit a stride and want to grow'},
+    {v:'seasoned',b:'A seasoned guide',s:'Many years, likely several children'},
+    {v:'summiting',b:'Summiting & launching',s:'Teens, or graduating children'}
+  ]},
+  {key:'age',q:'Who are you guiding right now?',help:'Pick the child most on your mind (or a range).',type:'single',options:[
+    {v:'4-7',b:'Little ones (4–7)',s:'The early years'},
+    {v:'8-10',b:'Middle years (8–10)',s:'Growing readers & explorers'},
+    {v:'11-13',b:'Tweens (11–13)',s:'More capable, more opinions'},
+    {v:'14-18',b:'Teens (14–18)',s:'High school & beyond'},
+    {v:'range',b:'A whole range of ages',s:'Several kids, several stages'}
+  ]},
+  {key:'crew',q:'How many are on the trail with you?',help:'',type:'single',options:[
+    {v:'one',b:'Just one',s:''},
+    {v:'two',b:'Two or three',s:''},
+    {v:'four',b:'Four or more',s:''},
+    {v:'full',b:'A full, busy crew',s:'The happy chaos'}
+  ]},
+  {key:'need',q:'What are you longing for in this season?',help:'What would make the biggest difference right now?',type:'single',options:[
+    {v:'wonder',b:'Wonder & gentle foundations',s:'Awe, habits, a doable rhythm'},
+    {v:'curiosity',b:'Curiosity & independence',s:'Following interests, growing capable'},
+    {v:'rhythm',b:'Rhythm for many ages',s:'Teaching the many, sustainably'},
+    {v:'depth',b:'Depth & mastery',s:'High school, rigor, launching'},
+    {v:'renewal',b:'Renewal & the long view',s:'Keep the joy, finish well, mentor'}
+  ]},
+  {key:'values',q:'What’s on your compass?',help:'Choose all that feel true — this shapes the flavor of your trail.',type:'multi',options:[
+    {v:'faith',b:'Faith at the center',s:''},
+    {v:'nature',b:'Nature-rich days',s:''},
+    {v:'books',b:'Living books & story',s:''},
+    {v:'handson',b:'Hands-on & real-world',s:''},
+    {v:'relationship',b:'Relationship over rigor',s:''},
+    {v:'structure',b:'Structure & clear goals',s:''}
+  ]},
+  {key:'philosophy',q:'And your approach?',help:'However you’d describe it today — this can change with the terrain.',type:'single',options:[
+    {v:'cm',b:'Charlotte Mason',s:'Living books, narration, nature'},
+    {v:'classical',b:'Classical',s:'Stages, great works, rigor'},
+    {v:'montessori',b:'Montessori / child-led',s:'Prepared environment, independence'},
+    {v:'unschool',b:'Interest-led / unschooling',s:'Following the child’s lead'},
+    {v:'eclectic',b:'Eclectic — a bit of everything',s:'Whatever works for us'},
+    {v:'unsure',b:'Still figuring it out',s:'And that’s okay'}
+  ]},
+  {key:'style',q:'And how do you like to travel?',help:'There’s no right way — some paint by the lines, some splash the color where it lands. This just sets the tone.',type:'single',options:[
+    {v:'purist',b:'I love a clear, ordered path',s:'Give me the plan and I’ll follow it'},
+    {v:'improviser',b:'I wander, ad-lib, and veer',s:'I’ll make it my own as I go'},
+    {v:'both',b:'A bit of both, depending on the day',s:'Structure some days, freedom others'}
+  ]}
+];
+
+const SUBMISSIONS_KEY='ccs_submissions_v1';
+const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let stepIndex=0;
+const answers={values:[]};
+const stage=document.getElementById('cgStage');
+const bar=document.getElementById('cgBar');
+const stepLbl=document.getElementById('cgStep');
+
+function renderStep(){
+  const st=STEPS[stepIndex];
+  stepLbl.textContent='Step '+(stepIndex+1)+' of '+STEPS.length;
+  bar.style.width=Math.round((stepIndex)/STEPS.length*100)+'%';
+  const chosen=answers[st.key];
+  const opts=st.options.map(o=>{
+    const sel=st.type==='multi'?(chosen||[]).includes(o.v):chosen===o.v;
+    return '<button type="button" class="opt'+(st.type==='multi'?' multi':'')+(sel?' sel':'')+'" data-v="'+o.v+'">'
+      +'<span class="dot"></span><span><b>'+o.b+'</b>'+(o.s?'<span>'+o.s+'</span>':'')+'</span></button>';
+  }).join('');
+  const canNext=st.type==='multi'?((chosen||[]).length>0):!!chosen;
+  stage.innerHTML=
+    '<p class="cg-q">'+st.q+'</p>'+(st.help?'<p class="cg-help">'+st.help+'</p>':'')
+    +'<div class="opts">'+opts+'</div>'
+    +'<div class="cg-actions">'
+    +(stepIndex>0?'<button class="linkbtn" id="cgBack">← Back</button>':'<span></span>')
+    +(st.type==='multi'?'<span class="hint">Pick any that fit</span>':'<span></span>')
+    +'<button class="btn btn-solid" id="cgNext" '+(canNext?'':'disabled style="opacity:.45;pointer-events:none"')+'>'+(stepIndex===STEPS.length-1?'See my park':'Next')+'</button>'
+    +'</div>';
+  stage.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>{
+    const v=btn.getAttribute('data-v');
+    if(st.type==='multi'){
+      const arr=answers[st.key]||[];
+      const i=arr.indexOf(v);
+      if(i>=0)arr.splice(i,1);else arr.push(v);
+      answers[st.key]=arr;
+    }else{answers[st.key]=v;}
+    renderStep();
+  });
+  const nx=document.getElementById('cgNext');if(nx)nx.onclick=next;
+  const bk=document.getElementById('cgBack');if(bk)bk.onclick=()=>{stepIndex--;renderStep()};
+}
+function next(){
+  if(stepIndex<STEPS.length-1){stepIndex++;renderStep();document.getElementById('cg').scrollIntoView({behavior:'smooth',block:'start'});}
+  else{showResult();}
+}
+
+/* ---------------- scoring ---------------- */
+function scorePark(p){
+  let s=0;
+  if(p.fit.stage.includes(answers.stage))s+=4;
+  if(p.fit.age.includes(answers.age))s+=3;
+  if(p.fit.need.includes(answers.need))s+=6;
+  if(answers.crew&&p.fit.crew&&p.fit.crew.includes(answers.crew))s+=2;
+  (answers.values||[]).forEach(v=>{if(p.fit.values.includes(v))s+=1});
+  return s;
+}
+function rankParks(){
+  return PARKS.map(p=>({p,s:scorePark(p)})).sort((a,b)=>b.s-a.s);
+}
+
+function showResult(){
+  bar.style.width='100%';
+  const ranked=rankParks();
+  const best=ranked[0].p, runner=ranked[1]?ranked[1].p:null;
+  renderPark(best,runner);
+  document.getElementById('cg').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+let marks={};
+/* ---- illustrated trail map ---- */
+const SVGNS='http://www.w3.org/2000/svg';
+const TRAIL_D='M64,432 C 190,430 175,318 300,306 S 470,300 528,214 S 660,168 720,120 S 792,96 800,64';
+function terrainSVG(p){
+  const id=p.id, a=p.pk, b=p.pk2;
+  let t='';
+  if(id==='acadia'){ // coast
+    t+='<polygon points="0,286 210,224 430,286 650,214 860,280 860,340 0,340" fill="'+b+'" opacity=".26"/>';
+    t+='<path d="M0,338 H860 V480 H0 Z" fill="'+a+'" opacity=".16"/>';
+    t+='<path d="M0,360 q 60,-14 120,0 t 120,0 t 120,0 t 120,0 t 120,0 t 120,0" fill="none" stroke="'+a+'" stroke-width="1.4" opacity=".4"/>';
+    t+='<path d="M0,392 q 60,-14 120,0 t 120,0 t 120,0 t 120,0 t 120,0 t 120,0" fill="none" stroke="'+a+'" stroke-width="1.2" opacity=".3"/>';
+  }else if(id==='zion'){ // canyon mesas
+    t+='<rect x="0" y="196" width="860" height="70" fill="'+b+'" opacity=".18"/>';
+    t+='<rect x="0" y="266" width="860" height="76" fill="'+a+'" opacity=".2"/>';
+    t+='<rect x="0" y="342" width="860" height="138" fill="'+b+'" opacity=".16"/>';
+    for(let x=40;x<860;x+=70)t+='<line x1="'+x+'" y1="200" x2="'+(x+10)+'" y2="470" stroke="'+a+'" stroke-width="1" opacity=".12"/>';
+  }else{ // mountains
+    t+='<polygon points="0,300 150,146 270,250 400,120 540,244 680,150 800,254 860,196 860,480 0,480" fill="'+b+'" opacity=".24"/>';
+    t+='<polygon points="0,360 130,244 250,332 400,222 540,330 660,254 800,344 860,300 860,480 0,480" fill="'+a+'" opacity=".26"/>';
+    if(id==='denali'||id==='smoky'){ // snow caps
+      t+='<polygon points="400,120 372,158 428,158" fill="#fff" opacity=".8"/>';
+      t+='<polygon points="150,146 128,180 172,180" fill="#fff" opacity=".7"/>';
+    }
+  }
+  return t;
+}
+function treeSVG(x,y,s,c){return '<path d="M'+x+' '+(y-s*1.7)+' L'+(x+s)+' '+y+' L'+(x-s)+' '+y+' Z M'+x+' '+(y-s*1.1)+' L'+(x+s*1.25)+' '+(y+s*0.5)+' L'+(x-s*1.25)+' '+(y+s*0.5)+' Z" fill="'+c+'" opacity=".5"/>';}
+function mapSVG(p){
+  const trees=[[110,300,13],[180,330,10],[250,300,12],[600,300,12],[660,330,10],[720,300,13],[500,340,11]]
+    .map(t=>treeSVG(t[0],t[1],t[2],p.pk2)).join('');
+  return '<svg class="parkmap" viewBox="0 0 860 480" role="img" aria-label="Trail map of '+p.name+'" xmlns="http://www.w3.org/2000/svg">'
+    +'<defs><linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="'+p.pk+'" stop-opacity=".07"/></linearGradient></defs>'
+    +'<rect width="860" height="480" fill="url(#skyG)"/>'
+    +terrainSVG(p)
+    +trees
+    +'<path id="trailPath" d="'+TRAIL_D+'" fill="none" stroke="#8a7a5c" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round" opacity=".9"/>'
+    +'<g transform="translate(806,410)" opacity=".6"><circle r="24" fill="none" stroke="'+p.pk+'" stroke-width="1.2"/><path d="M0,-20 L4.5,0 L0,3 L-4.5,0 Z" fill="'+p.pk+'"/><path d="M0,20 L4.5,0 L0,-3 L-4.5,0 Z" fill="'+p.pk2+'"/><text x="0" y="-26" text-anchor="middle" font-size="10" font-family="Jost" fill="'+p.pk+'">N</text></g>'
+    +'<rect x="6" y="6" width="848" height="468" rx="16" fill="none" stroke="'+p.pk+'" stroke-width="2" opacity=".35"/>'
+    +'<g id="mapPins"></g></svg>';
+}
+function pinColor(m,p){return m==='later'?'#B79447':m==='skip'?'#9aa290':p.pk;}
+function placePins(p){
+  const svg=stage.querySelector('.parkmap');if(!svg)return;
+  const path=svg.querySelector('#trailPath'),g=svg.querySelector('#mapPins');
+  const L=path.getTotalLength(),N=p.trail.length;
+  p.trail.forEach((v,i)=>{
+    const frac=N===1?0.5:i/(N-1);
+    const pt=path.getPointAtLength(L*frac);
+    const below=pt.y<150||i%2===0; // label below near top, else alternate
+    const ly=below?pt.y+30:pt.y-24;
+    const grp=document.createElementNS(SVGNS,'g');
+    grp.setAttribute('class','pin');grp.setAttribute('data-i',i);grp.setAttribute('transform','translate('+pt.x+','+pt.y+')');
+    grp.innerHTML='<circle class="ring" r="15"/><circle class="pinbg" r="12" fill="'+pinColor(marks[i],p)+'"/>'
+      +'<text class="pnum" y="1">'+(i+1)+'</text>'
+      +'<text class="plabel" y="'+(below?30:-22)+'">'+v.n+'</text>';
+    grp.addEventListener('click',()=>{
+      const card=stage.querySelector('.vp[data-i="'+i+'"]');
+      if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('flash');setTimeout(()=>card.classList.remove('flash'),1400);}
+    });
+    g.appendChild(grp);
+  });
+}
+function updatePinMark(i,p){
+  const pin=stage.querySelector('#mapPins [data-i="'+i+'"] .pinbg');
+  if(pin)pin.setAttribute('fill',pinColor(marks[i],p));
+}
+function styleNote(){
+  return {
+    purist:'You like a clear path — so the viewing points are laid in order. Still, follow only the ones that serve your family and leave the rest; a clean line is yours to draw.',
+    improviser:'You wander and veer — wonderful. Treat these viewing points like paint on a palette: use the colors you love, in any order, skip what doesn’t fit, and let it get a little messy. That’s where the beauty lives.',
+    both:'Some days you’ll want the plan; some days you’ll wander off-trail. Both belong here — take the viewing points in whatever order the day asks for.'
+  }[answers.style] || 'Take the viewing points in whatever order fits your family. Move past what doesn’t serve you, ad-lib, and veer — this is yours to shape.';
+}
+function renderPark(p,runner){
+  document.documentElement.style.setProperty('--pk',p.pk);
+  document.documentElement.style.setProperty('--pk2',p.pk2);
+  marks={};
+  const trail=p.trail.map((v,i)=>
+    '<div class="vp" data-i="'+i+'"><div class="marker">'+(i+1)+'</div><div class="card">'
+    +'<div class="vp-name">Viewing Point '+(i+1)+' · '+v.n+'</div>'
+    +'<h4 class="vp-title">'+v.t+'</h4><p class="vp-body">'+v.b+'</p>'
+    +'<div class="vp-marks">'
+    +'<button type="button" class="vpm" data-m="on">On my path</button>'
+    +'<button type="button" class="vpm" data-m="later">Maybe later</button>'
+    +'<button type="button" class="vpm" data-m="skip">Not for us</button>'
+    +'</div></div></div>').join('');
+  stepLbl.textContent='Your Park';
+  stage.innerHTML=
+    '<div class="result">'
+    +'<div class="rec-hero">'
+    +'<div class="rec-badge">Your best-fit journey</div>'
+    +'<div class="rec-name">'+p.name+'</div>'
+    +'<div class="rec-sub">'+p.sub+'</div>'
+    +'<div class="rec-meta"><span class="chip">'+p.ages+'</span>'+(answers.philosophy?'<span class="chip">'+philoLabel(answers.philosophy)+'</span>':'')+(answers.style?'<span class="chip">'+labelFor('style',answers.style)+'</span>':'')+'</div>'
+    +'<p class="rec-why">'+p.why+'</p>'
+    +'<div class="rec-cta"><button class="btn btn-pk" id="toTrail">Step onto the trail ↓</button><button class="linkbtn" id="restart">Start the Compass Guide over</button></div>'
+    +(runner?'<p class="runner">Also on your horizon: <a data-park="'+runner.id+'">'+runner.name+' — '+runner.sub+'</a></p>':'')
+    +'</div>'
+    +'<div class="trail-wrap">'
+    +'<div class="map-head"><span class="mh-eye">Your trail map</span><h3>'+p.name+'</h3></div>'
+    +mapSVG(p)
+    +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>On your path</span><span><i style="background:#B79447"></i>Maybe later</span><span><i style="background:#9aa290"></i>Set aside</span><span>Tap a pin to jump to that stop</span></div>'
+    +'<div class="manifesto"><span class="m-eye">Your masterpiece</span><p>This is a canvas, not a map to trace. You’re painting something that fits only your family.</p><p class="style-note">'+styleNote()+'</p></div>'
+    +'<p class="trail-intro"><b>'+p.name+'</b> has '+p.trail.length+' viewing points. Mark the ones that are yours — <b>on my path</b>, <b>maybe later</b>, or <b>not for us</b>. Start wherever you actually are, exit whenever you need to.</p>'
+    +'<div class="trail">'+trail+'</div>'
+    +'<p class="painted" id="painted">Mark a few viewing points above to paint your own version of this trail.</p>'
+    +'<p class="veer">See a viewing point in another park you love? Wander over and borrow it — the best trails are a little bit stolen. <a data-browse>Peek at the other parks ↓</a></p>'
+    +'<p class="trail-note">"Come invest in yourself, and watch peace, joy, and clarity begin to blossom in your home."</p><div id="provisions"></div></div>'
+    +captureHTML(p)
+    +'</div>';
+  // wire reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});
+  stage.querySelectorAll('.vp').forEach(el=>io.observe(el));
+  placePins(p);
+  // wire mark buttons
+  stage.querySelectorAll('.vp').forEach(vp=>{
+    const i=+vp.getAttribute('data-i'),card=vp.querySelector('.card');
+    vp.querySelectorAll('.vpm').forEach(btn=>btn.onclick=()=>{
+      const m=btn.getAttribute('data-m');
+      if(marks[i]===m){delete marks[i]}else{marks[i]=m}
+      card.classList.remove('marked-on','marked-later','marked-skip');
+      if(marks[i])card.classList.add('marked-'+marks[i]);
+      vp.querySelectorAll('.vpm').forEach(b=>b.classList.toggle('act',marks[i]===b.getAttribute('data-m')));
+      updatePinMark(i,p);
+      updatePainted(p);
+    });
+  });
+  document.getElementById('toTrail').onclick=()=>stage.querySelector('.trail-wrap').scrollIntoView({behavior:'smooth'});
+  document.getElementById('restart').onclick=restart;
+  const rp=stage.querySelector('[data-park]');if(rp)rp.onclick=()=>{const t=PARKS.find(x=>x.id===rp.getAttribute('data-park'));renderPark(t,p);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
+  const br=stage.querySelector('[data-browse]');if(br)br.onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
+  wireCapture(p);
+  loadProvisions(p);
+}
+let _resCache=null,_storeCache=null;
+function loadProvisions(p){
+  const host=document.getElementById('provisions');if(!host)return;
+  const parkName={yellowstone:'Yellowstone',acadia:'Acadia',zion:'Zion',denali:'Denali',smoky:'Great Smoky Mountains'};
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  function card(r){
+    const hasImg=r.image&&r.image.trim();
+    const cta=r.url?'<a href="'+esc(r.url)+'" target="_blank" rel="sponsored noopener nofollow" class="prov-buy">View on Amazon →</a>':'';
+    return '<div class="prov-card">'
+      +'<div class="prov-thumb">'+(hasImg?'<img src="'+esc(r.image)+'" alt="" loading="lazy">':'<div class="prov-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></div>')+'</div>'
+      +'<div class="prov-b"><div class="prov-t">'+esc(r.title||'')+'</div>'+(r.author?'<div class="prov-a">'+esc(r.author)+'</div>':'')+cta+'</div></div>';
+  }
+  function done(list){
+    const picks=list.filter(r=>r.park===p.id).concat(list.filter(r=>r.park==='any')).slice(0,4);
+    if(!picks.length){host.innerHTML='';return}
+    const disc=(_storeCache&&_storeCache.disclosure)||'As an Amazon Associate, Christina earns from qualifying purchases.';
+    host.innerHTML='<div class="prov"><div class="prov-head"><span class="m-eye">Provisions for the trail</span><h3 style="font-family:var(--serif);font-size:1.6rem;margin:.2rem 0 0">Christina’s picks for '+(parkName[p.id]||p.name)+'</h3></div>'
+      +'<div class="prov-grid">'+picks.map(card).join('')+'</div>'
+      +'<p class="prov-disc">'+esc(disc)+'</p>'
+      +'<div style="text-align:center;margin-top:.8rem"><a class="btn btn-pk" href="resources.html">See the whole shelf →</a></div></div>';
+  }
+  if(!_storeCache){fetch('/api/store',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{_storeCache=(d&&d.ok&&d.store)?d.store:{};}).catch(()=>{});}
+  if(_resCache){done(_resCache);return}
+  fetch('/api/resources',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{_resCache=(d&&d.ok&&Array.isArray(d.resources))?d.resources:[];done(_resCache)}).catch(()=>{host.innerHTML=''});
+}
+function paintedSummary(p){
+  const on=[],later=[],skip=[];
+  p.trail.forEach((v,i)=>{const m=marks[i];if(m==='on')on.push(v.n);else if(m==='later')later.push(v.n);else if(m==='skip')skip.push(v.n)});
+  return {on,later,skip};
+}
+function updatePainted(p){
+  const el=document.getElementById('painted');if(!el)return;
+  const {on,later,skip}=paintedSummary(p);
+  if(!on.length&&!later.length&&!skip.length){el.innerHTML='Mark a few viewing points above to paint your own version of this trail.';return}
+  const bits=[];
+  if(on.length)bits.push('<b>'+on.length+'</b> on your path');
+  if(later.length)bits.push('<b>'+later.length+'</b> for later');
+  if(skip.length)bits.push('<b>'+skip.length+'</b> set aside');
+  el.innerHTML='Your painted trail: '+bits.join(' · ')+'. That’s your masterpiece — no one else’s.';
+}
+function philoLabel(v){return {cm:'Charlotte Mason',classical:'Classical',montessori:'Montessori',unschool:'Interest-led',eclectic:'Eclectic',unsure:'Still exploring'}[v]||v}
+function restart(){stepIndex=0;['stage','age','crew','need','philosophy','style'].forEach(k=>delete answers[k]);answers.values=[];marks={};document.documentElement.style.setProperty('--pk','#5E7252');renderStep();document.getElementById('cg').scrollIntoView({behavior:'smooth'});}
+
+/* ---------------- optional capture ---------------- */
+function captureHTML(p){
+  return '<div class="capture" id="capture"><h3>Want Christina to walk this trail with you?</h3>'
+    +'<p>Leave your name and she’ll send your '+p.name+' trail guide and a personal note to help you take the first step.</p>'
+    +'<form id="capForm" novalidate><div class="row-2">'
+    +'<div class="field"><label>Name</label><input id="cap-name" type="text" autocomplete="name"></div>'
+    +'<div class="field"><label>Email</label><input id="cap-email" type="email" autocomplete="email"></div>'
+    +'</div><div class="field"><label>Anything you’d love your guide to know? (optional)</label><textarea id="cap-note" rows="2"></textarea></div>'
+    +'<button type="submit" class="btn btn-pk">Send me my trail</button></form>'
+    +'<div class="cap-done" id="capDone"><div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4 4L19 7"/></svg></div><h3>Your trail is on its way.</h3><p>Christina will reach out personally. Welcome to the journey.</p></div>'
+    +'</div>';
+}
+async function postSubmission(sub){
+  try{
+    const r=await fetch('/api/submissions',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(sub)});
+    let d=null;try{d=await r.json()}catch(_){}
+    if(d&&d.ok)return 'server';
+    if(d&&d.ok===false&&d.error)return 'error:'+d.error;
+  }catch(_){}
+  try{const a=JSON.parse(localStorage.getItem(SUBMISSIONS_KEY)||'[]');a.unshift(sub);localStorage.setItem(SUBMISSIONS_KEY,JSON.stringify(a))}catch(_){}
+  return 'local';
+}
+function wireCapture(p){
+  const form=document.getElementById('capForm');if(!form)return;
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const name=document.getElementById('cap-name'),email=document.getElementById('cap-email');
+    let bad=false;
+    if(name.value.trim()===''){name.closest('.field').classList.add('bad');bad=true}else name.closest('.field').classList.remove('bad');
+    if(!emailRe.test(email.value.trim())){email.closest('.field').classList.add('bad');bad=true}else email.closest('.field').classList.remove('bad');
+    if(bad)return;
+    const paint=paintedSummary(p);
+    const sub={type:'compass',questionnaire:'Compass Guide — '+p.name,name:name.value.trim(),email:email.value.trim(),phone:'',preferredContact:'Email',
+      responses:[
+        {q:'Recommended park',a:p.name+' — '+p.sub},
+        {q:'Journey stage',a:labelFor('stage',answers.stage)},
+        {q:'Child age',a:labelFor('age',answers.age)},
+        {q:'Crew size',a:labelFor('crew',answers.crew)},
+        {q:'Longing for',a:labelFor('need',answers.need)},
+        {q:'Values',a:(answers.values||[]).map(v=>labelFor('values',v)).join(', ')},
+        {q:'Approach',a:philoLabel(answers.philosophy)},
+        {q:'Travel style',a:labelFor('style',answers.style)},
+        {q:'On their path',a:paint.on.join(', ')||'—'},
+        {q:'Maybe later',a:paint.later.join(', ')||'—'},
+        {q:'Set aside',a:paint.skip.join(', ')||'—'},
+        {q:'Note',a:document.getElementById('cap-note').value.trim()}
+      ]};
+    const btn=form.querySelector('button');btn.disabled=true;btn.textContent='Sending…';
+    const res=await postSubmission(sub);
+    if(typeof res==='string'&&res.startsWith('error:')){alert('Sorry — '+res.slice(6)+' Please try again.');btn.disabled=false;btn.textContent='Send me my trail';return}
+    form.style.display='none';document.getElementById('capDone').classList.add('show');
+  });
+}
+function labelFor(key,v){const st=STEPS.find(s=>s.key===key);if(!st||!v)return v||'';const o=st.options.find(o=>o.v===v);return o?o.b:v}
+
+/* ---------------- all-parks grid ---------------- */
+document.getElementById('parkGrid').innerHTML=PARKS.map(p=>
+  '<div class="park-tile" data-park="'+p.id+'" style="--tp:'+p.tp+'"><div class="pn">'+p.name+'</div><div class="ps">'+p.sub+'</div><div class="pa">'+p.ages+'</div><p class="pd">'+p.short+'</p></div>'
+).join('');
+document.querySelectorAll('.park-tile').forEach(t=>t.onclick=()=>{
+  const p=PARKS.find(x=>x.id===t.getAttribute('data-park'));
+  renderPark(p,null);document.getElementById('cg').scrollIntoView({behavior:'smooth'});
+});
+
+document.getElementById('startBtn').onclick=()=>{renderStep();document.getElementById('compass').scrollIntoView({behavior:'smooth'})};
+
+/* ---------------- rabbit trails: Bible Weekly ---------------- */
+const RABBIT=[
+  {topic:'God is Creator',anchor:'Genesis 1:1',thm:'Everything that exists began as God’s idea and God’s handiwork.',days:[
+    {d:'Monday',ref:'Genesis 1:1',note:'Start the week in wonder at the very first thing Scripture tells us about God.'},
+    {d:'Tuesday',ref:'Psalm 19:1',note:'The skies are a sermon — step outside and let creation preach.'},
+    {d:'Wednesday',ref:'Colossians 1:16',note:'All things were made through Him and for Him — even what we can’t see.'},
+    {d:'Thursday',ref:'Nehemiah 9:6',note:'He made the heavens and keeps them alive; He sustains what He starts.'},
+    {d:'Friday',ref:'Isaiah 40:26',note:'He named every star — look up tonight and count how cared-for you are.'},
+    {d:'Saturday',ref:'Job 38:4',note:'God asks Job where he was at creation — a humbling look at how big God is.'},
+    {d:'Sunday',ref:'Revelation 4:11',note:'Worthy is the One who created all things — end the week in praise.'}
+  ]},
+  {topic:'God is Good',anchor:'Psalm 34:8',thm:'His goodness is something to taste and experience, not just believe.',days:[
+    {d:'Monday',ref:'Psalm 34:8',note:'“Taste and see” — goodness is meant to be experienced.'},
+    {d:'Tuesday',ref:'Psalm 100:5',note:'His goodness lasts forever and reaches every generation.'},
+    {d:'Wednesday',ref:'James 1:17',note:'Every good gift comes down from Him — make a list of today’s gifts.'},
+    {d:'Thursday',ref:'Nahum 1:7',note:'He is good and a stronghold in trouble — good even on hard days.'},
+    {d:'Friday',ref:'Psalm 145:9',note:'The Lord is good to all; His mercy is over everything He made.'},
+    {d:'Saturday',ref:'Mark 10:18',note:'Jesus says only God is truly good — the measure of all goodness.'},
+    {d:'Sunday',ref:'Psalm 107:1',note:'Give thanks, for He is good — end the week counting His kindnesses.'}
+  ]},
+  {topic:'God is Faithful',anchor:'Lamentations 3:22-23',thm:'His mercies are new every single morning.',days:[
+    {d:'Monday',ref:'Lamentations 3:22-23',note:'His mercies are new every morning — great is His faithfulness.'},
+    {d:'Tuesday',ref:'Deuteronomy 7:9',note:'He keeps covenant to a thousand generations — faithful far beyond us.'},
+    {d:'Wednesday',ref:'1 Corinthians 1:9',note:'God is faithful; He called you and won’t let go.'},
+    {d:'Thursday',ref:'Psalm 36:5',note:'His faithfulness reaches to the clouds — bigger than the sky.'},
+    {d:'Friday',ref:'2 Timothy 2:13',note:'Even when we falter, He remains faithful.'},
+    {d:'Saturday',ref:'Hebrews 10:23',note:'Hold tight to hope, because the One who promised is faithful.'},
+    {d:'Sunday',ref:'Psalm 89:8',note:'Faithfulness surrounds Him — end the week trusting His track record.'}
+  ]},
+  {topic:'God is Love',anchor:'1 John 4:8',thm:'God doesn’t only love — He is love itself.',days:[
+    {d:'Monday',ref:'1 John 4:8',note:'God doesn’t just love — love is who He is.'},
+    {d:'Tuesday',ref:'John 3:16',note:'Love that gives its most precious thing for us.'},
+    {d:'Wednesday',ref:'Romans 5:8',note:'He loved us first, while we were still far off.'},
+    {d:'Thursday',ref:'Psalm 136:26',note:'His steadfast love endures forever — say it back all day.'},
+    {d:'Friday',ref:'Ephesians 2:4',note:'Rich in mercy, great in love — even to us.'},
+    {d:'Saturday',ref:'Zephaniah 3:17',note:'He rejoices over you with singing — imagine God singing over your family.'},
+    {d:'Sunday',ref:'1 John 4:19',note:'We love because He first loved us — end the week loving someone on purpose.'}
+  ]},
+  {topic:'God is Provider',anchor:'Philippians 4:19',thm:'He supplies from His riches, not from our shortage.',days:[
+    {d:'Monday',ref:'Philippians 4:19',note:'He supplies every need from His riches, not our lack.'},
+    {d:'Tuesday',ref:'Matthew 6:26',note:'If He feeds the birds, how much more will He care for you?'},
+    {d:'Wednesday',ref:'Psalm 23:1',note:'The Lord is my shepherd; I shall not want.'},
+    {d:'Thursday',ref:'Genesis 22:14',note:'“The Lord will provide” — the name Abraham gave when God came through.'},
+    {d:'Friday',ref:'2 Corinthians 9:8',note:'He gives enough — and extra to share.'},
+    {d:'Saturday',ref:'Psalm 34:10',note:'Those who seek Him lack no good thing.'},
+    {d:'Sunday',ref:'Matthew 6:33',note:'Seek first His kingdom and the rest is added — reorder your priorities.'}
+  ]},
+  {topic:'God is My Refuge',anchor:'Psalm 46:1',thm:'A very present help, right in the middle of trouble.',days:[
+    {d:'Monday',ref:'Psalm 46:1',note:'A refuge and strength, a very present help in trouble.'},
+    {d:'Tuesday',ref:'Psalm 91:1-2',note:'Dwell in His shadow; call Him your fortress.'},
+    {d:'Wednesday',ref:'Proverbs 18:10',note:'His name is a strong tower — run into it.'},
+    {d:'Thursday',ref:'Psalm 62:8',note:'Pour out your heart to Him — He’s a refuge for feelings too.'},
+    {d:'Friday',ref:'Psalm 18:2',note:'My rock, my fortress, my deliverer — stack up the names.'},
+    {d:'Saturday',ref:'Nahum 1:7',note:'He knows those who take shelter in Him.'},
+    {d:'Sunday',ref:'Psalm 34:17',note:'The Lord hears and delivers — bring Him a worry to end the week.'}
+  ]},
+  {topic:'God is Light',anchor:'1 John 1:5',thm:'In Him there is no darkness at all.',days:[
+    {d:'Monday',ref:'1 John 1:5',note:'God is light; in Him there is no darkness at all.'},
+    {d:'Tuesday',ref:'John 8:12',note:'Jesus is the light of the world — follow and never walk in the dark.'},
+    {d:'Wednesday',ref:'Psalm 27:1',note:'The Lord is my light — so whom shall I fear?'},
+    {d:'Thursday',ref:'Psalm 119:105',note:'His Word is a lamp for our feet, one step at a time.'},
+    {d:'Friday',ref:'John 1:5',note:'The light shines in darkness, and darkness can’t overcome it.'},
+    {d:'Saturday',ref:'Isaiah 60:19',note:'One day God Himself will be our everlasting light.'},
+    {d:'Sunday',ref:'Psalm 18:28',note:'He lights our lamp and brightens our darkness — carry His light.'}
+  ]},
+  {topic:'God Keeps His Promises',anchor:'2 Corinthians 1:20',thm:'Every promise of God is “Yes” in Christ.',days:[
+    {d:'Monday',ref:'2 Corinthians 1:20',note:'Every promise of God is “Yes” in Christ.'},
+    {d:'Tuesday',ref:'Joshua 21:45',note:'Not one good promise failed — all of them came to pass.'},
+    {d:'Wednesday',ref:'Numbers 23:19',note:'God is not a man that He should lie; He does what He says.'},
+    {d:'Thursday',ref:'Hebrews 6:18',note:'It is impossible for God to lie — an anchor for the soul.'},
+    {d:'Friday',ref:'Psalm 145:13',note:'The Lord is faithful in all His words and kind in all He does.'},
+    {d:'Saturday',ref:'1 Kings 8:56',note:'He gave rest, just as He promised.'},
+    {d:'Sunday',ref:'Romans 4:21',note:'Fully convinced God can do what He promised — end the week assured.'}
+  ]}
+];
+const rtNow=(function(){const d=new Date(),s=new Date(d.getFullYear(),0,1);return Math.floor((d-s)/(7*864e5))%RABBIT.length})();
+let rtSel=rtNow;
+const rtPills=document.getElementById('rtPills'),rtDetail=document.getElementById('rtDetail');
+function renderRabbit(){
+  rtPills.innerHTML=RABBIT.map((r,i)=>'<button class="rt-pill'+(i===rtSel?' sel':'')+'" data-i="'+i+'">'+(i===rtNow?'<span class="now">This week</span>':'')+r.topic+'</button>').join('');
+  rtPills.querySelectorAll('.rt-pill').forEach(b=>b.onclick=()=>{rtSel=+b.getAttribute('data-i');renderRabbit()});
+  const r=RABBIT[rtSel];
+  rtDetail.innerHTML=
+    '<div class="rt-anchor"><div class="lbl">Anchor verse for the week'+(rtSel===rtNow?' · this week':'')+'</div><div class="ref">'+r.anchor+'</div><p class="thm">'+r.thm+'</p></div>'
+    +'<div class="rt-days">'+r.days.map(x=>'<div class="rt-day"><div class="dnum">'+x.d+'</div><div><div class="dref">'+x.ref+'</div><p class="dnote">'+x.note+'</p></div></div>').join('')+'</div>';
+}
+renderRabbit();
+
+document.getElementById('year').textContent=new Date().getFullYear();
+renderStep();
+document.getElementById('year').textContent=new Date().getFullYear();
+renderStep();
+</script>
+</body>
+</html>
