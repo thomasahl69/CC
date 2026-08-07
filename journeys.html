@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.16.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.17.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.16.0">
+<meta name="version" content="1.17.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -147,6 +147,15 @@ section{padding-block:clamp(46px,6vw,84px)}
 .vpm.act[data-m=skip]{background:var(--ink-soft);color:#fff;border-color:var(--ink-soft)}
 .painted{max-width:60ch;margin:1.4rem auto 0;text-align:center;font-size:.92rem;color:var(--ink-soft)}
 .painted b{color:var(--pk)}
+.two-trails{max-width:62ch;margin:clamp(20px,3vw,32px) auto .9rem;text-align:center;color:var(--ink-soft)}
+.two-trails b{color:var(--pk)}
+.trail-toggle{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:0 auto 1.4rem;max-width:640px}
+.trail-toggle .tt{flex:1;min-width:200px;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:.85rem 1.1rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:.15rem;font:inherit;color:inherit}
+.trail-toggle .tt:hover{border-color:var(--pk)}
+.trail-toggle .tt.act{border-color:var(--pk);background:color-mix(in srgb,var(--pk) 10%, var(--paper));box-shadow:inset 3px 0 0 var(--pk)}
+.trail-toggle .tt b{font-family:var(--serif);font-size:1.15rem;font-weight:500}
+.trail-toggle .tt span{font-family:var(--util);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.trail-toggle .tt.act span{color:var(--pk)}
 .veer{max-width:60ch;margin:1.1rem auto 0;text-align:center;font-size:.95rem;color:var(--ink-soft)}
 .veer a{color:var(--pk);text-decoration:underline;cursor:pointer}
 
@@ -251,7 +260,7 @@ section{padding-block:clamp(46px,6vw,84px)}
   <div class="wrap nav">
     <div class="brand-wrap">
       <a href="index.html" class="brand"><img src="favicon-192.png" alt="" onerror="this.style.display='none'">Authentic <span>Joy</span></a>
-      <span class="site-ver">v1.16.0</span>
+      <span class="site-ver">v1.17.0</span>
     </div>
     <nav class="topnav">
       <a href="index.html">Home</a>
@@ -341,53 +350,81 @@ const PARKS=[
    short:'First steps into homeschooling — wonder, habit, story, and strong roots at a gentle pace.',
    fit:{stage:['first','footing'],age:['4-7','8-10'],need:['wonder'],crew:['one','two'],values:['nature','books','faith','relationship']},
    why:'You’re standing at the trailhead, and these early years aren’t about doing everything — they’re about <b>awe, warm rhythms, and a few strong roots</b>. Yellowstone keeps the days short, the wonder big, and the pressure low.',
-   trail:[
-     {n:'Trailhead',t:'Beginning with wonder',b:'Trade the pressure for delight. We set a gentle first rhythm and a short, doable day you can actually keep.'},
-     {n:'Old Faithful',t:'Small, steady habits',b:'A few reliable habits — morning time, a read-aloud, time outside — that quietly hold the whole week together.'},
-     {n:'The Meadow',t:'Story & living books',b:'Beautiful books and narration do the heavy lifting. You read, they retell, and understanding grows on its own.'},
-     {n:'Riverside',t:'Nature & noticing',b:'Regular time outdoors becomes science, art, and calm all at once — no lesson plan required.'},
-     {n:'The Overlook',t:'Confidence for the year',b:'Look back at how far you’ve come, and step into the year ahead sure-footed and unhurried.'}
+   trails:[
+     {name:'The Mother’s Trail',sub:'For you, mama',points:[
+       {n:'Rest',t:'Short days, long wonder',b:'In these early years a short, peaceful day beats a full, frantic one. Your calm is the curriculum — rest is not falling behind.'},
+       {n:'Review',t:'Look how far you’ve come',b:'Each week, notice one small bloom instead of every gap — a letter learned, a question asked. Let the tiny wins steady you.'},
+       {n:'Relationship',t:'Warm before rigorous',b:'Snuggle-and-read beats drill-and-worry. The bond you build now is the foundation everything else will stand on.'}
+     ]},
+     {name:'The Learner’s Trail',sub:'For your child',points:[
+       {n:'Rest',t:'Time to just be',b:'Unstructured play and long looks at bugs are real learning at this age. Little ones grow deeply at rest.'},
+       {n:'Review',t:'Tell it back',b:'After a read-aloud, let them retell it in their own words. That’s review, joyfully — no test required.'},
+       {n:'Relationship',t:'Wonder together',b:'Kneel down and marvel alongside them. Shared wonder is how strong foundations take root.'}
+     ]}
    ]},
   {id:'acadia',name:'Acadia',sub:'Curiosity & Independence',ages:'Ages 8–12',tp:'#3E7CA8',pk:'#356F97',pk2:'#5E9B6B',
    short:'Following curiosity outward as a child grows more capable and independent.',
    fit:{stage:['footing','confident'],age:['8-10','11-13'],need:['curiosity'],crew:['one','two','four'],values:['nature','handson','books']},
    why:'Your learner is reaching for more. Acadia is about <b>following curiosity, hands-on discovery, and handing over the reins</b> a little at a time — from tide pools to summiting on their own.',
-   trail:[
-     {n:'Sand Beach',t:'Following curiosity',b:'Start where their questions already are. Interests become the on-ramp to real learning.'},
-     {n:'The Tide Pools',t:'Hands-on discovery',b:'Experiments, projects, and getting messy — understanding that comes through the hands.'},
-     {n:'Carriage Roads',t:'Learning to work solo',b:'Introduce independent work in gentle loops, so focus and follow-through grow without a fight.'},
-     {n:'Cadillac Summit',t:'Owning the learning',b:'Your child begins to set goals and carry them — you shift from leading to walking beside.'},
-     {n:'The Lookout',t:'Ready for more',b:'Confidence and independence take root, and the next stretch of trail comes into view.'}
+   trails:[
+     {name:'The Mother’s Trail',sub:'For you, mama',points:[
+       {n:'Rest',t:'Trust the unhurried',b:'Resist the race. A curious child needs room, not pressure — give yourself permission to slow so their wonder has air to breathe.'},
+       {n:'Review',t:'Notice the growing independence',b:'Each month, name one thing they can now do alone. It’s proof the trail is working — and fuel for you.'},
+       {n:'Relationship',t:'Walk beside, not ahead',b:'Shift from leading to companioning. Become the one who wonders alongside rather than directs.'}
+     ]},
+     {name:'The Learner’s Trail',sub:'For your child',points:[
+       {n:'Rest',t:'Follow a rabbit trail',b:'Let a genuine interest pull them happily off the plan. Curiosity rested is curiosity fed.'},
+       {n:'Review',t:'Show what you found',b:'A child who explains their tide-pool discovery is reviewing and owning it at the same time.'},
+       {n:'Relationship',t:'Discover, then share',b:'Hands-on discovery plus someone to share it with — that’s how independence is built kindly.'}
+     ]}
    ]},
   {id:'zion',name:'Zion',sub:'Rhythm for Many Ages',ages:'A full, mixed crew',tp:'#B4693F',pk:'#A65E38',pk2:'#5E8A63',
    short:'Combining ages and finding a sustainable family rhythm when the crew is full.',
    fit:{stage:['confident','seasoned'],age:['range','8-10','11-13'],need:['rhythm'],crew:['four','full'],values:['structure','relationship','faith']},
    why:'With a canyon full of different ages and stages, the trail is about <b>rhythm, combining what you can, and a pace that lasts</b>. Zion helps you teach the many without losing yourself.',
-   trail:[
-     {n:'The Narrows',t:'Combining the ages',b:'Loop subjects like history, nature, and read-alouds so everyone travels together, at their own depth.'},
-     {n:'The Watchman',t:'A rhythm that holds',b:'Build a weekly rhythm and simple routines that keep a busy household from tipping into chaos.'},
-     {n:'Angels Landing',t:'The hard stretches',b:'Strategies for the tricky ages, the resistant days, and the subjects that scare you.'},
-     {n:'Emerald Pools',t:'Rest & renewal',b:'Margin, mother-culture, and rest built into the plan — because a burned-out guide helps no one.'}
+   trails:[
+     {name:'The Mother’s Trail',sub:'For you, mama',points:[
+       {n:'Rest',t:'Margin in the canyon',b:'Build rest into the rhythm before the walls close in. Real margin keeps a full house from tipping into chaos.'},
+       {n:'Review',t:'Loop, don’t cram',b:'Circle back together instead of pushing forward alone. A family review loop lightens your load.'},
+       {n:'Relationship',t:'One family, many ages',b:'Combine what you can and let relationship — not the schedule — be the thread that holds the day.'}
+     ]},
+     {name:'The Learner’s Trail',sub:'For your child',points:[
+       {n:'Rest',t:'Everyone breathes',b:'Different ages need different rests — littles nap and play, bigs pause and reset. Rest belongs to every age.'},
+       {n:'Review',t:'Teach a younger one',b:'When an older child reviews with a younger, both grow — and you catch a breath.'},
+       {n:'Relationship',t:'Travel together',b:'Loop history, nature, and story so the whole crew journeys together, each at their own depth.'}
+     ]}
    ]},
   {id:'denali',name:'Denali',sub:'The Summit — Teens & Launching',ages:'Ages 13–18',tp:'#5C79B0',pk:'#4E6A9F',pk2:'#8AA7C9',
    short:'High school, depth, mastery, and launching a young adult well.',
    fit:{stage:['seasoned','summiting'],age:['14-18','11-13'],need:['depth'],crew:['one','two','four'],values:['structure','books']},
    why:'The air is thin and the views are long. Denali is about <b>depth, mastery, real independence, and a strong launch</b> — high-school planning without the panic.',
-   trail:[
-     {n:'Base Camp',t:'Mapping high school',b:'Credits, transcripts, and a four-year plan that fits your teen’s actual goals — demystified.'},
-     {n:'The Ridge',t:'Depth & mastery',b:'Go deep in a few things that matter. Rigor with meaning, not busywork.'},
-     {n:'High Camp',t:'Independence & ownership',b:'Your teen runs more of their own learning; you become mentor and consultant.'},
-     {n:'The Summit',t:'Launching well',b:'Life skills, next steps, and a confident hand-off into adulthood and calling.'}
+   trails:[
+     {name:'The Mother’s Trail',sub:'For you, mama',points:[
+       {n:'Rest',t:'Rest is not quitting',b:'High school is a marathon. Sustainable beats heroic — rest keeps you both on the mountain for the long climb.'},
+       {n:'Review',t:'Map the summit',b:'Step back and check the route — credits, goals, next steps — so the climb stays clear and calm.'},
+       {n:'Relationship',t:'Mentor, don’t manage',b:'As they take the lead, become the trusted guide they want to call. Relationship is the launchpad.'}
+     ]},
+     {name:'The Learner’s Trail',sub:'For your child',points:[
+       {n:'Rest',t:'Room to own it',b:'Independence needs unscheduled space to grow. Rest is what makes ownership possible.'},
+       {n:'Review',t:'Master a few things',b:'Depth over busywork — revisiting toward real mastery in the things that matter most.'},
+       {n:'Relationship',t:'Launch, connected',b:'Life skills and calling grow through relationship, not lectures. The bond is what they carry off the mountain.'}
+     ]}
    ]},
   {id:'smoky',name:'Great Smoky Mountains',sub:'The Seasoned Trail',ages:'Veteran & mentoring',tp:'#6C8C86',pk:'#5E7F79',pk2:'#9BB6A0',
    short:'For the seasoned guide — sustaining joy, mentoring others, finishing well.',
    fit:{stage:['seasoned','summiting'],age:['range','14-18'],need:['renewal'],crew:['full','four','two'],values:['relationship','faith','books']},
    why:'You’ve walked these ridges for years. The Smokies are about <b>the long view, keeping the joy, and pouring into others</b> — whether you’re finishing strong or helping newer moms find their trail.',
-   trail:[
-     {n:'The Old Growth',t:'What you’ve learned',b:'Name the wisdom you’ve gathered — and the ruts worth leaving behind.'},
-     {n:'Clingmans Dome',t:'The long view',b:'Zoom out on the whole journey; recalibrate around what actually matters now.'},
-     {n:'The Footbridge',t:'Mentoring & giving back',b:'Come alongside newer mamas — your story becomes someone else’s courage.'},
-     {n:'The Homecoming',t:'Finishing with joy',b:'End each child’s journey with gratitude, celebration, and peace.'}
+   trails:[
+     {name:'The Mother’s Trail',sub:'For you, mama',points:[
+       {n:'Rest',t:'The long-view rest',b:'After years on the ridges, rest is how you finish with joy instead of fumes. You’ve earned the margin.'},
+       {n:'Review',t:'Zoom out',b:'From the high dome, review the whole journey and let go of the ruts. Recalibrate around what matters now.'},
+       {n:'Relationship',t:'Pour into others',b:'Mentor a newer mama — your story becomes her courage. Relationship is the legacy the trail was always for.'}
+     ]},
+     {name:'The Learner’s Trail',sub:'For your child',points:[
+       {n:'Rest',t:'Finish gently',b:'Let the last miles be unhurried and grace-filled. Rest honors how far they’ve come.'},
+       {n:'Review',t:'Remember together',b:'Look back over the years side by side — a shared record of growth and grace.'},
+       {n:'Relationship',t:'Send with blessing',b:'The last viewing point is a homecoming — relationship, gratitude, and a blessing sent forward.'}
+     ]}
    ]}
 ];
 
@@ -510,7 +547,8 @@ function showResult(){
   document.getElementById('cg').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-let marks={};
+let marksByTrail={0:{},1:{}};let activeTrail=0;
+function curMarks(){return marksByTrail[activeTrail]||(marksByTrail[activeTrail]={});}
 /* ---- illustrated trail map ---- */
 const SVGNS='http://www.w3.org/2000/svg';
 const TRAIL_D='M64,432 C 190,430 175,318 300,306 S 470,300 528,214 S 660,168 720,120 S 792,96 800,64';
@@ -551,19 +589,20 @@ function mapSVG(p){
     +'<rect x="6" y="6" width="848" height="468" rx="16" fill="none" stroke="'+p.pk+'" stroke-width="2" opacity=".35"/>'
     +'<g id="mapPins"></g></svg>';
 }
-function pinColor(m,p){return m==='later'?'#B79447':m==='skip'?'#9aa290':p.pk;}
+function pinColor(m,p){return m==='on'?p.pk:m==='later'?'#B79447':'#B7AE97';}
 function placePins(p){
   const svg=stage.querySelector('.parkmap');if(!svg)return;
   const path=svg.querySelector('#trailPath'),g=svg.querySelector('#mapPins');
-  const L=path.getTotalLength(),N=p.trail.length;
-  p.trail.forEach((v,i)=>{
+  g.innerHTML='';
+  const pts=p.trails[activeTrail].points, L=path.getTotalLength(), N=pts.length;
+  const mk=curMarks();
+  pts.forEach((v,i)=>{
     const frac=N===1?0.5:i/(N-1);
     const pt=path.getPointAtLength(L*frac);
-    const below=pt.y<150||i%2===0; // label below near top, else alternate
-    const ly=below?pt.y+30:pt.y-24;
+    const below=pt.y<150||i%2===0;
     const grp=document.createElementNS(SVGNS,'g');
     grp.setAttribute('class','pin');grp.setAttribute('data-i',i);grp.setAttribute('transform','translate('+pt.x+','+pt.y+')');
-    grp.innerHTML='<circle class="ring" r="15"/><circle class="pinbg" r="12" fill="'+pinColor(marks[i],p)+'"/>'
+    grp.innerHTML='<circle class="ring" r="15"/><circle class="pinbg" r="12" fill="'+pinColor(mk[i],p)+'"/>'
       +'<text class="pnum" y="1">'+(i+1)+'</text>'
       +'<text class="plabel" y="'+(below?30:-22)+'">'+v.n+'</text>';
     grp.addEventListener('click',()=>{
@@ -575,7 +614,7 @@ function placePins(p){
 }
 function updatePinMark(i,p){
   const pin=stage.querySelector('#mapPins [data-i="'+i+'"] .pinbg');
-  if(pin)pin.setAttribute('fill',pinColor(marks[i],p));
+  if(pin)pin.setAttribute('fill',pinColor(curMarks()[i],p));
 }
 function styleNote(){
   return {
@@ -587,17 +626,10 @@ function styleNote(){
 function renderPark(p,runner){
   document.documentElement.style.setProperty('--pk',p.pk);
   document.documentElement.style.setProperty('--pk2',p.pk2);
-  marks={};
-  const trail=p.trail.map((v,i)=>
-    '<div class="vp" data-i="'+i+'"><div class="marker">'+(i+1)+'</div><div class="card">'
-    +'<div class="vp-name">Viewing Point '+(i+1)+' · '+v.n+'</div>'
-    +'<h4 class="vp-title">'+v.t+'</h4><p class="vp-body">'+v.b+'</p>'
-    +'<div class="vp-marks">'
-    +'<button type="button" class="vpm" data-m="on">On my path</button>'
-    +'<button type="button" class="vpm" data-m="later">Maybe later</button>'
-    +'<button type="button" class="vpm" data-m="skip">Not for us</button>'
-    +'</div></div></div>').join('');
+  marksByTrail={0:{},1:{}};activeTrail=0;
   stepLbl.textContent='Your Park';
+  const toggle='<div class="trail-toggle" id="trailToggle">'+p.trails.map((t,ti)=>
+    '<button type="button" class="tt'+(ti===0?' act':'')+'" data-t="'+ti+'"><b>'+t.name+'</b><span>'+t.sub+'</span></button>').join('')+'</div>';
   stage.innerHTML=
     '<div class="result">'
     +'<div class="rec-hero">'
@@ -612,38 +644,58 @@ function renderPark(p,runner){
     +'<div class="trail-wrap">'
     +'<div class="map-head"><span class="mh-eye">Your trail map</span><h3>'+p.name+'</h3></div>'
     +mapSVG(p)
-    +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>On your path</span><span><i style="background:#B79447"></i>Maybe later</span><span><i style="background:#9aa290"></i>Set aside</span><span>Tap a pin to jump to that stop</span></div>'
+    +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>On your path</span><span><i style="background:#B79447"></i>Maybe later</span><span>Tap a pin to jump to that stop</span></div>'
+    +'<p class="two-trails">Every park has <b>two trails</b>, and both walk the same gentle rhythm — <b>Rest</b>, <b>Review</b>, and <b>Relationship</b>. Choose the vantage that fits today:</p>'
+    +toggle
     +'<div class="manifesto"><span class="m-eye">Your masterpiece</span><p>This is a canvas, not a map to trace. You’re painting something that fits only your family.</p><p class="style-note">'+styleNote()+'</p></div>'
-    +'<p class="trail-intro"><b>'+p.name+'</b> has '+p.trail.length+' viewing points. Mark the ones that are yours — <b>on my path</b>, <b>maybe later</b>, or <b>not for us</b>. Start wherever you actually are, exit whenever you need to.</p>'
-    +'<div class="trail">'+trail+'</div>'
-    +'<p class="painted" id="painted">Mark a few viewing points above to paint your own version of this trail.</p>'
-    +'<p class="veer">See a viewing point in another park you love? Wander over and borrow it — the best trails are a little bit stolen. <a data-browse>Peek at the other parks ↓</a></p>'
+    +'<div id="trailArea"></div>'
+    +'<p class="painted" id="painted">Mark a few viewing points to paint your own version of this trail.</p>'
+    +'<p class="veer">See a viewing point on the other trail — or in another park — that you love? Wander over and borrow it. The best trails are a little bit stolen. <a data-browse>Peek at the other parks ↓</a></p>'
     +'<p class="trail-note">"Come invest in yourself, and watch peace, joy, and clarity begin to blossom in your home."</p><div id="provisions"></div></div>'
     +captureHTML(p)
     +'</div>';
-  // wire reveal
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});
-  stage.querySelectorAll('.vp').forEach(el=>io.observe(el));
-  placePins(p);
-  // wire mark buttons
-  stage.querySelectorAll('.vp').forEach(vp=>{
-    const i=+vp.getAttribute('data-i'),card=vp.querySelector('.card');
-    vp.querySelectorAll('.vpm').forEach(btn=>btn.onclick=()=>{
-      const m=btn.getAttribute('data-m');
-      if(marks[i]===m){delete marks[i]}else{marks[i]=m}
-      card.classList.remove('marked-on','marked-later','marked-skip');
-      if(marks[i])card.classList.add('marked-'+marks[i]);
-      vp.querySelectorAll('.vpm').forEach(b=>b.classList.toggle('act',marks[i]===b.getAttribute('data-m')));
-      updatePinMark(i,p);
-      updatePainted(p);
-    });
-  });
-  document.getElementById('toTrail').onclick=()=>stage.querySelector('.trail-wrap').scrollIntoView({behavior:'smooth'});
+  document.getElementById('toTrail').onclick=()=>stage.querySelector('.two-trails').scrollIntoView({behavior:'smooth'});
   document.getElementById('restart').onclick=restart;
   const rp=stage.querySelector('[data-park]');if(rp)rp.onclick=()=>{const t=PARKS.find(x=>x.id===rp.getAttribute('data-park'));renderPark(t,p);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
   const br=stage.querySelector('[data-browse]');if(br)br.onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
+  stage.querySelectorAll('#trailToggle .tt').forEach(b=>b.onclick=()=>setTrail(p,+b.getAttribute('data-t')));
+  renderActiveTrail(p);
   wireCapture(p);
   loadProvisions(p);
+}
+function setTrail(p,ti){
+  activeTrail=ti;
+  stage.querySelectorAll('#trailToggle .tt').forEach(b=>b.classList.toggle('act',+b.getAttribute('data-t')===ti));
+  renderActiveTrail(p);
+}
+function renderActiveTrail(p){
+  const trail=p.trails[activeTrail], pts=trail.points, mk=curMarks();
+  const list=pts.map((v,i)=>
+    '<div class="vp'+(mk[i]?' marked-'+mk[i]:'')+'" data-i="'+i+'"><div class="marker">'+(i+1)+'</div><div class="card">'
+    +'<div class="vp-name">'+trail.name+' · '+v.n+'</div>'
+    +'<h4 class="vp-title">'+v.t+'</h4><p class="vp-body">'+v.b+'</p>'
+    +'<div class="vp-marks">'
+    +'<button type="button" class="vpm'+(mk[i]==='on'?' act':'')+'" data-m="on">On my path</button>'
+    +'<button type="button" class="vpm'+(mk[i]==='later'?' act':'')+'" data-m="later">Maybe later</button>'
+    +'</div></div></div>').join('');
+  document.getElementById('trailArea').innerHTML=
+    '<p class="trail-intro"><b>'+trail.name.replace(/^The\s/,'')+'</b> walks three viewing points — <b>Rest</b>, <b>Review</b>, and <b>Relationship</b>. Mark the ones that are yours, in any order. Start wherever you actually are, exit whenever you need to.</p>'
+    +'<div class="trail">'+list+'</div>';
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});
+  document.querySelectorAll('#trailArea .vp').forEach(el=>io.observe(el));
+  placePins(p);
+  document.querySelectorAll('#trailArea .vp').forEach(vp=>{
+    const i=+vp.getAttribute('data-i'),card=vp.querySelector('.card');
+    vp.querySelectorAll('.vpm').forEach(btn=>btn.onclick=()=>{
+      const m=btn.getAttribute('data-m'),mk2=curMarks();
+      if(mk2[i]===m){delete mk2[i]}else{mk2[i]=m}
+      card.classList.remove('marked-on','marked-later');
+      if(mk2[i])card.classList.add('marked-'+mk2[i]);
+      vp.querySelectorAll('.vpm').forEach(b=>b.classList.toggle('act',mk2[i]===b.getAttribute('data-m')));
+      updatePinMark(i,p);updatePainted(p);
+    });
+  });
+  updatePainted(p);
 }
 let _resCache=null,_storeCache=null;
 function loadProvisions(p){
@@ -671,22 +723,21 @@ function loadProvisions(p){
   fetch('/api/resources',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{_resCache=(d&&d.ok&&Array.isArray(d.resources))?d.resources:[];done(_resCache)}).catch(()=>{host.innerHTML=''});
 }
 function paintedSummary(p){
-  const on=[],later=[],skip=[];
-  p.trail.forEach((v,i)=>{const m=marks[i];if(m==='on')on.push(v.n);else if(m==='later')later.push(v.n);else if(m==='skip')skip.push(v.n)});
-  return {on,later,skip};
+  const on=[],later=[],pts=p.trails[activeTrail].points,mk=curMarks();
+  pts.forEach((v,i)=>{const m=mk[i];if(m==='on')on.push(v.n);else if(m==='later')later.push(v.n)});
+  return {on,later};
 }
 function updatePainted(p){
   const el=document.getElementById('painted');if(!el)return;
-  const {on,later,skip}=paintedSummary(p);
-  if(!on.length&&!later.length&&!skip.length){el.innerHTML='Mark a few viewing points above to paint your own version of this trail.';return}
+  const {on,later}=paintedSummary(p);
+  if(!on.length&&!later.length){el.innerHTML='Mark a few viewing points to paint your own version of this trail.';return}
   const bits=[];
   if(on.length)bits.push('<b>'+on.length+'</b> on your path');
   if(later.length)bits.push('<b>'+later.length+'</b> for later');
-  if(skip.length)bits.push('<b>'+skip.length+'</b> set aside');
   el.innerHTML='Your painted trail: '+bits.join(' · ')+'. That’s your masterpiece — no one else’s.';
 }
 function philoLabel(v){return {cm:'Charlotte Mason',classical:'Classical',montessori:'Montessori',unschool:'Interest-led',eclectic:'Eclectic',unsure:'Still exploring'}[v]||v}
-function restart(){stepIndex=0;['stage','age','crew','need','philosophy','style'].forEach(k=>delete answers[k]);answers.values=[];marks={};document.documentElement.style.setProperty('--pk','#5E7252');renderStep();document.getElementById('cg').scrollIntoView({behavior:'smooth'});}
+function restart(){stepIndex=0;['stage','age','crew','need','philosophy','style'].forEach(k=>delete answers[k]);answers.values=[];marksByTrail={0:{},1:{}};activeTrail=0;document.documentElement.style.setProperty('--pk','#5E7252');renderStep();document.getElementById('cg').scrollIntoView({behavior:'smooth'});}
 
 /* ---------------- optional capture ---------------- */
 function captureHTML(p){
@@ -730,9 +781,9 @@ function wireCapture(p){
         {q:'Values',a:(answers.values||[]).map(v=>labelFor('values',v)).join(', ')},
         {q:'Approach',a:philoLabel(answers.philosophy)},
         {q:'Travel style',a:labelFor('style',answers.style)},
+        {q:'Trail',a:p.trails[activeTrail].name},
         {q:'On their path',a:paint.on.join(', ')||'—'},
         {q:'Maybe later',a:paint.later.join(', ')||'—'},
-        {q:'Set aside',a:paint.skip.join(', ')||'—'},
         {q:'Note',a:document.getElementById('cap-note').value.trim()}
       ]};
     const btn=form.querySelector('button');btn.disabled=true;btn.textContent='Sending…';

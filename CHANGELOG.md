@@ -8,6 +8,17 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.17.0 — 2026-06-27
+
+- **Two trails per park**, both built on the same gentle rhythm — **Rest · Review ·
+  Relationship**. Each park offers *The Mother's Trail* (for you, mama) and *The
+  Learner's Trail* (for your child); a toggle switches between them and re-draws the
+  trail map's pins.
+- Removed the **"Not for us"** option — viewing points are now marked simply *On my
+  path* or *Maybe later*, keeping the tone encouraging. Legend, painted-trail
+  summary, and the Compass submission updated to match, and the chosen trail is
+  recorded in the submission Christina receives.
+
 ## v1.16.0 — 2026-06-27
 
 - **Site-wide update tying the new pages and concepts together.**
