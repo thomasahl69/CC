@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.29.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.30.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.29.0">
-<title>Guided Journeys | Authentic Joy in the Journey</title>
-<meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
-<meta property="og:title" content="Guided Journeys — Find Your Trail">
-<meta property="og:description" content="A Compass Guide that matches your family to a national-park homeschool journey.">
-<link rel="icon" href="favicon.ico" sizes="any">
+<meta name="version" content="1.30.0">
+<title>Evergreen Homeschool — Guided Journeys &amp; Compass Guide | Authentic Joy in the Journey</title>
+<meta name="description" content="Evergreen Homeschool is a multi-age, family-style curriculum: a 10-year journey through history — Bible, science, literature, art, poetry, writing, and nature — with every child learning at their own level. Take the free Compass Guide.">
+<meta name="keywords" content="Evergreen Homeschool, multi-age homeschool curriculum, family-style homeschool, homeschool history curriculum, Christian homeschool, Charlotte Mason, classical homeschool, homeschool for multiple ages, Compass Guide">
+<link rel="canonical" href="https://www.christinacarpenter.org/journeys.html">
+<meta name="theme-color" content="#5E7252">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Evergreen Homeschool — One family, one story">
+<meta property="og:description" content="A 10-year, multi-age journey through history with every child at their own level. Take the free Compass Guide for a personalized plan.">
+<meta property="og:url" content="https://www.christinacarpenter.org/journeys.html">
+<meta property="og:image" content="https://www.christinacarpenter.org/favicon-192.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Evergreen Homeschool — Guided Journeys">
+<meta name="twitter:description" content="A multi-age, family-style homeschool journey through history. Free Compass Guide.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Evergreen Homeschool — Guided Journeys & Compass Guide",
+  "url": "https://www.christinacarpenter.org/journeys.html",
+  "applicationCategory": "EducationApplication",
+  "operatingSystem": "Any (web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "A free Compass Guide that gives homeschool families a personalized Evergreen plan — a multi-age, family-style journey through history with every child at their own level.",
+  "publisher": { "@type": "Organization", "name": "Authentic Joy in the Journey", "url": "https://www.christinacarpenter.org/" }
+}
+</script><link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#FAF6EF">
@@ -112,10 +134,12 @@ section{padding-block:clamp(46px,6vw,84px)}
 .cg-textwrap{margin:.2rem 0 .4rem}
 .cg-textin{width:100%;font-family:var(--sans);font-size:1.15rem;padding:.8rem 1rem;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
 .cg-textin:focus{outline:none;border-color:var(--sage-deep);box-shadow:0 0 0 3px color-mix(in srgb,var(--sage) 25%,transparent)}
-.opt-wrap{display:flex;flex-direction:column}
-.opt-info-btn{align-self:flex-start;margin:.35rem 0 0 .3rem;background:none;border:0;padding:.15rem .2rem;font-family:var(--util);font-size:.72rem;letter-spacing:.03em;color:var(--sage-deep);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.opt-wrap{display:grid;grid-template-columns:1fr auto;align-items:stretch;gap:.4rem .6rem}
+.opt-wrap .opt{width:100%}
+.opt-info-btn{align-self:center;white-space:nowrap;background:none;border:0;padding:.2rem .45rem;font-family:var(--util);font-size:.72rem;letter-spacing:.03em;color:var(--sage-deep);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .opt-info-btn:hover{color:var(--ink)}
-.opt-info{margin:.4rem 0 .1rem .3rem;font-size:.88rem;color:var(--ink-soft);line-height:1.5;background:color-mix(in srgb,var(--sage) 8%,var(--paper));border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem}
+.opt-info{grid-column:1 / -1;margin:.1rem 0 .1rem;font-size:.88rem;color:var(--ink-soft);line-height:1.5;background:color-mix(in srgb,var(--sage) 8%,var(--paper));border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem}
+@media(max-width:520px){.opt-wrap{grid-template-columns:1fr}.opt-info-btn{justify-self:start;padding-left:.3rem}}
 .path-desc{display:block;font-size:.85rem;color:var(--ink-soft);font-style:italic;margin-top:.25rem}
 .opt{display:flex;gap:.9rem;align-items:flex-start;text-align:left;width:100%;background:var(--paper-2);border:1.5px solid var(--line);border-radius:14px;padding:1rem 1.1rem;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;font:inherit;color:inherit}
 .opt:hover{border-color:var(--sage);transform:translateX(3px)}
@@ -315,7 +339,7 @@ details.teach summary+p{margin-top:.2rem}
 .parks h2{color:var(--paper)}
 .parks .eyebrow{color:var(--blush)}.parks .eyebrow::before{background:var(--rose)}
 .park-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;margin-top:clamp(30px,4vw,48px)}
-.park-tile{border-radius:18px;padding:1.4rem;background:rgba(250,246,239,.05);border:1px solid rgba(250,246,239,.14);cursor:pointer;transition:transform .25s,background .25s;border-top:3px solid var(--tp,#8FA483)}
+.park-tile{display:block;text-decoration:none;color:inherit;border-radius:18px;padding:1.4rem;background:rgba(250,246,239,.05);border:1px solid rgba(250,246,239,.14);cursor:pointer;transition:transform .25s,background .25s;border-top:3px solid var(--tp,#8FA483)}
 .park-tile:hover{transform:translateY(-4px);background:rgba(250,246,239,.09)}
 .park-tile .pn{font-family:var(--serif);font-size:1.5rem}
 .park-tile .ps{font-family:var(--serif);font-style:italic;color:var(--blush);font-size:1rem;margin:.1rem 0 .5rem}
@@ -369,7 +393,7 @@ details.teach summary+p{margin-top:.2rem}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.29.0</span>
+      <span class="site-ver">v1.30.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -716,7 +740,7 @@ function renderStep(){
       +'<span class="dot"></span><span><b>'+o.b+'</b>'+(o.s?'<span>'+o.s+'</span>':'')+'</span></button>';
     if(!o.info)return btn;
     return '<div class="opt-wrap">'+btn
-      +'<button type="button" class="opt-info-btn" data-oi="'+oi+'" aria-expanded="false">What’s this?</button>'
+      +'<button type="button" class="opt-info-btn" data-oi="'+oi+'" aria-expanded="false">Learn more…</button>'
       +'<div class="opt-info" id="oi'+oi+'" hidden>'+o.info+'</div></div>';
   }).join('');
   const canNext=st.type==='multi'?((chosen||[]).length>0):!!chosen;
@@ -743,7 +767,7 @@ function renderStep(){
     const box=document.getElementById('oi'+b.getAttribute('data-oi'));if(!box)return;
     const open=box.hasAttribute('hidden');
     if(open){box.removeAttribute('hidden');b.textContent='Hide';b.setAttribute('aria-expanded','true');b.classList.add('open');}
-    else{box.setAttribute('hidden','');b.textContent='What’s this?';b.setAttribute('aria-expanded','false');b.classList.remove('open');}
+    else{box.setAttribute('hidden','');b.textContent='Learn more…';b.setAttribute('aria-expanded','false');b.classList.remove('open');}
   });
   const nx=document.getElementById('cgNext');if(nx)nx.onclick=next;
   const bk=document.getElementById('cgBack');if(bk)bk.onclick=()=>{stepIndex--;renderStep()};
@@ -1121,9 +1145,10 @@ function labelFor(key,v){const st=STEPS.find(s=>s.key===key);if(!st||!v)return v
 
 /* ---------------- all-parks grid ---------------- */
 document.getElementById('parkGrid').innerHTML=PARKS.map(p=>
-  '<div class="park-tile" data-park="'+p.id+'" style="--tp:'+p.tp+'"><div class="pn">'+p.name+'</div><div class="ps">'+p.era+'</div><div class="pa">'+p.dates+'</div><p class="pd">'+p.blurb+'</p></div>'
+  '<a class="park-tile" href="/parks/'+p.id+'.html" data-park="'+p.id+'" style="--tp:'+p.tp+'"><div class="pn">'+p.name+'</div><div class="ps">'+p.era+'</div><div class="pa">'+p.dates+'</div><p class="pd">'+p.blurb+'</p></a>'
 ).join('');
-document.querySelectorAll('.park-tile').forEach(t=>t.onclick=()=>{
+document.querySelectorAll('.park-tile').forEach(t=>t.onclick=e=>{
+  e.preventDefault();
   const p=PARKS.find(x=>x.id===t.getAttribute('data-park'));
   renderPark(p,null);document.getElementById('cg').scrollIntoView({behavior:'smooth'});
 });

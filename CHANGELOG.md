@@ -8,6 +8,29 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.30.0 — 2026-06-27
+
+SEO, findability, and standalone URLs.
+
+- **A crawlable page for every park.** Each of the five parks now has its own real,
+  shareable URL (/parks/acadia.html … denali.html) with full static content — era, both
+  years, study stops, the four paths, the nine subjects — generated from the live park data
+  so it never drifts. The park tiles are now real links (crawlers follow them; visitors still
+  get the smooth in-page experience) and each page links to the next/previous era and back to
+  the Compass Guide.
+- **robots.txt + sitemap.xml** (admin and API excluded; nine URLs listed).
+- **Structured data (JSON-LD):** WebSite + Organization + WebApplication on the homepage,
+  WebApplication on Journeys, a Course block on every park page, CollectionPage on Resources,
+  and EducationEvent on the Conference page.
+- **Full head SEO on every page:** canonical URLs, Twitter cards, theme-color, and keyword
+  meta. The Journeys page meta was updated from the old "national-park" pitch to Evergreen.
+- **Keyword-rich static hero** on the homepage (Christian homeschool, Evergreen, multi-age
+  family curriculum) — real HTML, not JS-rendered.
+- **The "What's this?" explainer is now a "Learn more…" link to the right** of each option,
+  saving vertical space, and it collapses to below on narrow phones.
+- Admin is marked noindex. Every page (including the five new ones) carries the viewport meta
+  and responsive layout for phones, tablets, and desktops.
+
 ## v1.29.0 — 2026-06-27
 
 - **Plain-language "What's this?" explainers in the questionnaire.** The educator-type
