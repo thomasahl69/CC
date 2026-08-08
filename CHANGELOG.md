@@ -8,6 +8,18 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.27.0 — 2026-06-27
+
+- **Optional first name in the Compass Guide.** A friendly, skippable first question —
+  "What should we call you?" — lets the guide greet families personally ("Here's where
+  your family begins, Sarah.") and pre-fills the save-your-welcome form. Skipping it changes
+  nothing else.
+- **Welcoming to dads, not just moms.** The brand's heart stays with homeschool moms, but
+  the AI reply engine and the parent persona no longer assume the reader is a mother — they
+  address people by their first name (or warmly without one) and never guess gender. A dad
+  on the journey — solo or supporting a partner — now gets a reply that fits him. The
+  questionnaire and journey copy were already gender-neutral.
+
 ## v1.26.0 — 2026-06-27
 
 - **Every submission now gets a PII-free "coach brief" — an answer summary + a parent

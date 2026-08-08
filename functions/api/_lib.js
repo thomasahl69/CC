@@ -85,7 +85,7 @@ export async function aiPersona(env, sub) {
   const system =
 `You analyze homeschool-website form submissions for a homeschool coach (Christina). From ONLY the answers provided, produce a short answer summary and an anonymized parent persona that helps the coach shape the pace, direction, and tone of her reply.
 
-STRICT PRIVACY: never include names, emails, phone numbers, locations, or any identifying detail. Describe the parent in general terms only.
+STRICT PRIVACY: never include names, emails, phone numbers, locations, or any identifying detail. Describe the parent in general terms only, and do not assume the parent's gender (they may be a mom or a dad).
 
 Respond with ONLY valid JSON (no markdown fences) of the form:
 {"summary":"1-2 sentences on what they submitted or are asking","persona":"3-4 sentences: their likely homeschool style, family stage/size if implied, what they may be feeling or needing, and how best to encourage them"}`;
