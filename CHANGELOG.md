@@ -8,6 +8,18 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.31.1 — 2026-06-27
+
+- **Fixed silent image-upload failures in the Gallery (and everywhere else).** Uploads now
+  report exactly what happened instead of failing quietly:
+  - The Gallery shows a persistent status line — "Uploading…", "Added N images ✓", or the
+    precise failure reason — right under the buttons.
+  - Every failure now names its cause: not signed in / offline preview, session expired,
+    no R2 storage bound, file too big, wrong type, or server error.
+  - iPhone/HEIC and other files that report a blank MIME type are no longer dropped
+    silently — they're accepted by file extension and validated on the server.
+  - Event, Team, and Resource image uploads surface the same clear errors.
+
 ## v1.31.0 — 2026-06-27
 
 - **Evergreen remembers you.** Once a family completes the Compass Guide, their answers are

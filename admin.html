@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.31.0 -->
+<!-- Content Studio (admin) — v1.31.1 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.31.0">
+<meta name="version" content="1.31.1">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -192,6 +192,10 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .brief-persona b{font-family:var(--util);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage-deep);display:block;margin-bottom:.15rem}
 .brief-persona p{margin:0;font-size:.94rem;color:var(--ink-soft);line-height:1.55}
 .brief-empty{margin:0;font-size:.9rem;color:var(--ink-soft);line-height:1.5}
+.gal-status{margin:0 0 1rem;padding:.7rem .95rem;border-radius:10px;font-size:.92rem;line-height:1.45;border:1px solid var(--line);background:var(--paper-2);color:var(--ink)}
+.gal-status.busy{border-color:var(--sage);background:color-mix(in srgb,var(--sage) 12%,var(--paper))}
+.gal-status.ok{border-color:var(--sage-deep);background:color-mix(in srgb,var(--sage) 16%,var(--paper));color:var(--sage-deep)}
+.gal-status.err{border-color:#C67B6E;background:#F7ECE9;color:#8A4436}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -236,7 +240,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.31.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.31.1</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -254,7 +258,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.31.0</span>
+      <span class="ver" id="appVer">v1.31.1</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -387,6 +391,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
         <input type="file" id="gal-file" accept="image/*" multiple hidden>
       </div>
     </div>
+    <div id="galStatus" class="gal-status" hidden></div>
     <div id="teamPanel" class="team-panel">
       <h3>Team photos</h3>
       <div class="team-slots">
@@ -471,7 +476,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.31.0';
+const APP_VERSION='1.31.1';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -494,20 +499,21 @@ async function api(path,opts={}){
   return {ok:r.ok,status:r.status,body};
 }
 
-/* upload an image file to R2 storage; returns the URL to use, or null */
+/* upload an image file to R2 storage; returns {ok, url, error} — never silent */
 async function uploadImageFile(file){
-  if(!SERVER){alert('Image uploads work on the published site (they need the server). For now you can paste an image link instead.');return null}
-  if(!file){return null}
-  if(!/^image\//i.test(file.type)){alert('Please choose an image file (jpg, png, gif, webp).');return null}
-  if(file.size>10*1024*1024){alert('That image is larger than 10 MB. Please choose a smaller one.');return null}
+  if(!file)return{ok:false,error:'No file was selected.'};
+  const looksImage=/^image\//i.test(file.type||'')||/\.(jpe?g|png|gif|webp|avif|heic|heif|bmp|svg)$/i.test(file.name||'');
+  if(!looksImage)return{ok:false,error:'That file doesn’t look like an image (jpg, png, gif, webp, heic).'};
+  if(file.size>10*1024*1024)return{ok:false,error:'That image is larger than 10 MB — please choose a smaller one.'};
+  if(!SERVER)return{ok:false,error:'Uploads need the live site. Open the admin on your published Cloudflare site and sign in, then uploads will save to your storage. (For now you can paste an image link instead.)'};
   const fd=new FormData();fd.append('file',file);
   try{
     const r=await fetch('/api/upload',{method:'POST',credentials:'same-origin',body:fd});
-    const d=await r.json().catch(()=>null);
-    if(r.ok&&d&&d.ok)return d.url;
-    alert('Upload failed.\n\n'+((d&&d.error)||('Status '+r.status)));
-  }catch(e){alert('Upload failed — could not reach the server.')}
-  return null;
+    let d=null;try{d=await r.json()}catch(_){}
+    if(r.ok&&d&&d.ok)return{ok:true,url:d.url};
+    if(r.status===401)return{ok:false,error:'Your admin session expired. Sign in again, then retry the upload.'};
+    return{ok:false,error:(d&&d.error)||('The server responded with status '+r.status+'.')};
+  }catch(e){return{ok:false,error:'Could not reach the server. Check your connection and that the site is deployed.'};}
 }
 
 /* ---------- seed content (from the two source documents) ---------- */
@@ -1033,9 +1039,10 @@ function renderEvtDetail(){
   evFile.onchange=async()=>{
     const f=evFile.files&&evFile.files[0];if(!f)return;
     evUp.textContent='Uploading\u2026';evUp.disabled=true;
-    const url=await uploadImageFile(f);
+    const res=await uploadImageFile(f);
     evUp.textContent='Upload';evUp.disabled=false;evFile.value='';
-    if(url){ev.image=url;document.getElementById('ev-image').value=url;scheduleEvtSave(ev);prev();renderEvtList()}
+    if(res.ok){ev.image=res.url;document.getElementById('ev-image').value=res.url;scheduleEvtSave(ev);prev();renderEvtList()}
+    else{alert('Upload failed.\n\n'+res.error)}
   };
   document.getElementById('delEvt').onclick=async()=>{
     if(confirm('Delete this event?')){
@@ -1139,13 +1146,28 @@ function renderGallery(){
 document.getElementById('btnAddImg').onclick=()=>addImage('');
 
 /* gallery uploads + drag-and-drop */
+function galStatus(msg,kind){
+  const el=document.getElementById('galStatus');if(!el)return;
+  if(!msg){el.hidden=true;el.textContent='';el.className='gal-status';return}
+  el.hidden=false;el.textContent=msg;el.className='gal-status'+(kind?' '+kind:'');
+}
 async function addUploadedFiles(files){
-  const imgs=[...files].filter(f=>/^image\//i.test(f.type));
-  if(!imgs.length){if(files&&files.length)alert('Those didn\u2019t look like image files.');return}
+  const all=[...files];
+  if(!all.length)return;
   const btn=document.getElementById('btnUploadImg');
   if(btn){btn.textContent='Uploading\u2026';btn.disabled=true}
-  for(const f of imgs){const url=await uploadImageFile(f);if(url)await addImage(url)}
+  let ok=0; const errs=[];
+  for(let i=0;i<all.length;i++){
+    const f=all[i];
+    galStatus('Uploading '+(f.name||('image '+(i+1)))+' ('+(i+1)+' of '+all.length+')\u2026','busy');
+    const res=await uploadImageFile(f);
+    if(res.ok){await addImage(res.url);ok++;}
+    else{errs.push((f.name?f.name+': ':'')+res.error);}
+  }
   if(btn){btn.textContent='Upload images';btn.disabled=false}
+  if(errs.length&&!ok){galStatus('Upload failed. '+errs[0],'err');}
+  else if(errs.length){galStatus('Added '+ok+' image'+(ok===1?'':'s')+'. '+errs.length+' failed: '+errs[0],'err');}
+  else{galStatus('Added '+ok+' image'+(ok===1?'':'s')+' \u2713','ok');setTimeout(()=>galStatus(''),3500);}
 }
 (function(){
   const fileInput=document.getElementById('gal-file'),upBtn=document.getElementById('btnUploadImg'),zone=document.getElementById('galleryView');
@@ -1186,9 +1208,10 @@ document.querySelectorAll('.team-slot').forEach(slot=>{
   fileInput.onchange=async()=>{
     const f=fileInput.files&&fileInput.files[0];fileInput.value='';if(!f)return;
     upBtn.textContent='Uploading\u2026';upBtn.disabled=true;
-    const url=await uploadImageFile(f);
+    const res=await uploadImageFile(f);
     upBtn.textContent='Upload';upBtn.disabled=false;
-    if(url){team[member]=url;await saveTeam();renderTeam()}
+    if(res.ok){team[member]=res.url;await saveTeam();renderTeam()}
+    else{alert('Upload failed.\n\n'+res.error)}
   };
   slot.querySelector('.ts-clear').onclick=async()=>{team[member]='';await saveTeam();renderTeam()};
 });
@@ -1313,7 +1336,7 @@ function renderResDetail(){
   document.getElementById('rs-image').addEventListener('input',prev);prev();
   const rf=document.getElementById('rs-file'),ru=document.getElementById('rs-upload');
   ru.onclick=()=>rf.click();
-  rf.onchange=async()=>{const f=rf.files&&rf.files[0];if(!f)return;ru.textContent='Uploading…';ru.disabled=true;const url=await uploadImageFile(f);ru.textContent='Upload';ru.disabled=false;rf.value='';if(url){x.image=url;document.getElementById('rs-image').value=url;scheduleResSave(x);prev()}};
+  rf.onchange=async()=>{const f=rf.files&&rf.files[0];if(!f)return;ru.textContent='Uploading…';ru.disabled=true;const res=await uploadImageFile(f);ru.textContent='Upload';ru.disabled=false;rf.value='';if(res.ok){x.image=res.url;document.getElementById('rs-image').value=res.url;scheduleResSave(x);prev()}else{alert('Upload failed.\n\n'+res.error)}};
   document.getElementById('delRes').onclick=async()=>{if(confirm('Delete this resource?')){const id=x.id;resources=resources.filter(r=>r.id!==id);activeRes=null;if(SERVER){try{await api('/resources/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}else{saveResLocal()}renderResList();renderResDetail()}};
 }
 
