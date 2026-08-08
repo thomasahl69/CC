@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.17.1 -->
+<!-- Content Studio (admin) — v1.19.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.17.1">
+<meta name="version" content="1.19.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -174,6 +174,17 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .field-inline{display:flex;flex-direction:column;gap:.25rem;flex:1;min-width:220px}
 .field-inline label{font-family:var(--util);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
 .field-inline label span{text-transform:none;letter-spacing:0;color:var(--sage)}
+.media-bar{padding:.85rem clamp(12px,2vw,20px);border-bottom:1px solid var(--line);background:var(--paper-2)}
+.media-grid{padding:clamp(14px,2vw,22px);display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;overflow:auto}
+.media-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column}
+.media-thumb{aspect-ratio:1/1;background:var(--paper-2) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="%23eee"/></svg>');background-size:16px 16px;overflow:hidden}
+.media-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.media-meta{padding:.55rem .65rem;font-family:var(--util);font-size:.66rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:.15rem}
+.media-actions{display:flex;gap:.35rem;padding:0 .65rem .65rem}
+.media-actions button{flex:1;font-family:var(--util);font-size:.64rem;letter-spacing:.04em;border:1px solid var(--line);background:var(--paper-2);border-radius:7px;padding:.4em;cursor:pointer;color:var(--ink)}
+.media-actions button:hover{border-color:var(--sage)}
+.media-actions button.del:hover{border-color:var(--rose);color:var(--rose)}
+.media-empty{padding:clamp(30px,5vw,60px);text-align:center;color:var(--ink-soft)}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -218,7 +229,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.17.1</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.19.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -236,7 +247,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.17.1</span>
+      <span class="ver" id="appVer">v1.19.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -244,6 +255,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
       <button class="vtab" id="tabEvents" role="tab">Events</button>
       <button class="vtab" id="tabGallery" role="tab">Gallery</button>
       <button class="vtab" id="tabResources" role="tab">Resources</button>
+      <button class="vtab" id="tabMedia" role="tab">Media</button>
     </div>
     <span id="contentActions" style="display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn ghost tiny" id="btnPreview">Preview JSON</button>
@@ -277,6 +289,10 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
   <div class="notice" id="galleryNotice" style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
     <div><b>These photos appear in the "Highlights" gallery on the Bloom &amp; Blossom Conference page.</b> Paste an image link for each, drag the order with the arrows, and add a caption if you like.</div>
+  </div>
+  <div class="notice" id="mediaNotice" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><b>Every image you’ve uploaded, in one place.</b> Copy an image’s link to reuse it anywhere, or delete ones you no longer need to keep your storage tidy. (Uploading happens inside Events, Gallery, and Resources.)</div>
   </div>
   <div class="notice" id="resourcesNotice" style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
@@ -400,6 +416,12 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
       </main>
     </div>
   </div>
+
+  <!-- MEDIA VIEW -->
+  <div id="mediaView" style="display:none;flex-direction:column;flex:1">
+    <div class="media-bar"><span id="mediaCount" class="util" style="color:var(--ink-soft)"></span></div>
+    <div id="mediaGrid" class="media-grid"></div>
+  </div>
 </div>
 
 <!-- preview dialog -->
@@ -431,7 +453,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.17.1';
+const APP_VERSION='1.19.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -669,17 +691,19 @@ const STATUS_LABEL={'new':'New','in-progress':'In progress','responded':'Respond
 const TYPE_LABEL={'rsvp':'Notify','contact':'Contact','questionnaire':'Questionnaire'};
 
 async function showView(which){
-  const isC=which==='content', isS=which==='subs', isE=which==='events', isG=which==='gallery', isR=which==='resources';
+  const isC=which==='content', isS=which==='subs', isE=which==='events', isG=which==='gallery', isR=which==='resources', isM=which==='media';
   document.getElementById('contentView').style.display=isC?'':'none';
   document.getElementById('subsView').style.display=isS?'':'none';
   document.getElementById('eventsView').style.display=isE?'':'none';
   document.getElementById('galleryView').style.display=isG?'':'none';
   document.getElementById('resourcesView').style.display=isR?'flex':'none';
+  document.getElementById('mediaView').style.display=isM?'flex':'none';
   document.getElementById('contentNotice').style.display=isC?'':'none';
   document.getElementById('subNotice').style.display=isS?'':'none';
   document.getElementById('eventsNotice').style.display=isE?'':'none';
   document.getElementById('galleryNotice').style.display=isG?'':'none';
   document.getElementById('resourcesNotice').style.display=isR?'':'none';
+  document.getElementById('mediaNotice').style.display=isM?'':'none';
   document.getElementById('contentActions').style.display=isC?'flex':'none';
   document.getElementById('subActions').style.display=isS?'flex':'none';
   document.getElementById('tabContent').classList.toggle('active',isC);
@@ -687,16 +711,19 @@ async function showView(which){
   document.getElementById('tabEvents').classList.toggle('active',isE);
   document.getElementById('tabGallery').classList.toggle('active',isG);
   document.getElementById('tabResources').classList.toggle('active',isR);
+  document.getElementById('tabMedia').classList.toggle('active',isM);
   if(isS){await refreshSubs();renderSubList();updateSubBadge()}
   if(isE){await refreshEvents();renderEvtList()}
   if(isG){await refreshGallery();renderGallery();await refreshTeam();renderTeam()}
   if(isR){await refreshStore();await refreshResources();renderResList()}
+  if(isM){await refreshMedia();renderMedia()}
 }
 document.getElementById('tabContent').onclick=()=>showView('content');
 document.getElementById('tabSubs').onclick=()=>showView('subs');
 document.getElementById('tabEvents').onclick=()=>showView('events');
 document.getElementById('tabGallery').onclick=()=>showView('gallery');
 document.getElementById('tabResources').onclick=()=>showView('resources');
+document.getElementById('tabMedia').onclick=()=>showView('media');
 document.getElementById('subFilter').onchange=e=>{subFilter=e.target.value;renderSubList()};
 
 function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
@@ -753,6 +780,11 @@ function renderSubDetail(){
         <label class="lbl">Your response ${s.respondedAt?'· last saved '+fmtDate(s.respondedAt):''}</label>
         <textarea class="ta" id="subResp" rows="5" placeholder="Write your reply to ${esc(s.name||'her')} here…">${esc(s.response||'')}</textarea>
       </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0 0">
+        <button class="btn tiny" id="sendResp">Send by email</button>
+        <button class="btn ghost tiny" id="copyResp">Copy reply</button>
+        <button class="btn ghost tiny" id="markResp">Mark responded</button>
+      </div>
       <div class="ai-slot" id="aiSlot"></div>
     </div>`;
   host.appendChild(d);
@@ -770,6 +802,21 @@ function renderSubDetail(){
     if(SERVER){try{await api('/submissions/'+encodeURIComponent(id),{method:'DELETE'})}catch(e){}}else{saveSubs()}
     renderSubList();renderSubDetail();updateSubBadge();
   }};
+  const markResponded=()=>{s.status='responded';s.respondedAt=new Date().toISOString();commitSub(s);renderSubList();updateSubBadge();const sel=document.getElementById('subStatus');if(sel)sel.value='responded';tick();};
+  d.querySelector('#sendResp').onclick=()=>{
+    const body=(s.response||'').trim();
+    if(!body){alert('Write a reply first — or use “Generate draft” below, then “Append to reply.”');return;}
+    if(!s.email){alert('This submission has no email address to send to.');return;}
+    markResponded();
+    const subject=encodeURIComponent('A note from Christina — Authentic Joy in the Journey');
+    window.location.href='mailto:'+encodeURIComponent(s.email)+'?subject='+subject+'&body='+encodeURIComponent(body);
+  };
+  d.querySelector('#copyResp').onclick=async()=>{
+    const body=(s.response||'').trim();if(!body){alert('Nothing to copy yet.');return;}
+    const b=d.querySelector('#copyResp');
+    try{await navigator.clipboard.writeText(body);const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1200);}catch(e){alert('Copy this reply:\n\n'+body);}
+  };
+  d.querySelector('#markResp').onclick=markResponded;
 }
 
 /* AI draft slot */
@@ -1108,6 +1155,37 @@ document.querySelectorAll('.team-slot').forEach(slot=>{
   };
   slot.querySelector('.ts-clear').onclick=async()=>{team[member]='';await saveTeam();renderTeam()};
 });
+
+/* ---------- media library ---------- */
+let media=[];
+async function refreshMedia(){
+  media=[];
+  if(!SERVER)return;
+  try{const r=await api('/media');if(r.ok&&r.body&&Array.isArray(r.body.items))media=r.body.items;}catch(e){}
+}
+function fmtSize(n){if(!n&&n!==0)return'';if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(0)+' KB';return (n/1048576).toFixed(1)+' MB';}
+function renderMedia(){
+  const grid=document.getElementById('mediaGrid'),count=document.getElementById('mediaCount');
+  if(!grid)return;
+  if(!SERVER){grid.innerHTML='<div class="media-empty">The media library lists images stored on your live site. It’s available once deployed — local preview can’t reach your storage.</div>';if(count)count.textContent='';return}
+  if(!media.length){grid.innerHTML='<div class="media-empty">No uploaded images yet. Upload photos inside Events, Gallery, or Resources and they’ll appear here.</div>';if(count)count.textContent='';return}
+  if(count)count.textContent=media.length+' image'+(media.length===1?'':'s');
+  grid.innerHTML=media.map(m=>
+    '<div class="media-card" data-k="'+esc(m.key)+'">'
+    +'<div class="media-thumb"><img src="'+esc(m.url)+'" alt="" loading="lazy"></div>'
+    +'<div class="media-meta"><span>'+fmtSize(m.size)+(m.uploaded?' · '+fmtDate(m.uploaded):'')+'</span></div>'
+    +'<div class="media-actions"><button class="copy" data-u="'+esc(m.url)+'">Copy link</button><button class="del" data-k="'+esc(m.key)+'">Delete</button></div>'
+    +'</div>').join('');
+  grid.querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{
+    try{await navigator.clipboard.writeText(b.getAttribute('data-u'));const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1200);}catch(e){alert('Copy this link:\n'+b.getAttribute('data-u'));}
+  });
+  grid.querySelectorAll('.del').forEach(b=>b.onclick=()=>deleteMedia(b.getAttribute('data-k')));
+}
+async function deleteMedia(key){
+  if(!confirm('Delete this image permanently? Anything still using it will lose the picture.'))return;
+  try{await api('/media/'+encodeURIComponent(key),{method:'DELETE'});}catch(e){}
+  media=media.filter(m=>m.key!==key);renderMedia();
+}
 
 /* ---------- resources / store ---------- */
 const RES_KEY='ccs_resources_v1';

@@ -8,6 +8,39 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.19.0 — 2026-06-27
+
+Bug-fix and integration pass from live feedback:
+
+- **Fixed the disappearing menu in Content Studio.** A malformed notice block (from the
+  Media Library addition) left `resourcesNotice` without its opening tag, so switching
+  tabs threw a JS error and a stray `</div>` collapsed the layout. Repaired — all tabs
+  switch cleanly again, which also makes the **Media** (image) tab reachable.
+- **Journeys & Resources are now part of the overall site**, not standalone: both pages
+  carry the same site header, full navigation menu, brand wordmark, Register button, and
+  mobile hamburger as the home page.
+- **Both journey trails are now for the student:** *The Learner's Trail* (skills &
+  knowledge) and *The Wonder Trail* (heart & curiosity) — the earlier "Mother's Trail"
+  framing is gone. Both still walk Rest · Review · Relationship, rewritten per park.
+- **Image management** is clearer: the Media tab (now reachable) is the one place to see,
+  copy links to, and delete every uploaded image; uploading still lives in Events,
+  Gallery, and Resources.
+- **Resources rebuilt as a store layout** (GrowthPath-style): a sticky category bar, a
+  "shop for a trail" filter, and products grouped into **aisles** with headings and
+  counts (Must-Haves first). Shows a labeled sample layout until real products are added.
+
+## v1.18.0 — 2026-06-27
+
+- **Media Library** (new Content Studio tab): every image you've uploaded, in one
+  place. Copy an image's link to reuse it anywhere, or delete images you no longer
+  need to keep R2 storage tidy. Backed by `GET /api/media` (lists R2 uploads) and
+  `DELETE /api/media/:key`.
+- **Respond & send in one place:** the Submissions responder now has **Send by
+  email** (opens your mail app with the reply pre-filled to the person and marks the
+  submission "responded"), plus **Copy reply** and **Mark responded**. Works
+  alongside the existing "Generate draft / Append to reply" AI helper.
+- No database migration needed (Media uses R2; Send uses your mail app).
+
 ## v1.17.1 — 2026-06-27
 
 - Made the **Adolphe Millot field plate** easy to find: the Journeys page nav now has

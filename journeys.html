@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.17.1 -->
+<!-- Guided Journeys — Compass Guide — page v1.19.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.17.1">
+<meta name="version" content="1.19.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -58,9 +58,34 @@ p{margin:0 0 1.1em}
 .site-ver{font-family:var(--util);font-size:.58rem;letter-spacing:.1em;color:var(--sage-deep);opacity:.6;margin-top:4px}
 .nav a.home{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
 .nav a.home:hover{color:var(--ink)}
-.topnav{display:flex;gap:clamp(.9rem,2.5vw,1.6rem)}
-.topnav a{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
-.topnav a:hover{color:var(--ink)}
+.brand{font-size:1.45rem}
+.brand-mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none}
+.brand-mark img{width:32px;height:32px;object-fit:contain;border-radius:50%}
+.brand-mark svg{width:26px;height:26px}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;margin:0;padding:0}
+.nav-links a:not(.btn){font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft);position:relative;padding-block:4px;transition:color .2s}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--sage-deep);transition:width .28s ease}
+.nav-links a:not(.btn):hover{color:var(--ink)}
+.nav-links a:not(.btn):hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-cta{margin-left:.3rem}
+.nav-cta .btn-solid{color:var(--paper)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.hamburger span{width:24px;height:2px;background:var(--ink);transition:transform .3s ease,opacity .25s ease}
+.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:860px){
+  .nav-links{position:fixed;inset:72px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:8px var(--gutter) 24px;transform:translateY(-140%);transition:transform .4s cubic-bezier(.3,.7,.2,1);box-shadow:0 20px 40px -20px var(--shadow);max-height:calc(100vh - 72px);overflow:auto;z-index:60}
+  .nav-links.open{transform:none}
+  .nav-links li{border-bottom:1px solid var(--line)}
+  .nav-links li:last-child{border-bottom:0}
+  .nav-links a{display:block;padding:15px 0;font-size:1rem}
+  .nav-links a::after{display:none}
+  .nav-cta{margin:14px 0 0}
+  .nav-cta .btn{width:100%;justify-content:center}
+  .hamburger{display:flex}
+}
 
 /* hero */
 .hero{position:relative;text-align:center;padding:clamp(50px,7vw,96px) 0 clamp(30px,4vw,54px);overflow:hidden}
@@ -256,19 +281,28 @@ section{padding-block:clamp(46px,6vw,84px)}
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header" id="siteHeader">
   <div class="wrap nav">
     <div class="brand-wrap">
-      <a href="index.html" class="brand"><img src="favicon-192.png" alt="" onerror="this.style.display='none'">Authentic <span>Joy</span></a>
-      <span class="site-ver">v1.17.1</span>
+      <a href="index.html" class="brand" aria-label="Christina Carpenter home">
+        <span class="brand-mark">
+          <img src="https://static.wixstatic.com/media/20ae10_06e67ae6427e4b61ba01f7c773e2a54b~mv2.png/v1/fill/w_160,h_160,al_c,q_90,enc_auto/logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
+        </span>
+        Christina <span>Carpenter</span>
+      </a>
+      <span class="site-ver">v1.19.0</span>
     </div>
-    <nav class="topnav">
-      <a href="index.html">Home</a>
-      <a href="#plate">The Plate</a>
-      <a href="#rabbit">Rabbit Trails</a>
-      <a href="resources.html">Resources</a>
-      <a href="bloom-and-blossom.html">Conference</a>
-    </nav>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#spaces">What I Offer</a></li>
+      <li><a href="journeys.html" aria-current="page">Journeys</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="bloom-and-blossom.html">Conference</a></li>
+      <li><a href="index.html#events">Events</a></li>
+      <li class="nav-cta"><a href="index.html#events" class="btn btn-solid btn-sm">Register</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -353,15 +387,15 @@ const PARKS=[
    fit:{stage:['first','footing'],age:['4-7','8-10'],need:['wonder'],crew:['one','two'],values:['nature','books','faith','relationship']},
    why:'You’re standing at the trailhead, and these early years aren’t about doing everything — they’re about <b>awe, warm rhythms, and a few strong roots</b>. Yellowstone keeps the days short, the wonder big, and the pressure low.',
    trails:[
-     {name:'The Mother’s Trail',sub:'For you, mama',points:[
-       {n:'Rest',t:'Short days, long wonder',b:'In these early years a short, peaceful day beats a full, frantic one. Your calm is the curriculum — rest is not falling behind.'},
-       {n:'Review',t:'Look how far you’ve come',b:'Each week, notice one small bloom instead of every gap — a letter learned, a question asked. Let the tiny wins steady you.'},
-       {n:'Relationship',t:'Warm before rigorous',b:'Snuggle-and-read beats drill-and-worry. The bond you build now is the foundation everything else will stand on.'}
+     {name:'The Learner’s Trail',sub:'Skills & knowledge',points:[
+       {n:'Rest',t:'Short lessons, full hearts',b:'Ten focused minutes beats an exhausting hour. Little learners bloom when the day stays gentle.'},
+       {n:'Review',t:'Tell it back',b:'After a read-aloud, let them narrate it in their own words. That’s how young minds lock learning in.'},
+       {n:'Relationship',t:'Learn side by side',b:'Sound out the word together, count the acorns together. Early skills grow best hand-in-hand.'}
      ]},
-     {name:'The Learner’s Trail',sub:'For your child',points:[
-       {n:'Rest',t:'Time to just be',b:'Unstructured play and long looks at bugs are real learning at this age. Little ones grow deeply at rest.'},
-       {n:'Review',t:'Tell it back',b:'After a read-aloud, let them retell it in their own words. That’s review, joyfully — no test required.'},
-       {n:'Relationship',t:'Wonder together',b:'Kneel down and marvel alongside them. Shared wonder is how strong foundations take root.'}
+     {name:'The Wonder Trail',sub:'Heart & curiosity',points:[
+       {n:'Rest',t:'Time to just be',b:'Unstructured play, mud, and long looks at bugs are real learning. Wonder needs open space.'},
+       {n:'Review',t:'Notice what amazed you',b:'End the week naming one thing that made them say “whoa.” Awe remembered becomes awe multiplied.'},
+       {n:'Relationship',t:'Marvel together',b:'Kneel down and be amazed alongside them. Shared delight is what makes a child love to learn.'}
      ]}
    ]},
   {id:'acadia',name:'Acadia',sub:'Curiosity & Independence',ages:'Ages 8–12',tp:'#3E7CA8',pk:'#356F97',pk2:'#5E9B6B',
@@ -369,15 +403,15 @@ const PARKS=[
    fit:{stage:['footing','confident'],age:['8-10','11-13'],need:['curiosity'],crew:['one','two','four'],values:['nature','handson','books']},
    why:'Your learner is reaching for more. Acadia is about <b>following curiosity, hands-on discovery, and handing over the reins</b> a little at a time — from tide pools to summiting on their own.',
    trails:[
-     {name:'The Mother’s Trail',sub:'For you, mama',points:[
-       {n:'Rest',t:'Trust the unhurried',b:'Resist the race. A curious child needs room, not pressure — give yourself permission to slow so their wonder has air to breathe.'},
-       {n:'Review',t:'Notice the growing independence',b:'Each month, name one thing they can now do alone. It’s proof the trail is working — and fuel for you.'},
-       {n:'Relationship',t:'Walk beside, not ahead',b:'Shift from leading to companioning. Become the one who wonders alongside rather than directs.'}
+     {name:'The Learner’s Trail',sub:'Skills & knowledge',points:[
+       {n:'Rest',t:'Trust the slower path',b:'A capable child still needs margin. Skills settle when there’s room to breathe between them.'},
+       {n:'Review',t:'Show what you learned',b:'Let them teach you the thing they just figured out. Explaining it is the deepest kind of review.'},
+       {n:'Relationship',t:'Coach, don’t just correct',b:'Work beside them on the hard problem. Skills grow fastest next to someone who believes in them.'}
      ]},
-     {name:'The Learner’s Trail',sub:'For your child',points:[
-       {n:'Rest',t:'Follow a rabbit trail',b:'Let a genuine interest pull them happily off the plan. Curiosity rested is curiosity fed.'},
-       {n:'Review',t:'Show what you found',b:'A child who explains their tide-pool discovery is reviewing and owning it at the same time.'},
-       {n:'Relationship',t:'Discover, then share',b:'Hands-on discovery plus someone to share it with — that’s how independence is built kindly.'}
+     {name:'The Wonder Trail',sub:'Heart & curiosity',points:[
+       {n:'Rest',t:'Follow a rabbit trail',b:'Let a real interest pull them happily off the plan. Curiosity fed is curiosity kept.'},
+       {n:'Review',t:'Collect your discoveries',b:'A nature journal, a photo, a shelf of finds — looking back at what they chased builds a curious heart.'},
+       {n:'Relationship',t:'Explore together',b:'Hands in the tide pool, questions out loud, someone to share it with — that’s how wonder becomes character.'}
      ]}
    ]},
   {id:'zion',name:'Zion',sub:'Rhythm for Many Ages',ages:'A full, mixed crew',tp:'#B4693F',pk:'#A65E38',pk2:'#5E8A63',
@@ -385,15 +419,15 @@ const PARKS=[
    fit:{stage:['confident','seasoned'],age:['range','8-10','11-13'],need:['rhythm'],crew:['four','full'],values:['structure','relationship','faith']},
    why:'With a canyon full of different ages and stages, the trail is about <b>rhythm, combining what you can, and a pace that lasts</b>. Zion helps you teach the many without losing yourself.',
    trails:[
-     {name:'The Mother’s Trail',sub:'For you, mama',points:[
-       {n:'Rest',t:'Margin in the canyon',b:'Build rest into the rhythm before the walls close in. Real margin keeps a full house from tipping into chaos.'},
-       {n:'Review',t:'Loop, don’t cram',b:'Circle back together instead of pushing forward alone. A family review loop lightens your load.'},
-       {n:'Relationship',t:'One family, many ages',b:'Combine what you can and let relationship — not the schedule — be the thread that holds the day.'}
+     {name:'The Learner’s Trail',sub:'Skills & knowledge',points:[
+       {n:'Rest',t:'Everyone breathes',b:'Different ages need different rests. Skills stick when no child is pushed past their own pace.'},
+       {n:'Review',t:'Teach a younger one',b:'When an older child reviews with a younger, both grow — the teacher most of all.'},
+       {n:'Relationship',t:'Learn as one crew',b:'Loop a subject everyone shares, each at their own depth. Skills grow in the togetherness.'}
      ]},
-     {name:'The Learner’s Trail',sub:'For your child',points:[
-       {n:'Rest',t:'Everyone breathes',b:'Different ages need different rests — littles nap and play, bigs pause and reset. Rest belongs to every age.'},
-       {n:'Review',t:'Teach a younger one',b:'When an older child reviews with a younger, both grow — and you catch a breath.'},
-       {n:'Relationship',t:'Travel together',b:'Loop history, nature, and story so the whole crew journeys together, each at their own depth.'}
+     {name:'The Wonder Trail',sub:'Heart & curiosity',points:[
+       {n:'Rest',t:'Room in the canyon',b:'Even in a full house, guard unhurried time. A rushed child rarely stops to wonder.'},
+       {n:'Review',t:'Remember together',b:'Look back over the week as a family — favorite moments, big questions. Shared memory grows a shared heart.'},
+       {n:'Relationship',t:'Travel side by side',b:'Read-alouds, projects, and adventures done together bind curiosity to belonging.'}
      ]}
    ]},
   {id:'denali',name:'Denali',sub:'The Summit — Teens & Launching',ages:'Ages 13–18',tp:'#5C79B0',pk:'#4E6A9F',pk2:'#8AA7C9',
@@ -401,15 +435,15 @@ const PARKS=[
    fit:{stage:['seasoned','summiting'],age:['14-18','11-13'],need:['depth'],crew:['one','two','four'],values:['structure','books']},
    why:'The air is thin and the views are long. Denali is about <b>depth, mastery, real independence, and a strong launch</b> — high-school planning without the panic.',
    trails:[
-     {name:'The Mother’s Trail',sub:'For you, mama',points:[
-       {n:'Rest',t:'Rest is not quitting',b:'High school is a marathon. Sustainable beats heroic — rest keeps you both on the mountain for the long climb.'},
-       {n:'Review',t:'Map the summit',b:'Step back and check the route — credits, goals, next steps — so the climb stays clear and calm.'},
-       {n:'Relationship',t:'Mentor, don’t manage',b:'As they take the lead, become the trusted guide they want to call. Relationship is the launchpad.'}
+     {name:'The Learner’s Trail',sub:'Skills & knowledge',points:[
+       {n:'Rest',t:'Depth needs margin',b:'Mastery isn’t rushed. Give the teen space to go deep in a few things instead of thin across many.'},
+       {n:'Review',t:'Master a few things',b:'Circle back and truly know it, rather than cramming and forgetting. Real review builds real skill.'},
+       {n:'Relationship',t:'Learn from a mentor',b:'Big skills grow beside a trusted guide. Walk the hard climbs with them, not ahead of them.'}
      ]},
-     {name:'The Learner’s Trail',sub:'For your child',points:[
-       {n:'Rest',t:'Room to own it',b:'Independence needs unscheduled space to grow. Rest is what makes ownership possible.'},
-       {n:'Review',t:'Master a few things',b:'Depth over busywork — revisiting toward real mastery in the things that matter most.'},
-       {n:'Relationship',t:'Launch, connected',b:'Life skills and calling grow through relationship, not lectures. The bond is what they carry off the mountain.'}
+     {name:'The Wonder Trail',sub:'Heart & curiosity',points:[
+       {n:'Rest',t:'Room to own it',b:'Unscheduled space is where a teen discovers what they love. Rest makes ownership possible.'},
+       {n:'Review',t:'Name what lights you up',b:'Look back at what consistently draws them in. Reviewing the heart points toward the path ahead.'},
+       {n:'Relationship',t:'Launch, connected',b:'Character and calling grow through relationship, not lectures. The bond is what they carry off the mountain.'}
      ]}
    ]},
   {id:'smoky',name:'Great Smoky Mountains',sub:'The Seasoned Trail',ages:'Veteran & mentoring',tp:'#6C8C86',pk:'#5E7F79',pk2:'#9BB6A0',
@@ -417,15 +451,15 @@ const PARKS=[
    fit:{stage:['seasoned','summiting'],age:['range','14-18'],need:['renewal'],crew:['full','four','two'],values:['relationship','faith','books']},
    why:'You’ve walked these ridges for years. The Smokies are about <b>the long view, keeping the joy, and pouring into others</b> — whether you’re finishing strong or helping newer moms find their trail.',
    trails:[
-     {name:'The Mother’s Trail',sub:'For you, mama',points:[
-       {n:'Rest',t:'The long-view rest',b:'After years on the ridges, rest is how you finish with joy instead of fumes. You’ve earned the margin.'},
-       {n:'Review',t:'Zoom out',b:'From the high dome, review the whole journey and let go of the ruts. Recalibrate around what matters now.'},
-       {n:'Relationship',t:'Pour into others',b:'Mentor a newer mama — your story becomes her courage. Relationship is the legacy the trail was always for.'}
+     {name:'The Learner’s Trail',sub:'Skills & knowledge',points:[
+       {n:'Rest',t:'Finish gently',b:'Let the last miles be unhurried. A calm finish is where hard-won skills finally settle for good.'},
+       {n:'Review',t:'Look back over it all',b:'Review the whole record of growth together — proof of how far they’ve actually climbed.'},
+       {n:'Relationship',t:'Learn to lead',b:'Give them a younger one to teach or a real responsibility. Skill becomes maturity in relationship.'}
      ]},
-     {name:'The Learner’s Trail',sub:'For your child',points:[
-       {n:'Rest',t:'Finish gently',b:'Let the last miles be unhurried and grace-filled. Rest honors how far they’ve come.'},
-       {n:'Review',t:'Remember together',b:'Look back over the years side by side — a shared record of growth and grace.'},
-       {n:'Relationship',t:'Send with blessing',b:'The last viewing point is a homecoming — relationship, gratitude, and a blessing sent forward.'}
+     {name:'The Wonder Trail',sub:'Heart & curiosity',points:[
+       {n:'Rest',t:'Keep the joy',b:'Guard rest so wonder survives the long journey. A weary heart stops noticing.'},
+       {n:'Review',t:'Tell the story',b:'Look back on the years of wonder together — the trips, the books, the questions. Remembering shapes who they become.'},
+       {n:'Relationship',t:'Send with blessing',b:'The last viewing point is a homecoming — gratitude, connection, and a blessing sent forward.'}
      ]}
    ]}
 ];
@@ -647,7 +681,7 @@ function renderPark(p,runner){
     +'<div class="map-head"><span class="mh-eye">Your trail map</span><h3>'+p.name+'</h3></div>'
     +mapSVG(p)
     +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>On your path</span><span><i style="background:#B79447"></i>Maybe later</span><span>Tap a pin to jump to that stop</span></div>'
-    +'<p class="two-trails">Every park has <b>two trails</b>, and both walk the same gentle rhythm — <b>Rest</b>, <b>Review</b>, and <b>Relationship</b>. Choose the vantage that fits today:</p>'
+    +'<p class="two-trails">Every park has <b>two trails for your child</b> — one for <b>skills</b>, one for the <b>heart</b> — and both walk the same gentle rhythm: <b>Rest</b>, <b>Review</b>, and <b>Relationship</b>. Choose where to start today:</p>'
     +toggle
     +'<div class="manifesto"><span class="m-eye">Your masterpiece</span><p>This is a canvas, not a map to trace. You’re painting something that fits only your family.</p><p class="style-note">'+styleNote()+'</p></div>'
     +'<div id="trailArea"></div>'
@@ -896,8 +930,11 @@ function renderRabbit(){
 renderRabbit();
 
 document.getElementById('year').textContent=new Date().getFullYear();
-renderStep();
-document.getElementById('year').textContent=new Date().getFullYear();
+(function(){var ham=document.getElementById('hamburger'),nl=document.getElementById('navLinks');
+  if(ham&&nl){ham.addEventListener('click',function(){var o=nl.classList.toggle('open');ham.setAttribute('aria-expanded',o?'true':'false')});
+  nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');ham.setAttribute('aria-expanded','false')})});}
+  var hd=document.getElementById('siteHeader');if(hd)addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>8)});
+})();
 renderStep();
 </script>
 </body>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Resources / Provisions — page v1.17.1 -->
+<!-- Resources / Provisions — page v1.19.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.17.1">
+<meta name="version" content="1.19.0">
 <title>Provisions for the Journey | Authentic Joy in the Journey</title>
 <meta name="description" content="Christina's curated shelf of homeschool books, read-alouds, and resources — provisions for every stage of your journey.">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -47,6 +47,34 @@ h1{font-size:clamp(2.6rem,6vw,4.4rem)}
 .topnav{display:flex;gap:clamp(.9rem,2.5vw,1.6rem)}
 .topnav a{font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft)}
 .topnav a:hover{color:var(--ink)}
+.brand{font-size:1.45rem}
+.brand-mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none}
+.brand-mark img{width:32px;height:32px;object-fit:contain;border-radius:50%}
+.brand-mark svg{width:26px;height:26px}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;margin:0;padding:0}
+.nav-links a:not(.btn){font-family:var(--util);font-size:.82rem;letter-spacing:.06em;color:var(--ink-soft);position:relative;padding-block:4px;transition:color .2s}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--sage-deep);transition:width .28s ease}
+.nav-links a:not(.btn):hover{color:var(--ink)}
+.nav-links a:not(.btn):hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-cta{margin-left:.3rem}
+.nav-cta .btn{padding:.7em 1.3em;font-size:.74rem}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.hamburger span{width:24px;height:2px;background:var(--ink);transition:transform .3s ease,opacity .25s ease}
+.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:860px){
+  .nav-links{position:fixed;inset:72px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:8px var(--gutter) 24px;transform:translateY(-140%);transition:transform .4s cubic-bezier(.3,.7,.2,1);box-shadow:0 20px 40px -20px var(--shadow);max-height:calc(100vh - 72px);overflow:auto;z-index:60}
+  .nav-links.open{transform:none}
+  .nav-links li{border-bottom:1px solid var(--line)}
+  .nav-links li:last-child{border-bottom:0}
+  .nav-links a{display:block;padding:15px 0;font-size:1rem}
+  .nav-links a::after{display:none}
+  .nav-cta{margin:14px 0 0}
+  .nav-cta .btn{width:100%;justify-content:center}
+  .hamburger{display:flex}
+}
 .hero{text-align:center;padding:clamp(48px,7vw,92px) 0 clamp(20px,3vw,36px)}
 .hero .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.2vw,1.7rem);color:var(--ink-soft);max-width:40ch;margin:1.2rem auto 1.4rem}
 .disclosure{font-size:.82rem;color:var(--ink-soft);max-width:60ch;margin:1.2rem auto 0;font-style:italic}
@@ -57,6 +85,16 @@ section{padding-block:clamp(30px,4vw,52px)}
 .filt:hover{border-color:var(--sage)}
 .filt.sel{background:var(--sage-deep);color:#fff;border-color:var(--sage-deep)}
 .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.3rem}
+.store-nav{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;position:sticky;top:72px;background:rgba(250,246,239,.92);backdrop-filter:blur(10px);padding:.85rem 0;z-index:10;border-bottom:1px solid var(--line);margin-bottom:1.4rem}
+.store-parks{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;align-items:center;margin-bottom:2.2rem}
+.store-parks .pn-label{font-family:var(--util);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:.3rem}
+.filt.sm{font-size:.68rem;padding:.4em .85em}
+.aisle{margin-bottom:clamp(30px,4.5vw,54px);scroll-margin-top:150px}
+.aisle-head{display:flex;align-items:baseline;gap:.9rem;margin-bottom:1.2rem;border-bottom:1px solid var(--line);padding-bottom:.6rem}
+.aisle-head h2{font-size:clamp(1.6rem,3vw,2.15rem);margin:0}
+.aisle-head .count{font-family:var(--util);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.sample-buy{display:inline-flex;align-items:center;gap:.5em;font-family:var(--util);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--sage);border-radius:999px;padding:.6em 1.1em;opacity:.6;cursor:default}
+.sample-note{text-align:center;color:var(--sage-deep);font-style:italic;background:var(--paper-2);border:1px dashed var(--line);border-radius:14px;padding:1rem;max-width:640px;margin:1rem auto 0;font-size:.9rem}
 .res-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
 .res-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -28px var(--shadow)}
 .res-thumb{aspect-ratio:4/3;background:var(--paper-2);position:relative;overflow:hidden}
@@ -80,34 +118,46 @@ section{padding-block:clamp(30px,4vw,52px)}
 </style>
 </head>
 <body>
-<header class="site-header">
+<header class="site-header" id="siteHeader">
   <div class="wrap nav">
     <div class="brand-wrap">
-      <a href="index.html" class="brand"><img src="favicon-192.png" alt="" onerror="this.style.display='none'">Authentic <span>Joy</span></a>
-      <span class="site-ver">v1.17.1</span>
+      <a href="index.html" class="brand" aria-label="Christina Carpenter home">
+        <span class="brand-mark">
+          <img src="https://static.wixstatic.com/media/20ae10_06e67ae6427e4b61ba01f7c773e2a54b~mv2.png/v1/fill/w_160,h_160,al_c,q_90,enc_auto/logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
+        </span>
+        Christina <span>Carpenter</span>
+      </a>
+      <span class="site-ver">v1.19.0</span>
     </div>
-    <nav class="topnav">
-      <a href="index.html">Home</a>
-      <a href="journeys.html">Journeys</a>
-      <a href="bloom-and-blossom.html">Conference</a>
-    </nav>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#spaces">What I Offer</a></li>
+      <li><a href="journeys.html">Journeys</a></li>
+      <li><a href="resources.html" aria-current="page">Resources</a></li>
+      <li><a href="bloom-and-blossom.html">Conference</a></li>
+      <li><a href="index.html#events">Events</a></li>
+      <li class="nav-cta"><a href="index.html#events" class="btn btn-solid">Register</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow center">Provisions for the Journey</p>
+    <p class="eyebrow center">The Trail Shop</p>
     <h1>Christina's shelf.</h1>
-    <p class="tagline">The books, read-alouds, and resources she reaches for again and again — gathered for every stage of the trail.</p>
+    <p class="tagline">The books, read-alouds, and supplies she reaches for again and again — gathered into aisles for every stage of the trail.</p>
     <div id="storefrontCta"></div>
     <p class="disclosure" id="disclosure">As an Amazon Associate, Christina earns from qualifying purchases.</p>
   </div>
 </section>
 
-<section>
+<section class="store">
   <div class="wrap">
-    <div class="filters" id="filters"></div>
-    <div class="res-grid" id="resGrid"></div>
+    <div class="store-nav" id="catNav"></div>
+    <div class="store-parks" id="parkNav"></div>
+    <div id="aisles"></div>
     <div id="resEmpty"></div>
   </div>
 </section>
@@ -122,45 +172,55 @@ section{padding-block:clamp(30px,4vw,52px)}
 <script>
 const PARK_NAMES={yellowstone:'Yellowstone',acadia:'Acadia',zion:'Zion',denali:'Denali',smoky:'Great Smoky Mtns',any:'For everyone'};
 const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-let RES=[],parkFilter='all',catFilter='all';
-const grid=document.getElementById('resGrid'),emptyEl=document.getElementById('resEmpty'),filtersEl=document.getElementById('filters');
+let RES=[],parkFilter='all',catFilter='all',IS_SAMPLE=false;
+const aislesEl=document.getElementById('aisles'),emptyEl=document.getElementById('resEmpty'),catNav=document.getElementById('catNav'),parkNav=document.getElementById('parkNav');
 
-function render(){
-  const parks=[...new Set(RES.map(r=>r.park).filter(Boolean))];
+const SAMPLE=[
+  {title:'The Read-Aloud Family',author:'Sarah Mackenzie',note:'Why reading together matters most — and how to build the habit.',category:'Must-Haves',park:'any'},
+  {title:'Morning Time Basket',author:'A gentle-feast staple',note:'Poetry, hymns, and a little beauty to open your day.',category:'Must-Haves',park:'yellowstone'},
+  {title:'The Story of the World',author:'Susan Wise Bauer',note:'Narrative history the whole crew can loop together.',category:'Books',park:'zion'},
+  {title:'Life of Fred',author:'Stanley Schmidt',note:'Story-driven math for a curious learner.',category:'Books',park:'denali'},
+  {title:'Watercolor & Nature Journal Set',author:'Nature study kit',note:'Simple supplies for sketching what you find on the trail.',category:'Supplies',park:'acadia'},
+  {title:'Keepsake Trail Journal',author:'For the long view',note:'A place to record the years of wonder.',category:'Supplies',park:'smoky'}
+];
+
+function orderedCats(){
   const cats=[...new Set(RES.map(r=>r.category).filter(Boolean))];
-  filtersEl.innerHTML='';
-  if(parks.length>1||cats.length>1){
-    let html='';
-    if(cats.length>1){
-      html+='<div class="filt-row"><button class="filt'+(catFilter==='all'?' sel':'')+'" data-c="all">All resources</button>'
-        +cats.map(c=>'<button class="filt'+(catFilter===c?' sel':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>').join('')+'</div>';
-    }
-    if(parks.length>1){
-      html+='<div class="filt-row"><button class="filt'+(parkFilter==='all'?' sel':'')+'" data-p="all">Every trail</button>'
-        +parks.map(p=>'<button class="filt'+(parkFilter===p?' sel':'')+'" data-p="'+esc(p)+'">'+(PARK_NAMES[p]||esc(p))+'</button>').join('')+'</div>';
-    }
-    filtersEl.innerHTML=html;
-    filtersEl.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{catFilter=b.getAttribute('data-c');render()});
-    filtersEl.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{parkFilter=b.getAttribute('data-p');render()});
-  }
-  const list=RES.filter(r=>(catFilter==='all'||r.category===catFilter)&&(parkFilter==='all'||r.park===parkFilter));
-  if(!RES.length){
-    grid.innerHTML='';emptyEl.innerHTML='<div class="empty"><p>Christina is gathering her shelf. Check back soon for her favorite books and resources.</p></div>';return;
-  }
-  emptyEl.innerHTML='';
-  grid.innerHTML=list.map(r=>{
-    const hasImg=r.image&&r.image.trim();
-    const thumb='<div class="res-thumb">'+(r.category?'<span class="res-cat">'+esc(r.category)+'</span>':'')
-      +(hasImg?'<img src="'+esc(r.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\'">':'')
-      +'<div class="ph" style="display:'+(hasImg?'none':'grid')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></div></div>';
-    const cta=r.url?'<div class="res-cta"><a href="'+esc(r.url)+'" target="_blank" rel="sponsored noopener nofollow">View on Amazon →</a></div>':'';
-    const park=r.park&&r.park!=='any'?'<div class="res-park">Fits the '+(PARK_NAMES[r.park]||esc(r.park))+' trail</div>':'';
-    return '<div class="res-card">'+thumb+'<div class="res-body">'
-      +'<div class="res-title">'+esc(r.title||'Untitled')+'</div>'
-      +(r.author?'<div class="res-author">'+esc(r.author)+'</div>':'')
-      +(r.note?'<p class="res-note">'+esc(r.note)+'</p>':'')+park+cta+'</div></div>';
-  }).join('');
-  if(!list.length)grid.innerHTML='<p style="color:var(--ink-soft)">Nothing in this filter yet.</p>';
+  cats.sort((a,b)=>{const pri=x=>/must|essential/i.test(x)?0:1;return pri(a)-pri(b)||a.localeCompare(b)});
+  return cats;
+}
+function card(r){
+  const hasImg=r.image&&r.image.trim();
+  const thumb='<div class="res-thumb">'+(r.category?'<span class="res-cat">'+esc(r.category)+'</span>':'')
+    +(hasImg?'<img src="'+esc(r.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\'">':'')
+    +'<div class="ph" style="display:'+(hasImg?'none':'grid')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></div></div>';
+  const cta=r.url?'<div class="res-cta"><a href="'+esc(r.url)+'" target="_blank" rel="sponsored noopener nofollow">View on Amazon →</a></div>'
+    :(IS_SAMPLE?'<div class="res-cta"><span class="sample-buy">View on Amazon →</span></div>':'');
+  const park=r.park&&r.park!=='any'?'<div class="res-park">Fits the '+(PARK_NAMES[r.park]||esc(r.park))+' trail</div>':'';
+  return '<div class="res-card">'+thumb+'<div class="res-body">'
+    +'<div class="res-title">'+esc(r.title||'Untitled')+'</div>'
+    +(r.author?'<div class="res-author">'+esc(r.author)+'</div>':'')
+    +(r.note?'<p class="res-note">'+esc(r.note)+'</p>':'')+park+cta+'</div></div>';
+}
+function aisle(cat,items){
+  return '<section class="aisle"><div class="aisle-head"><h2>'+esc(cat)+'</h2><span class="count">'+items.length+' item'+(items.length===1?'':'s')+'</span></div>'
+    +'<div class="res-grid">'+items.map(card).join('')+'</div></section>';
+}
+function render(){
+  const cats=orderedCats();
+  const parks=[...new Set(RES.map(r=>r.park).filter(Boolean))];
+  catNav.innerHTML=(RES.length&&cats.length)?('<button class="filt'+(catFilter==='all'?' sel':'')+'" data-c="all">All aisles</button>'+cats.map(c=>'<button class="filt'+(catFilter===c?' sel':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>').join('')):'';
+  parkNav.innerHTML=(RES.length&&parks.length>1)?('<span class="pn-label">Shop for a trail:</span><button class="filt sm'+(parkFilter==='all'?' sel':'')+'" data-p="all">Every trail</button>'+parks.filter(p=>p!=='any').map(p=>'<button class="filt sm'+(parkFilter===p?' sel':'')+'" data-p="'+esc(p)+'">'+(PARK_NAMES[p]||esc(p))+'</button>').join('')):'';
+  catNav.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{catFilter=b.getAttribute('data-c');render();window.scrollTo({top:0,behavior:'smooth'})});
+  parkNav.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{parkFilter=b.getAttribute('data-p');render()});
+  if(!RES.length){aislesEl.innerHTML='';emptyEl.innerHTML='<div class="empty"><p>Christina is stocking the shelves. Check back soon for her favorite books and resources.</p></div>';return}
+  const showCats=(catFilter==='all')?cats:[catFilter];
+  let html='';
+  showCats.forEach(c=>{const items=RES.filter(r=>r.category===c&&(parkFilter==='all'||r.park===parkFilter||r.park==='any'));if(items.length)html+=aisle(c,items)});
+  const uncat=RES.filter(r=>!r.category&&(parkFilter==='all'||r.park===parkFilter||r.park==='any'));
+  if(catFilter==='all'&&uncat.length)html+=aisle('More provisions',uncat);
+  aislesEl.innerHTML=html||'<p style="text-align:center;color:var(--ink-soft);padding:2rem">Nothing in this filter yet.</p>';
+  emptyEl.innerHTML=IS_SAMPLE?'<p class="sample-note">This is a sample layout. Your real products replace these as soon as you add them in <b>Content Studio → Resources</b>.</p>':'';
 }
 
 fetch('/api/store',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{
@@ -170,10 +230,16 @@ fetch('/api/store',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then
   }
 }).catch(()=>{});
 fetch('/api/resources',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(d=>{
-  if(d&&d.ok&&Array.isArray(d.resources))RES=d.resources;
+  if(d&&d.ok&&Array.isArray(d.resources)&&d.resources.length){RES=d.resources;IS_SAMPLE=false;}
+  else{RES=SAMPLE;IS_SAMPLE=true;}
   render();
-}).catch(()=>render());
+}).catch(()=>{RES=SAMPLE;IS_SAMPLE=true;render();});
 document.getElementById('year').textContent=new Date().getFullYear();
+(function(){var ham=document.getElementById('hamburger'),nl=document.getElementById('navLinks');
+  if(ham&&nl){ham.addEventListener('click',function(){var o=nl.classList.toggle('open');ham.setAttribute('aria-expanded',o?'true':'false')});
+  nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');ham.setAttribute('aria-expanded','false')})});}
+  var hd=document.getElementById('siteHeader');if(hd)addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>8)});
+})();
 </script>
 </body>
 </html>
