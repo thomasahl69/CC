@@ -8,6 +8,31 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.24.0 — 2026-06-27
+
+**Journeys rebuilt as Evergreen (draft across all five parks) — for dinner review.**
+
+- Parks are now the **five historical eras** Christina named: Acadia (Ancient),
+  Yosemite (Medieval), Yellowstone (Renaissance & Exploration), Zion (1700s–1800s),
+  Denali (Modern) — each with a themed map and a full draft of content.
+- Each park is **two years**: Year 1 Explore and Year 2 Deep Trail (the old two-path
+  toggle, re-cut). Four **study stops** per year, drafted for every era.
+- The style selector is replaced by the **Four Paths / levels** — Wildflower, Meadow,
+  Ranger, and Hearth (the whole-family layer) — each re-tailoring how the stops are
+  walked.
+- A **nine-subjects** panel per park shows how Bible, History, Science, Geography,
+  Literature, Poetry, Art, Writing, and Nature weave into that era.
+- The **"For you, teacher"** parent-teacher guidance carries over (full depth on
+  Acadia; ready to extend).
+- Hero, the five-parks grid, and the entry flow reframed to Evergreen. The old
+  age-based Compass quiz is parked (kept in code) behind a simple "begin at the
+  beginning" placement — the per-child path-placement quiz is the next step once
+  Christina confirms the mechanics.
+
+_Draft notes: park names/eras are Christina's current draft (to be tweaked); the
+field-plate artwork still shows the old park set and will be redrawn once names lock;
+the Compass quiz reframe and the per-park book lists are the next build steps._
+
 ## v1.23.1 — 2026-06-27
 
 - Renamed the **Media** tab to **Image Library** and rewrote the Gallery + Image Library notices so the difference is obvious: Gallery = curated photos shown on the site (conference highlights + team); Image Library = your private shelf of every uploaded file, for reuse and cleanup.

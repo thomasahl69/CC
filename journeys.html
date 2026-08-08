@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.23.1 -->
+<!-- Guided Journeys — Compass Guide — page v1.24.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.23.1">
+<meta name="version" content="1.24.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -209,6 +209,22 @@ section{padding-block:clamp(46px,6vw,84px)}
 .sp-pills .sp{font-family:var(--util);font-size:.76rem;border:1.5px solid var(--line);background:var(--paper-2);border-radius:999px;padding:.5em 1em;cursor:pointer;color:var(--ink);transition:all .2s}
 .sp-pills .sp:hover{border-color:var(--pk)}
 .sp-pills .sp.act{background:var(--pk);color:#fff;border-color:var(--pk)}
+.sp-pills .sp em{display:block;font-style:normal;font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;opacity:.7;margin-top:.15rem}
+.subjects{margin-top:clamp(28px,4vw,48px);border-top:1px solid var(--line);padding-top:clamp(24px,3vw,36px)}
+.subj-head{text-align:center;max-width:56ch;margin:0 auto 1.4rem}
+.subj-head .mh-eye{font-family:var(--util);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pk)}
+.subj-head h3{font-family:var(--serif);font-size:1.6rem;margin:.2rem 0 .4rem}
+.subj-head p{color:var(--ink-soft);font-size:.95rem;margin:0}
+.subj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem}
+.subj{border:1px solid var(--line);border-radius:12px;padding:.8rem .9rem;background:var(--paper)}
+.subj b{font-family:var(--util);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pk);display:block;margin-bottom:.25rem}
+.subj span{font-size:.9rem;color:var(--ink-soft);line-height:1.45}
+.place-intro{text-align:center;max-width:60ch;margin:0 auto}
+.place-intro h3{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);margin:0 0 .6rem}
+.place-intro p{color:var(--ink-soft);margin:.4rem 0}
+.place-intro .rec-cta{justify-content:center;margin-top:1.4rem}
+.year-switch{text-align:center;margin:.2rem auto -.4rem}
+.year-switch .ys-label{font-family:var(--util);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
 .sp-lens{margin:.9rem auto 0;max-width:56ch;font-size:.94rem;color:var(--ink-soft);background:color-mix(in srgb,var(--pk) 8%, var(--paper));border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
 .sp-lens b{color:var(--pk)}
 .pause-chip{display:flex;align-items:flex-start;gap:.7rem;max-width:60ch;margin:.2rem auto;padding:.55rem .9rem 1.5rem 2.4rem;position:relative;color:var(--ink-soft);font-size:.9rem}
@@ -321,7 +337,7 @@ details.teach summary+p{margin-top:.2rem}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.23.1</span>
+      <span class="site-ver">v1.24.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -340,11 +356,11 @@ details.teach summary+p{margin-top:.2rem}
 <section class="hero">
   <svg class="ridge" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 120 L0 70 L180 30 L340 78 L520 20 L700 74 L880 34 L1060 82 L1240 40 L1440 78 L1440 120 Z"/></svg>
   <div class="wrap">
-    <p class="eyebrow center">Guided Journeys</p>
-    <h1>Find your <span class="accent">trail</span>.</h1>
-    <p class="tagline">Every family's homeschool is its own wild, beautiful country.</p>
-    <p class="sub">Answer a few questions and the Compass Guide will match you to a national-park journey built for right where you are. Then you paint it your own way — keep what fits, save some for later, veer off-trail. Some of us follow the path; some of us (hi) splash the color where it lands. Both make a masterpiece.</p>
-    <button class="btn btn-solid" id="startBtn">Begin with the Compass Guide</button>
+    <p class="eyebrow center">Evergreen Homeschool</p>
+    <h1>One family. <span class="accent">One story.</span></h1>
+    <p class="tagline">A 10-year, National-Park journey through history — with every child at their own level.</p>
+    <p class="sub">Evergreen is a multi-age, family-style curriculum. Instead of a separate grade-level track for each child, the whole family travels the same trail through history — Bible, science, literature, art, poetry, writing, and nature all woven into each era — while the work meets each child right where they are. Five parks, two years each, four paths for four kinds of learner.</p>
+    <button class="btn btn-solid" id="startBtn">Explore the five parks</button>
     <div style="margin-top:1rem"><a href="#rabbit" style="font-family:var(--util);font-size:.8rem;letter-spacing:.06em;color:var(--sage-deep);text-decoration:underline">or wander a rabbit trail →</a></div>
     <figure class="hero-quote">
       <blockquote>"I'm not afraid of storms, for I am learning how to sail my ship."</blockquote>
@@ -371,9 +387,9 @@ details.teach summary+p{margin-top:.2rem}
 <!-- ALL PARKS -->
 <section class="parks" id="parks">
   <div class="wrap">
-    <p class="eyebrow center">The Trail Map</p>
-    <h2 style="text-align:center;max-width:20ch;margin:0 auto">All the parks on the map.</h2>
-    <p style="text-align:center;color:rgba(250,246,239,.75);max-width:56ch;margin:1rem auto 0">Curious where you might land? Every journey has its own country. Tap one to preview its trail — or let the Compass Guide choose for you.</p>
+    <p class="eyebrow center">The Five Parks</p>
+    <h2 style="text-align:center;max-width:20ch;margin:0 auto">Five parks, five eras of history.</h2>
+    <p style="text-align:center;color:rgba(250,246,239,.75);max-width:56ch;margin:1rem auto 0">The family travels forward through time, one park at a time — each studied for two years. Tap a park to explore its two years, its study stops, and the subjects woven through it.</p>
     <div class="park-grid" id="parkGrid"></div>
   </div>
 </section>
@@ -416,97 +432,180 @@ details.teach summary+p{margin-top:.2rem}
 <script>
 /* ---------------- park data ---------------- */
 const PARKS=[
-  {id:'yellowstone',name:'Yellowstone',sub:'Wonder & Foundations',ages:'Ages 4–10',tp:'#C48A2C',pk:'#B07E28',pk2:'#3E8078',
-   short:'First steps into homeschooling — wonder, habit, story, and strong roots at a gentle pace.',
-   fit:{stage:['first','footing'],age:['4-7','8-10'],need:['wonder'],crew:['one','two'],values:['nature','books','faith','relationship']},
-   why:'You’re standing at the trailhead, and these early years aren’t about doing everything — they’re about <b>awe, warm rhythms, and a few strong roots</b>. Yellowstone keeps the days short, the wonder big, and the pressure low.',
+  {id:'acadia',name:'Acadia',era:'The Ancient World',dates:'Creation – AD 500',tp:'#3E7CA8',pk:'#356F97',pk2:'#5E9B6B',
+   blurb:'Where the human story begins — creation, the first great civilizations, and the roots of faith, history, and ideas.',
    trails:[
-     {name:'The Foundations Path',sub:'Core skills',points:[
-       {n:'Letters & Sounds',t:'Reading begins',b:'Playful phonics and letter sounds — the first keys that unlock reading.',
-        teach:'You don’t need a boxed curriculum to start. Point out letters on signs, cereal boxes, and their own name; play sound games in the car ("what starts with buh?"). Fifteen playful minutes beats an hour of drills — and your calm matters more than your method.',
-        ready:'They’re ready to move on when they can hear the first sound in a word and know most letters — not when they read fluently. Fluency comes later, on its own.'},
-       {n:'Numbers & Counting',t:'Early math',b:'Counting, sorting, and number sense woven through everyday play.',
-        teach:'Count everything out loud — stairs, grapes, cars. Let them set the table (one plate per chair) and sort laundry by color. At this age math is a conversation, not a worksheet, so you don’t have to be "good at math" to teach it.',
-        ready:'Ready when they count objects accurately and notice "more" and "less." Reversed numbers and lost counts are normal — keep it light.'},
-       {n:'Copywork',t:'The writing hand',b:'Tracing, drawing, and copywork that build a steady, confident hand.',
-        teach:'Strengthen little hands first: play dough, tearing paper, tongs, lacing beads. Then trace, then copy one short word. If writing brings tears, back up to hands-and-play — you are not behind, and neither are they.',
-        ready:'Ready when they hold a pencil comfortably and copy simple shapes and letters. Neatness comes with years, never with pressure.'}
+     {name:'Year 1 · Explore',sub:'Foundational stories',points:[
+       {n:'In the Beginning',t:'Creation & the first stories',b:'Genesis, the dawn of the world, and the earliest stories of God and people.',
+        teach:'Start with story, not facts. Read the account, wonder aloud together, and let the youngest simply listen and narrate back. You are laying a foundation of awe, not covering a checklist.'},
+       {n:'Rivers of Civilization',t:'Egypt & Mesopotamia',b:'The first cities, writing, and wonders — pyramids, pharaohs, and the cradle of history.',
+        teach:'Build a pyramid from blocks, write names in “hieroglyphs,” taste some dates. Hands beat handouts at every level; the goal is that the era feels real, not memorized.'},
+       {n:'The People of Promise',t:'The Old Testament story',b:'Abraham to the kings — the story of Israel woven right through the ancient world.',
+        teach:'Let the Bible be the spine everyone shares (that’s your Hearth time). Rangers can map the journeys; Wildflowers can act them out. Same story, four depths.'},
+       {n:'Greece & Rome',t:'Myths, ideas & empires',b:'Greek myths and the first democracies; the mighty, road-building Roman world.',
+        teach:'Read myths aloud like bedtime stories. If a myth raises a hard question, that’s a feature — pause and talk about it as a family rather than rushing on.'}
      ]},
-     {name:'The Wonder Path',sub:'Exploration & interests',points:[
-       {n:'Nature Study',t:'The outdoor classroom',b:'Regular time outside — observing, collecting, and asking why.',
-        teach:'You are not the expert here — wonder alongside them. Keep a jar, a magnifier, and a cheap notebook by the door. Ask "I wonder why…?" and let the answer be "let’s find out." Your curiosity is the whole lesson.',
-        ready:'This one never really "completes" — it’s a lifelong habit. You’re winning the moment they start noticing and asking on their own.'},
-       {n:'Read-Alouds',t:'A world of story',b:'Living books and fairy tales that grow vocabulary and imagination.',
-        teach:'Read a little above their level — they understand far more than they can read. Don’t quiz; just enjoy it. Let them wiggle, draw, or build LEGO while you read — listening still counts, and connection is the point.',
-        ready:'Add narration (having them "tell it back") when they can recall the story afterward. Until then, simply keep reading — that is the work.'},
-       {n:'Play & Making',t:'Learning through play',b:'Blocks, art, and pretend — deep learning disguised as fun.',
-        teach:'Resist filling every hour. Boredom is the doorway to imagination. Offer open-ended things — blocks, boxes, art supplies — and step back. Protecting unstructured play is real teaching, even when it feels like doing nothing.',
-        ready:'There’s no finish line. If they can lose themselves in their own invented games, the learning is already happening.'}
+     {name:'Year 2 · Deep Trail',sub:'Deeper history & sources',points:[
+       {n:'Reading the Sources',t:'How we know the ancient world',b:'Primary sources, artifacts, and the detective work of history itself.',
+        teach:'This is Ranger-level fuel, but younger ones love “being a history detective” too. Give each child the same artifact photo and ask what they notice before you explain.'},
+       {n:'Ancient Science',t:'Astronomy, math & invention',b:'Early astronomy, geometry, engineering, and medicine — the ancients were clever.',
+        teach:'Do the experiment before the explanation. Watching a shadow move or a simple lever work teaches more than a paragraph, and it levels the table for every age.'},
+       {n:'Classical Thought',t:'Philosophers, law & rhetoric',b:'Greek philosophers and Roman law — ideas that still shape how we live and think.',
+        teach:'You don’t need a philosophy degree — just ask good questions and think out loud with them. Modeling “I wonder…” teaches more than having every answer.'},
+       {n:'The Early Church',t:'The life of Christ & Rome’s fall',b:'The Gospels, the early church, and the close of the ancient age.',
+        teach:'Let this be a gentle, worshipful close to the era. Narration, art, and prayer carry it better than a test — for you as much as for them.'}
      ]}
+   ],
+   subjects:[
+     {s:'Bible',b:'Genesis through the Gospels and the birth of the church.'},
+     {s:'History',b:'Mesopotamia, Egypt, Israel, Greece, and Rome.'},
+     {s:'Science',b:'Early astronomy, invention, and the ancients’ natural world.'},
+     {s:'Geography',b:'The Fertile Crescent, the Nile, and the Mediterranean world.'},
+     {s:'Literature',b:'Myths, Aesop’s fables, and ancient epics (by level).'},
+     {s:'Poetry',b:'The Psalms and the rhythms of ancient verse.'},
+     {s:'Art',b:'Cave paintings, hieroglyphs, Greek pottery, Roman mosaics.'},
+     {s:'Writing',b:'From copywork and narration to essays on the sources.'},
+     {s:'Nature Study',b:'The plants, animals, and night skies the ancients watched.'}
    ]},
-  {id:'acadia',name:'Acadia',sub:'Curiosity & Independence',ages:'Ages 8–12',tp:'#3E7CA8',pk:'#356F97',pk2:'#5E9B6B',
-   short:'Following curiosity outward as a child grows more capable and independent.',
-   fit:{stage:['footing','confident'],age:['8-10','11-13'],need:['curiosity'],crew:['one','two','four'],values:['nature','handson','books']},
-   why:'Your learner is reaching for more. Acadia is about <b>following curiosity, hands-on discovery, and handing over the reins</b> a little at a time — from tide pools to summiting on their own.',
+  {id:'yosemite',name:'Yosemite',era:'The Medieval World',dates:'AD 500 – 1500',tp:'#4E7A5A',pk:'#46704F',pk2:'#8AA77E',
+   blurb:'Knights, cathedrals, and faraway kingdoms — the long, layered story of the Middle Ages across the whole world.',
    trails:[
-     {name:'The Foundations Path',sub:'Core skills',points:[
-       {n:'Fluent Reading',t:'Reading to learn',b:'Moving from learning-to-read to reading-to-learn across every subject.'},
-       {n:'Math Operations',t:'Real arithmetic',b:'Multiplication, division, and fractions anchored in real problems.'},
-       {n:'Writing & Grammar',t:'Finding their voice',b:'Paragraphs, written narration, and the working basics of grammar.'}
+     {name:'Year 1 · Explore',sub:'Foundational stories',points:[
+       {n:'Kingdoms & Castles',t:'Feudal life & knights',b:'Rome falls, castles rise — knights, lords, villages, and the shape of medieval life.',
+        teach:'Castles and knights sell themselves. Ride the natural fascination — build, draw, and act it out — and the “dry” parts (feudal roles, daily life) sneak in painlessly.'},
+       {n:'The Spread of Faith',t:'Monasteries & cathedrals',b:'The medieval church, patient monks, and the great cathedrals reaching for the sky.',
+        teach:'Copy an “illuminated” letter together, light a candle, keep it beautiful and quiet. Atmosphere teaches the medieval church better than dates do.'},
+       {n:'Empires of the East',t:'Byzantium, Islam, China & Japan',b:'A wider world — Byzantium, the Islamic golden age, and the great empires of Asia.',
+        teach:'This keeps the story from being Europe-only. A map and a few good picture books do the heavy lifting; you’re widening their world, not filling gaps.'},
+       {n:'Plague & Turning',t:'A world on the edge of change',b:'Trials, the plague, and a medieval world tipping toward a new age.',
+        teach:'Hard history handled gently. Name the sorrow honestly, keep it age-right for your Wildflowers, and let older ones sit with the weight — together.'}
      ]},
-     {name:'The Wonder Path',sub:'Exploration & interests',points:[
-       {n:'Hands-on Science',t:'Experiment & observe',b:'Simple experiments and nature journaling that feed real curiosity.'},
-       {n:'History & Story',t:'The human story',b:'Living history and biographies that make the past come alive.'},
-       {n:'Interest Projects',t:'Follow the spark',b:'Self-chosen projects that build independence and ownership.'}
+     {name:'Year 2 · Deep Trail',sub:'Deeper history & sources',points:[
+       {n:'Charters & Kings',t:'Magna Carta & the roots of freedom',b:'Medieval law and the Magna Carta — the first seeds of the freedoms we know.',
+        teach:'Connect it forward: “this is where ‘no one is above the law’ began.” Rangers can compare it to today; the whole family can feel why it mattered.'},
+       {n:'Medieval Learning',t:'Universities, medicine & the stars',b:'The first universities, medieval medicine, astronomy, and clever invention.',
+        teach:'Try a medieval remedy or a simple astrolabe activity. Let them judge it as a scientist would — what worked, what didn’t, and how we found out.'},
+       {n:'Cathedrals & Craft',t:'Gothic art & the guilds',b:'Soaring Gothic cathedrals, illuminated manuscripts, stained glass, and the guilds.',
+        teach:'Make something — stained-glass with tissue paper, a guild “apprentice” project. Craft is the curriculum here, and it welcomes every age to the same table.'},
+       {n:'Voices of the Age',t:'Beowulf & Chaucer',b:'Reading the medieval world firsthand — its legends, heroes, and pilgrims.',
+        teach:'Read the exciting bits aloud dramatically. Rangers tackle the real text; younger ones get the retelling. Nobody is bored, nobody is lost.'}
      ]}
+   ],
+   subjects:[
+     {s:'Bible',b:'The medieval church and Scripture faithfully preserved.'},
+     {s:'History',b:'Feudal Europe, Byzantium, Islam, Asia, and the Mongols.'},
+     {s:'Science',b:'Medieval medicine, astronomy, and the roots of science.'},
+     {s:'Geography',b:'The Silk Road and the known — and unknown — world.'},
+     {s:'Literature',b:'King Arthur, Beowulf, and Chaucer (by level).'},
+     {s:'Poetry',b:'Ballads and the poetry of the age.'},
+     {s:'Art',b:'Illuminated manuscripts, stained glass, Gothic cathedrals.'},
+     {s:'Writing',b:'Narration, copywork, and essays on medieval sources.'},
+     {s:'Nature Study',b:'The herb garden, the seasons, and the medieval land.'}
    ]},
-  {id:'zion',name:'Zion',sub:'Rhythm for Many Ages',ages:'A full, mixed crew',tp:'#B4693F',pk:'#A65E38',pk2:'#5E8A63',
-   short:'Combining ages and finding a sustainable family rhythm when the crew is full.',
-   fit:{stage:['confident','seasoned'],age:['range','8-10','11-13'],need:['rhythm'],crew:['four','full'],values:['structure','relationship','faith']},
-   why:'With a canyon full of different ages and stages, the trail is about <b>rhythm, combining what you can, and a pace that lasts</b>. Zion helps you teach the many without losing yourself.',
+  {id:'yellowstone',name:'Yellowstone',era:'Renaissance & Exploration',dates:'1500 – 1700',tp:'#C48A2C',pk:'#B07E28',pk2:'#3E8078',
+   blurb:'A world reborn and a world discovered — art, faith, and science awakening as explorers reach new horizons.',
    trails:[
-     {name:'The Foundations Path',sub:'Core skills',points:[
-       {n:'Morning Basket',t:'Together time',b:'Shared read-alouds, memory work, and devotion for every age at once.'},
-       {n:'Skills at Level',t:'Their own level',b:'Math and reading met at each child’s level, in short focused blocks.'},
-       {n:'Writing for All',t:'Words for every age',b:'From copywork to composition, scaled to each child on the trail.'}
+     {name:'Year 1 · Explore',sub:'Foundational stories',points:[
+       {n:'A World Reborn',t:'The Renaissance',b:'Rediscovery and dazzling new art — a burst of ideas, beauty, and confidence.',
+        teach:'Fill the room with the art. Prop up prints, try a “masterpiece” together, and let wonder lead. You’re growing taste and joy, not lecturing on movements.'},
+       {n:'New Horizons',t:'The age of exploration',b:'Explorers, ships, and the meeting of continents — the world’s map redrawn.',
+        teach:'Track voyages on a map with yarn and pins. Be honest that discovery had a cost; older ones can hold both the courage and the consequences.'},
+       {n:'Faith Reformed',t:'The Reformation',b:'A great turning in the church — Scripture in the language of the people.',
+        teach:'This is close to your heart, so share why it matters to you. Personal conviction, spoken plainly, disciples more than any worksheet.'},
+       {n:'Science Awakens',t:'The Scientific Revolution begins',b:'New questions and new tools begin to remake how we see the universe.',
+        teach:'Look up. A telescope or star app turns this era into an experience. Let a real observation spark the “how do we know?” conversation.'}
      ]},
-     {name:'The Wonder Path',sub:'Exploration & interests',points:[
-       {n:'Unit Studies',t:'One topic, many ages',b:'A shared theme the whole crew explores, each at their own depth.'},
-       {n:'Field Trips',t:'Out together',b:'Nature days and hands-on outings the whole family shares.'},
-       {n:'Life Skills',t:'Running the ship',b:'Chores, cooking, and teamwork counted as the real curriculum they are.'}
+     {name:'Year 2 · Deep Trail',sub:'Deeper history & sources',points:[
+       {n:'Masters & Masterpieces',t:'Da Vinci & Michelangelo',b:'Renaissance genius up close — perspective, anatomy, engineering, and light.',
+        teach:'Do a real technique — one-point perspective, a fresco with plaster. Struggling with the craft themselves builds awe for the masters at every level.'},
+       {n:'Explorers & Encounters',t:'Firsthand accounts',b:'Primary accounts of exploration — and an honest look at its consequences.',
+        teach:'Read the actual journals. Ask “whose voice is missing here?” It’s a powerful, age-appropriate way to teach discernment with sources.'},
+       {n:'Reformation Voices',t:'Luther, Tyndale & the Word',b:'The words and people that put Scripture into the hands of ordinary families.',
+        teach:'Trace how your own Bible got to your table. Gratitude is the lesson; let it land as worship, not just history.'},
+       {n:'The New Science',t:'Galileo & Newton',b:'The birth of modern science — observation, evidence, and grand new laws.',
+        teach:'Roll balls, drop things, time them. The scientific method is best caught by doing it, and the youngest can predict-and-check right alongside the oldest.'}
      ]}
+   ],
+   subjects:[
+     {s:'Bible',b:'The Reformation and Scripture in the common tongue.'},
+     {s:'History',b:'Renaissance Europe, exploration, and the Reformation.'},
+     {s:'Science',b:'Copernicus, Galileo, Newton — the Scientific Revolution.'},
+     {s:'Geography',b:'The age of exploration and the mapping of the world.'},
+     {s:'Literature',b:'Shakespeare, Don Quixote, Pilgrim’s Progress (by level).'},
+     {s:'Poetry',b:'The sonnet and the flowering of English verse.'},
+     {s:'Art',b:'Da Vinci, Michelangelo, Rembrandt, perspective and light.'},
+     {s:'Writing',b:'From narration to analytical essays on the era.'},
+     {s:'Nature Study',b:'The new naturalists and a fresh curiosity about the world.'}
    ]},
-  {id:'denali',name:'Denali',sub:'The Summit — Teens & Launching',ages:'Ages 13–18',tp:'#5C79B0',pk:'#4E6A9F',pk2:'#8AA7C9',
-   short:'High school, depth, mastery, and launching a young adult well.',
-   fit:{stage:['seasoned','summiting'],age:['14-18','11-13'],need:['depth'],crew:['one','two','four'],values:['structure','books']},
-   why:'The air is thin and the views are long. Denali is about <b>depth, mastery, real independence, and a strong launch</b> — high-school planning without the panic.',
+  {id:'zion',name:'Zion',era:'Revolutions & Pioneers',dates:'1700s – 1800s',tp:'#B4693F',pk:'#A65E38',pk2:'#5E8A63',
+   blurb:'Revolutions and pioneers — the birth of nations, world-changing inventions, and a rapidly remaking world.',
    trails:[
-     {name:'The Foundations Path',sub:'Core skills',points:[
-       {n:'Core Credits',t:'The transcript',b:'Math, science, English, and history planned toward graduation.'},
-       {n:'Writing & Rhetoric',t:'Think and persuade',b:'Essays, research, and clear argument for college and for life.'},
-       {n:'Advanced Studies',t:'Going deep',b:'Algebra through calculus, or lab sciences — matched to their goals.'}
+     {name:'Year 1 · Explore',sub:'Foundational stories',points:[
+       {n:'Age of Revolutions',t:'New nations are born',b:'The American and French revolutions — ideas of liberty reshaping the world.',
+        teach:'Big ideas, small hands: a “taxation” game at snack time makes revolution make sense to a six-year-old and a sixteen-year-old at once.'},
+       {n:'A New Nation',t:'Founding & the frontier',b:'The founding, the Constitution, and pioneers pressing west across the land.',
+        teach:'Pioneer life is pure hands-on gold — candles, journals, simple chores. Let them feel how hard and how brave ordinary days were.'},
+       {n:'The Machine Age',t:'Industry & invention',b:'Inventions, railroads, and factories remaking everyday life.',
+        teach:'Take apart something simple, follow how a thing is made. The wonder of “how does that work?” is the doorway into the whole era.'},
+       {n:'A Divided Nation',t:'Slavery & the Civil War',b:'The hard story of slavery, the Civil War, and the long fight for freedom.',
+        teach:'Handle this with honesty and gentleness. Match the depth to the child, tell the truth, and let it move you — modeling a tender conscience is the lesson.'}
      ]},
-     {name:'The Wonder Path',sub:'Exploration & interests',points:[
-       {n:'Electives & Passions',t:'Their calling',b:'Deep dives into interests — coding, art, music, or a trade skill.'},
-       {n:'Great Ideas',t:'Big questions',b:'Wrestling with worldview, ethics, and the great conversation.'},
-       {n:'Work & Real World',t:'Launch skills',b:'Jobs, internships, finances, and the muscles of independent living.'}
+     {name:'Year 2 · Deep Trail',sub:'Deeper history & sources',points:[
+       {n:'Founding Documents',t:'The words beneath the nation',b:'The Declaration and Constitution — and the ideas and debates behind them.',
+        teach:'Read the real words together. Rangers can debate them; everyone can hear how much rides on a single sentence.'},
+       {n:'Inventors & Industry',t:'The technology that remade life',b:'Electricity, the telegraph, machines — the tools that changed the everyday.',
+        teach:'Recreate a simple circuit or telegraph tap. A working spark makes the era unforgettable and levels the field for every age.'},
+       {n:'Voices for Freedom',t:'Abolition, firsthand',b:'Abolition and primary accounts — hard history told through real voices.',
+        teach:'Let the people speak for themselves through their own words. It builds empathy and discernment better than any summary you could give.'},
+       {n:'Literature of the Age',t:'Dickens & Austen',b:'The great 19th-century novels — social conscience, wit, and unforgettable characters.',
+        teach:'Read aloud in funny voices. Rangers read the full novels; younger ones get the abridged or the film after — same story around one table.'}
      ]}
+   ],
+   subjects:[
+     {s:'Bible',b:'Faith in a revolutionary age and the great awakenings.'},
+     {s:'History',b:'Revolutions, founding, industry, and the Civil War.'},
+     {s:'Science',b:'The industrial revolution, electricity, and early modern science.'},
+     {s:'Geography',b:'The expanding nation and the nineteenth-century world.'},
+     {s:'Literature',b:'Dickens, Austen, Twain, Little Women (by level).'},
+     {s:'Poetry',b:'The Romantic poets and early American verse.'},
+     {s:'Art',b:'Romanticism, the landscape painters, and early photography.'},
+     {s:'Writing',b:'Narration, persuasive essays, and real research.'},
+     {s:'Nature Study',b:'Audubon, the naturalists, and the pioneers’ land.'}
    ]},
-  {id:'smoky',name:'Great Smoky Mountains',sub:'The Seasoned Trail',ages:'Veteran & mentoring',tp:'#6C8C86',pk:'#5E7F79',pk2:'#9BB6A0',
-   short:'For the seasoned guide — sustaining joy, mentoring others, finishing well.',
-   fit:{stage:['seasoned','summiting'],age:['range','14-18'],need:['renewal'],crew:['full','four','two'],values:['relationship','faith','books']},
-   why:'You’ve walked these ridges for years. The Smokies are about <b>the long view, keeping the joy, and pouring into others</b> — whether you’re finishing strong or helping newer moms find their trail.',
+  {id:'denali',name:'Denali',era:'The Modern World',dates:'1900s – Present',tp:'#5C79B0',pk:'#4E6A9F',pk2:'#8AA7C9',
+   blurb:'The modern age — world wars, wonders, and a world remade within living memory, right up to today.',
    trails:[
-     {name:'The Foundations Path',sub:'Core skills',points:[
-       {n:'Finish the Core',t:'Completing the credits',b:'Wrapping the last requirements with calm and clarity.'},
-       {n:'Portfolio & Record',t:'The story on paper',b:'Transcripts, portfolios, and records that open the next door.'},
-       {n:'Capstone',t:'A culminating work',b:'A thesis or big project that shows all they’ve become.'}
+     {name:'Year 1 · Explore',sub:'Foundational stories',points:[
+       {n:'A New Century',t:'Flight, invention & change',b:'Cars, flight, and electricity — the turn into the fast-moving modern age.',
+        teach:'Grandparents are primary sources here — interview them. Living memory makes this era personal for every child at the table.'},
+       {n:'A World at War',t:'The World Wars',b:'A century of upheaval — the World Wars and the world they reshaped.',
+        teach:'Keep it human, not just strategic: one family’s story, one letter home. Shield the youngest from the worst while telling the truth to the oldest.'},
+       {n:'A Changing World',t:'Space, rights & rapid change',b:'The space age, the civil-rights movement, and a world changing by the day.',
+        teach:'Watch the moon landing, listen to a real speech. Primary footage lets your Wildflower and your Ranger feel the same goosebumps.'},
+       {n:'Our World Today',t:'The recent past & now',b:'The near past and the world your family actually lives in and shapes.',
+        teach:'Connect history to this week’s news, gently. Teaching them to think about today wisely is the whole point of the journey.'}
      ]},
-     {name:'The Wonder Path',sub:'Exploration & interests',points:[
-       {n:'Mentoring',t:'Teaching is learning',b:'Your learner guiding a younger one — mastery through service.'},
-       {n:'Vocation',t:'The next path',b:'Discerning college, trade, ministry, or the work ahead.'},
-       {n:'Legacy & Faith',t:'What lasts',b:'Character, faith, and relationships that outlast any subject.'}
+     {name:'Year 2 · Deep Trail',sub:'Deeper history & sources',points:[
+       {n:'The Great Wars',t:'Causes & consequences',b:'Primary accounts and the deeper why behind the century’s great conflicts.',
+        teach:'Move from “what happened” to “why, and what did it cost?” Let Rangers wrestle with hard questions while the family holds the human weight together.'},
+       {n:'Modern Science',t:'Atoms, DNA & the cosmos',b:'Modern physics, genetics, computers, and the reach into space.',
+        teach:'Hands-on still wins: a DNA-extraction from a strawberry delights every age. Let awe, not jargon, carry the science.'},
+       {n:'Movements & Voices',t:'The fight for justice, firsthand',b:'Civil rights and modern movements told through the people who lived them.',
+        teach:'Primary voices again — speeches, letters, memoirs. It grows conviction and compassion in a way no textbook summary can.'},
+       {n:'Modern Literature',t:'Voices of our time',b:'Twentieth-century classics and contemporary writers worth knowing.',
+        teach:'Choose books that spark real conversation. Preview for your family’s values, then talk openly — reading together is discipling together.'}
      ]}
+   ],
+   subjects:[
+     {s:'Bible',b:'Faith in the modern world and the global church.'},
+     {s:'History',b:'The World Wars, the modern era, and current events.'},
+     {s:'Science',b:'Modern physics, space, computers, and biology.'},
+     {s:'Geography',b:'The modern, connected world and its maps.'},
+     {s:'Literature',b:'Twentieth-century and contemporary classics (by level).'},
+     {s:'Poetry',b:'Modern and contemporary poetry.'},
+     {s:'Art',b:'Modern art movements, photography, and film.'},
+     {s:'Writing',b:'Research papers, analysis, and creative writing.'},
+     {s:'Nature Study',b:'Ecology, conservation, and the natural world today.'}
    ]}
 ];
 
@@ -609,6 +708,7 @@ function next(){
 
 /* ---------------- scoring ---------------- */
 function scorePark(p){
+  if(!p.fit)return 0;
   let s=0;
   if(p.fit.stage.includes(answers.stage))s+=4;
   if(p.fit.age.includes(answers.age))s+=3;
@@ -630,22 +730,16 @@ function showResult(){
 }
 
 let marksByTrail={0:{},1:{}};let activeTrail=0;
-let selectedStyle='eclectic';
-const PAUSES=[
-  {n:'Rest',b:'A pause to breathe — margin, play, and renewal so no one burns out.'},
-  {n:'Review',b:'A pause to look back — loop over what you’ve learned and let it settle.'},
-  {n:'Reset',b:'A pause to recalibrate — change what isn’t working and start fresh.'}
-];
-const STYLE_LABEL={classical:'Classical',cm:'Charlotte Mason',montessori:'Montessori',unschool:'Interest-led',eclectic:'Eclectic',blend:'My own blend'};
+let selectedStyle='hearth';
+const STYLE_LABEL={wildflower:'Wildflower',meadow:'Meadow',ranger:'Ranger',hearth:'Hearth'};
+const STYLE_SUB={wildflower:'Young learners',meadow:'Developing learners',ranger:'Older learners',hearth:'The whole family'};
 const STYLE_LENS={
-  classical:'Take the education points roughly in order, add memory work and recitation, and aim for mastery of one before moving to the next.',
-  cm:'Keep lessons short and unhurried, reach these points through living books and narration, and let nature study and beauty lead the way.',
-  montessori:'Follow the child: offer hands-on materials for each point and let them repeat it until it’s truly their own.',
-  unschool:'Let interest choose the order — every education point can begin from a real question your child already has.',
-  eclectic:'Borrow the best of each method and take the points in whatever order fits your week and your child.',
-  blend:'Build your own recipe — mix methods point by point. There’s no wrong order; the route is yours to design.'
+  wildflower:'Meets the era through picture books, stories, songs, and hands-on play — short, sensory, and full of wonder. No writing required; narration and delight are the work.',
+  meadow:'Narrates what they hear, keeps a notebook, draws maps and timelines, and begins simple copywork and beginner research.',
+  ranger:'Reads primary sources, analyzes and discusses, researches independently, and writes essays and reports.',
+  hearth:'The shared table — Bible, poetry, art, nature study, read-alouds, and conversation the whole family experiences together, whatever each child’s level.'
 };
-function styleFromAnswers(){const m={cm:'cm',classical:'classical',montessori:'montessori',unschool:'unschool',eclectic:'eclectic',unsure:'eclectic'};return m[answers.philosophy]||'eclectic';}
+function styleFromAnswers(){return 'hearth';}
 function curMarks(){return marksByTrail[activeTrail]||(marksByTrail[activeTrail]={});}
 /* ---- illustrated trail map ---- */
 const SVGNS='http://www.w3.org/2000/svg';
@@ -692,28 +786,16 @@ function placePins(p){
   const svg=stage.querySelector('.parkmap');if(!svg)return;
   const path=svg.querySelector('#trailPath'),g=svg.querySelector('#mapPins');
   g.innerHTML='';
-  const edu=p.trails[activeTrail].points, L=path.getTotalLength(), mk=curMarks();
-  // build ordered stops: education point, pause, education point, pause ...
-  const stops=[];
-  edu.forEach((v,i)=>{stops.push({type:'edu',v,i});if(i<edu.length-1)stops.push({type:'pause',v:PAUSES[i%PAUSES.length]})});
-  const T=stops.length;
-  stops.forEach((s,j)=>{
-    const pt=path.getPointAtLength(L*(T===1?0.5:j/(T-1)));
-    const below=pt.y<150|| (s.type==='edu'? s.i%2===0 : true);
+  const pts=p.trails[activeTrail].points, L=path.getTotalLength(), N=pts.length, mk=curMarks();
+  pts.forEach((v,i)=>{
+    const pt=path.getPointAtLength(L*(N===1?0.5:i/(N-1)));
+    const below=pt.y<150||i%2===0;
     const grp=document.createElementNS(SVGNS,'g');
-    grp.setAttribute('transform','translate('+pt.x+','+pt.y+')');
-    if(s.type==='edu'){
-      grp.setAttribute('class','pin');grp.setAttribute('data-i',s.i);
-      grp.innerHTML='<circle class="ring" r="15"/><circle class="pinbg" r="12" fill="'+pinColor(mk[s.i],p)+'"/>'
-        +'<text class="pnum" y="1">'+(s.i+1)+'</text>'
-        +'<text class="plabel" y="'+(below?30:-22)+'">'+s.v.n+'</text>';
-      grp.addEventListener('click',()=>{const card=stage.querySelector('.vp[data-i="'+s.i+'"]');if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('flash');setTimeout(()=>card.classList.remove('flash'),1400);}});
-    }else{
-      grp.setAttribute('class','pause-pin');
-      grp.innerHTML='<circle r="7" fill="#EFE7D6" stroke="#B7AE97" stroke-width="1.5"/>'
-        +'<line x1="-2" y1="-3" x2="-2" y2="3" stroke="#8A7A5C" stroke-width="1.4"/><line x1="2" y1="-3" x2="2" y2="3" stroke="#8A7A5C" stroke-width="1.4"/>'
-        +'<text class="pauselabel" y="'+(below?18:-12)+'">'+s.v.n+'</text>';
-    }
+    grp.setAttribute('class','pin');grp.setAttribute('data-i',i);grp.setAttribute('transform','translate('+pt.x+','+pt.y+')');
+    grp.innerHTML='<circle class="ring" r="15"/><circle class="pinbg" r="12" fill="'+pinColor(mk[i],p)+'"/>'
+      +'<text class="pnum" y="1">'+(i+1)+'</text>'
+      +'<text class="plabel" y="'+(below?30:-22)+'">'+v.n+'</text>';
+    grp.addEventListener('click',()=>{const card=stage.querySelector('.vp[data-i="'+i+'"]');if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('flash');setTimeout(()=>card.classList.remove('flash'),1400);}});
     g.appendChild(grp);
   });
 }
@@ -735,37 +817,39 @@ function renderPark(p,runner){
   stepLbl.textContent='Your Park';
   const toggle='<div class="trail-toggle" id="trailToggle">'+p.trails.map((t,ti)=>
     '<button type="button" class="tt'+(ti===0?' act':'')+'" data-t="'+ti+'"><b>'+t.name+'</b><span>'+t.sub+'</span></button>').join('')+'</div>';
-  const styleSel='<div class="style-pick"><span class="sp-label">Your route through the park — your homeschool style:</span><div class="sp-pills" id="stylePills">'
-    +Object.keys(STYLE_LABEL).map(k=>'<button type="button" class="sp'+(k===selectedStyle?' act':'')+'" data-s="'+k+'">'+STYLE_LABEL[k]+'</button>').join('')+'</div>'
+  const styleSel='<div class="style-pick"><span class="sp-label">Choose a path — the level each child travels at:</span><div class="sp-pills" id="stylePills">'
+    +Object.keys(STYLE_LABEL).map(k=>'<button type="button" class="sp'+(k===selectedStyle?' act':'')+'" data-s="'+k+'">'+STYLE_LABEL[k]+'<em>'+STYLE_SUB[k]+'</em></button>').join('')+'</div>'
     +'<p class="sp-lens" id="styleLens"></p></div>';
-  const ageChip=answers.age?'<span class="chip">Child: '+labelFor('age',answers.age)+'</span>':'';
+  const subjects='<div class="subjects"><div class="subj-head"><span class="mh-eye">Woven together this era</span><h3>The nine subjects</h3><p>They aren’t nine separate classes — every one connects to the same story, place, and ideas.</p></div>'
+    +'<div class="subj-grid">'+p.subjects.map(s=>'<div class="subj"><b>'+s.s+'</b><span>'+s.b+'</span></div>').join('')+'</div></div>';
   stage.innerHTML=
     '<div class="result">'
     +'<div class="rec-hero">'
-    +'<div class="rec-badge">Your best-fit journey</div>'
+    +'<div class="rec-badge">A park on the Evergreen journey</div>'
     +'<div class="rec-name">'+p.name+'</div>'
-    +'<div class="rec-sub">'+p.sub+'</div>'
-    +'<div class="rec-meta"><span class="chip">'+p.ages+'</span>'+ageChip+(answers.philosophy?'<span class="chip">'+philoLabel(answers.philosophy)+'</span>':'')+'</div>'
-    +'<p class="rec-why">'+p.why+'</p>'
-    +'<div class="rec-cta"><button class="btn btn-pk" id="toTrail">Step onto the trail ↓</button><button class="linkbtn" id="restart">Start the Compass Guide over</button></div>'
-    +(runner?'<p class="runner">Also on your horizon: <a data-park="'+runner.id+'">'+runner.name+' — '+runner.sub+'</a></p>':'')
+    +'<div class="rec-sub">'+p.era+'</div>'
+    +'<div class="rec-meta"><span class="chip">'+p.dates+'</span><span class="chip">2 years · Explore + Deep Trail</span><span class="chip">Wildflower · Meadow · Ranger · Hearth</span></div>'
+    +'<p class="rec-why">'+p.blurb+'</p>'
+    +'<div class="rec-cta"><button class="btn btn-pk" id="toTrail">Step into this era ↓</button><button class="linkbtn" id="restart">Back to the five parks</button></div>'
     +'</div>'
     +'<div class="trail-wrap">'
-    +'<div class="map-head"><span class="mh-eye">Your trail map</span><h3>'+p.name+'</h3></div>'
+    +'<div class="map-head"><span class="mh-eye">'+p.era+'</span><h3>'+p.name+'</h3></div>'
     +mapSVG(p)
-    +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>Education point</span><span><i class="pausekey"></i>Rest / Review / Reset — a pause</span><span>Tap a marker to jump to it</span></div>'
-    +'<p class="two-trails">The numbered <b>markers are education points</b> — the learning destinations for this stage. Between them sit <b>Rest, Review &amp; Reset</b>: pauses, not destinations. There are <b>two paths</b>, and completing <b>both</b> makes the full journey — but how you walk them is entirely yours. And this journey is built for <b>you, the parent-teacher</b>, as much as for your child.</p>'
-    +styleSel
+    +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>A study stop</span><span>Tap a marker to jump to it</span></div>'
+    +'<p class="two-trails">Each park is <b>studied for two years</b> — <b>Year 1: Explore</b>, then <b>Year 2: Deep Trail</b>. The numbered markers are the era’s <b>study stops</b>. Every child travels at their own <b>path</b> (level), and the whole family shares the same story — so this journey is built for <b>you, the parent-teacher</b>, as much as for your children.</p>'
+    +'<div class="year-switch"><span class="ys-label">Which year?</span></div>'
     +toggle
+    +styleSel
     +'<div id="trailArea"></div>'
-    +'<p class="painted" id="painted">Mark a few education points to sketch your route through this path.</p>'
-    +'<p class="veer">See an education point on the other path — or in another park — that you love? Wander over and borrow it. The best journeys are a little bit stolen. <a data-browse>Peek at the other parks ↓</a></p>'
-    +'<p class="trail-note">"Come invest in yourself, and watch peace, joy, and clarity begin to blossom in your home."</p><div id="provisions"></div></div>'
+    +subjects
+    +'<p class="painted" id="painted">Mark a few stops to sketch how you’ll walk this year.</p>'
+    +'<p class="veer">Curriculum is a <b>guide and a resource</b>, not a track to race down. Take these stops in the order that fits your family, linger where you love, and let the youngest and oldest meet the same story at their own depth. <a data-browse>See the other parks ↓</a></p>'
+    +'<p class="trail-note">"Evergreen teaches families to learn together."</p><div id="provisions"></div></div>'
     +captureHTML(p)
     +'</div>';
   document.getElementById('toTrail').onclick=()=>stage.querySelector('.two-trails').scrollIntoView({behavior:'smooth'});
-  document.getElementById('restart').onclick=restart;
-  const rp=stage.querySelector('[data-park]');if(rp)rp.onclick=()=>{const t=PARKS.find(x=>x.id===rp.getAttribute('data-park'));renderPark(t,p);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
+  document.getElementById('restart').onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
+  const rp=stage.querySelector('[data-park]');if(rp)rp.onclick=()=>{const t=PARKS.find(x=>x.id===rp.getAttribute('data-park'));renderPark(t,p);document.getElementById('parks').scrollIntoView({behavior:'smooth'})};
   const br=stage.querySelector('[data-browse]');if(br)br.onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
   stage.querySelectorAll('#trailToggle .tt').forEach(b=>b.onclick=()=>setTrail(p,+b.getAttribute('data-t')));
   stage.querySelectorAll('#stylePills .sp').forEach(b=>b.onclick=()=>{selectedStyle=b.getAttribute('data-s');stage.querySelectorAll('#stylePills .sp').forEach(x=>x.classList.toggle('act',x===b));updateStyleLens()});
@@ -774,7 +858,7 @@ function renderPark(p,runner){
   wireCapture(p);
   loadProvisions(p);
 }
-function updateStyleLens(){const el=document.getElementById('styleLens');if(el)el.innerHTML='<b>'+STYLE_LABEL[selectedStyle]+':</b> '+STYLE_LENS[selectedStyle];}
+function updateStyleLens(){const el=document.getElementById('styleLens');if(el)el.innerHTML='<b>'+STYLE_LABEL[selectedStyle]+' — '+STYLE_SUB[selectedStyle]+':</b> '+STYLE_LENS[selectedStyle];}
 function setTrail(p,ti){
   activeTrail=ti;
   stage.querySelectorAll('#trailToggle .tt').forEach(b=>b.classList.toggle('act',+b.getAttribute('data-t')===ti));
@@ -788,18 +872,17 @@ function renderActiveTrail(p){
     const teach=v.teach?'<details class="teach"><summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14v7M7 11v4a5 3 0 0 0 10 0v-4"/></svg>For you, teacher</summary>'
       +'<p>'+v.teach+'</p>'+(v.ready?'<p class="teach-ready"><b>You’ll know it’s landing when:</b> '+v.ready+'</p>':'')+'</details>':'';
     list+='<div class="vp'+(mk[i]?' marked-'+mk[i]:'')+'" data-i="'+i+'"><div class="marker">'+(i+1)+'</div><div class="card">'
-      +'<div class="vp-name">Education point · '+v.n+'</div>'
+      +'<div class="vp-name">Study stop · '+v.n+'</div>'
       +'<h4 class="vp-title">'+v.t+'</h4><p class="vp-body">'+v.b+'</p>'
       +teach
       +'<div class="vp-marks">'
       +'<button type="button" class="vpm'+(mk[i]==='on'?' act':'')+'" data-m="on">On my path</button>'
       +'<button type="button" class="vpm'+(mk[i]==='later'?' act':'')+'" data-m="later">Maybe later</button>'
       +'</div></div></div>';
-    if(i<pts.length-1){const pz=PAUSES[i%PAUSES.length];list+='<div class="pause-chip"><span class="pz-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="18"/></svg></span><span><b>'+pz.n+'</b> — '+pz.b+'</span></div>';}
   });
   document.getElementById('trailArea').innerHTML=
-    '<p class="trail-intro"><b>'+trail.name.replace(/^The\s/,'')+'</b> — '+trail.points.length+' education points to reach, with a <b>Rest</b>, <b>Review</b>, or <b>Reset</b> pause between each. Mark the points that are yours, in any order; start where you actually are and pause whenever you need to.</p>'
-    +(hasTeach?'<p class="teach-note">This journey is for <b>you</b> as much as for your child — the hard part is usually guiding them, not their learning. Open <b>“For you, teacher”</b> on any point for how to walk it (and a word of courage).</p>':'')
+    '<p class="trail-intro"><b>'+trail.name.replace(/·/,'—')+'</b>: '+trail.points.length+' study stops through this era. At the <b>'+STYLE_LABEL[selectedStyle]+'</b> path they’re walked '+levelPhrase()+'. Mark the ones you’ll focus on — in any order.</p>'
+    +(hasTeach?'<p class="teach-note">This journey is for <b>you</b> as much as for your children — the hard part is usually guiding them, not their learning. Open <b>“For you, teacher”</b> on any stop for how to walk it (and a word of courage).</p>':'')
     +'<div class="trail">'+list+'</div>';
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});
   document.querySelectorAll('#trailArea .vp').forEach(el=>io.observe(el));
@@ -817,10 +900,11 @@ function renderActiveTrail(p){
   });
   updatePainted(p);
 }
+function levelPhrase(){return {wildflower:'through stories, play, and wonder',meadow:'with narration, notebooking, and maps',ranger:'with primary sources, research, and writing',hearth:'together as a family, out loud, around one table'}[selectedStyle]||'your own way';}
 let _resCache=null,_storeCache=null;
 function loadProvisions(p){
   const host=document.getElementById('provisions');if(!host)return;
-  const parkName={yellowstone:'Yellowstone',acadia:'Acadia',zion:'Zion',denali:'Denali',smoky:'Great Smoky Mountains'};
+  const parkName={acadia:'Acadia',yosemite:'Yosemite',yellowstone:'Yellowstone',zion:'Zion',denali:'Denali'};
   const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   function card(r){
     const hasImg=r.image&&r.image.trim();
@@ -891,18 +975,12 @@ function wireCapture(p){
     if(!emailRe.test(email.value.trim())){email.closest('.field').classList.add('bad');bad=true}else email.closest('.field').classList.remove('bad');
     if(bad)return;
     const paint=paintedSummary(p);
-    const sub={type:'compass',questionnaire:'Compass Guide — '+p.name,name:name.value.trim(),email:email.value.trim(),phone:'',preferredContact:'Email',
+    const sub={type:'compass',questionnaire:'Evergreen — '+p.name,name:name.value.trim(),email:email.value.trim(),phone:'',preferredContact:'Email',
       responses:[
-        {q:'Recommended park',a:p.name+' — '+p.sub},
-        {q:'Journey stage',a:labelFor('stage',answers.stage)},
-        {q:'Child age',a:labelFor('age',answers.age)},
-        {q:'Crew size',a:labelFor('crew',answers.crew)},
-        {q:'Longing for',a:labelFor('need',answers.need)},
-        {q:'Values',a:(answers.values||[]).map(v=>labelFor('values',v)).join(', ')},
-        {q:'Approach',a:philoLabel(answers.philosophy)},
-        {q:'Homeschool style (route)',a:STYLE_LABEL[selectedStyle]||selectedStyle},
-        {q:'Path',a:p.trails[activeTrail].name},
-        {q:'Education points on their path',a:paint.on.join(', ')||'—'},
+        {q:'Park (era)',a:p.name+' — '+p.era+' ('+p.dates+')'},
+        {q:'Year',a:p.trails[activeTrail].name},
+        {q:'Path (level)',a:STYLE_LABEL[selectedStyle]+' — '+STYLE_SUB[selectedStyle]},
+        {q:'Study stops marked "on my path"',a:paint.on.join(', ')||'—'},
         {q:'Maybe later',a:paint.later.join(', ')||'—'},
         {q:'Note',a:document.getElementById('cap-note').value.trim()}
       ]};
@@ -916,14 +994,25 @@ function labelFor(key,v){const st=STEPS.find(s=>s.key===key);if(!st||!v)return v
 
 /* ---------------- all-parks grid ---------------- */
 document.getElementById('parkGrid').innerHTML=PARKS.map(p=>
-  '<div class="park-tile" data-park="'+p.id+'" style="--tp:'+p.tp+'"><div class="pn">'+p.name+'</div><div class="ps">'+p.sub+'</div><div class="pa">'+p.ages+'</div><p class="pd">'+p.short+'</p></div>'
+  '<div class="park-tile" data-park="'+p.id+'" style="--tp:'+p.tp+'"><div class="pn">'+p.name+'</div><div class="ps">'+p.era+'</div><div class="pa">'+p.dates+'</div><p class="pd">'+p.blurb+'</p></div>'
 ).join('');
 document.querySelectorAll('.park-tile').forEach(t=>t.onclick=()=>{
   const p=PARKS.find(x=>x.id===t.getAttribute('data-park'));
   renderPark(p,null);document.getElementById('cg').scrollIntoView({behavior:'smooth'});
 });
 
-document.getElementById('startBtn').onclick=()=>{renderStep();document.getElementById('compass').scrollIntoView({behavior:'smooth'})};
+function showPlacement(){
+  stepLbl.textContent='Where to begin';
+  const bar=document.getElementById('cgBar');if(bar&&bar.parentElement)bar.parentElement.style.display='none';
+  stage.innerHTML='<div class="place-intro"><h3>Evergreen begins at the beginning.</h3>'
+    +'<p>Every family starts in the Ancient World and travels forward through history <b>together</b> — each child at their own path (Wildflower, Meadow, Ranger) while the whole family shares the same story at Hearth.</p>'
+    +'<p>Pick any of the five parks below to explore its two years and its woven subjects — or step straight into the first era.</p>'
+    +'<div class="rec-cta"><button class="btn btn-pk" id="startFirst">Begin at the Ancient World</button><button class="linkbtn" id="seeParks">See all five parks ↓</button></div></div>';
+  document.getElementById('startFirst').onclick=()=>{renderPark(PARKS[0],null);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
+  document.getElementById('seeParks').onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('startBtn').onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
 
 /* ---------------- rabbit trails: Bible Weekly ---------------- */
 const RABBIT=[
@@ -1019,7 +1108,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
   nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');ham.setAttribute('aria-expanded','false')})});}
   var hd=document.getElementById('siteHeader');if(hd)addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>8)});
 })();
-renderStep();
+showPlacement();
 </script>
 </body>
 </html>
