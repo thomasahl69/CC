@@ -8,6 +8,19 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.22.0 — 2026-06-27
+
+- **Encouragement woven through the site.** A new rotating **encouragement band** on the
+  home page cycles gentle, brave, "you can do this" quotes (auto-advancing, with dots,
+  and still when reduced-motion is on). Anchored by Louisa May Alcott's *"I'm not afraid
+  of storms…"* and Thomas Ahl's *"Bravery is not the absence of fear…"*, plus a few
+  original encouragements.
+- The Alcott line also headlines the **Journeys** hero and closes the **Resources** page;
+  the bravery quote closes the **Conference** page — so encouragement greets and sends off
+  visitors everywhere.
+- Note: the "courage is not the absence of fear" line often credited to FDR is actually
+  Ambrose Redmoon's, so we used Thomas's own version instead of a misattribution.
+
 ## v1.21.0 — 2026-06-27
 
 Reworked the journey model around clearer intent:
