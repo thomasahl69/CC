@@ -8,6 +8,10 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.23.1 — 2026-06-27
+
+- Renamed the **Media** tab to **Image Library** and rewrote the Gallery + Image Library notices so the difference is obvious: Gallery = curated photos shown on the site (conference highlights + team); Image Library = your private shelf of every uploaded file, for reuse and cleanup.
+
 ## v1.23.0 — 2026-06-27
 
 - **The journey now serves the parent-teacher, not just the student.** Every education
