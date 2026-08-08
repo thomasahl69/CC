@@ -8,6 +8,19 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.20.0 — 2026-06-27
+
+- **Automatic database setup — no console, ever.** An API middleware now creates and
+  updates every table on the first request after each deploy (`CREATE TABLE IF NOT
+  EXISTS` for all tables plus any additive columns). You never need to open the D1
+  console or run SQL by hand — just deploy. Existing data is never touched.
+- **Feedback form** on the home page (a "Share your feedback" section with a 1–5 star
+  rating, message, and optional name/email; linked in the footer). Submissions post as
+  `type:'feedback'`.
+- **Read feedback in Content Studio:** Submissions now has a **Type** filter
+  (Feedback / Questionnaires / Compass Guide / Notify / Contact) so you can pull up all
+  feedback at a glance, and feedback carries its star rating in the detail view.
+
 ## v1.19.0 — 2026-06-27
 
 Bug-fix and integration pass from live feedback:

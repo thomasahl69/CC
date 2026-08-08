@@ -36,11 +36,16 @@ npx wrangler d1 create cc-db
 It prints a `database_id`. Open `wrangler.toml` and paste it in place of the id
 that's there.
 
-## 2. Create the tables
+## 2. Create the tables — automatic
 
-```bash
-npx wrangler d1 execute cc-db --remote --file=./schema.sql
-```
+You don't need to run any SQL by hand. The site **creates and updates all its
+tables automatically** on the first request after each deploy (an API middleware
+runs `CREATE TABLE IF NOT EXISTS` for every table, plus any additive columns).
+Just create the empty D1 database (step 1) and bind it (step 4); the tables appear
+on their own the first time the site's API is hit.
+
+_Optional:_ if you ever want to pre-create them manually you still can with
+`npx wrangler d1 execute cc-db --remote --file=./schema.sql`, but it's not required.
 
 ## 3. Create the Pages project and deploy
 
@@ -119,13 +124,10 @@ npx wrangler pages deploy
 Edit files, run `npx wrangler pages deploy` again. Database contents (submissions,
 events, and your edited knowledge base) stay put — deploys don't touch the data.
 
-**If a new version adds a table** (e.g. v1.1.0 added `events`), re-run the schema
-once — it uses `CREATE TABLE IF NOT EXISTS`, so it only adds what's missing and
-leaves your existing data alone:
-
-```bash
-npx wrangler d1 execute cc-db --remote --file=./schema.sql
-```
+**New tables and columns are handled automatically.** When a new version adds a
+table or column, the site's auto-migration adds it on the first request after the
+deploy — you never need to open the D1 console or run SQL. (It only ever adds
+what's missing; your existing data is left alone.)
 
 ## Troubleshooting
 

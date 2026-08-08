@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Authentic Joy in the Journey — site v1.19.0 -->
+<!-- Authentic Joy in the Journey — site v1.20.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.19.0">
+<meta name="version" content="1.20.0">
 <title>Authentic Joy in the Journey | Christina Carpenter</title>
 <meta name="description" content="Authentic Joy in the Journey and the Bloom and Blossom Conference encourage, equip, and empower mothers on their motherhood and home education journey.">
 <meta property="og:title" content="Authentic Joy in the Journey | Christina Carpenter">
@@ -303,6 +303,15 @@ form{display:grid;gap:1.1rem}
 
 /* ============ BRAND LOGO ============ */
 .brand-mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none}
+.feedback-sec{background:var(--paper-2)}
+.stars{display:flex;gap:.25rem;justify-content:center;margin-bottom:1rem;font-size:2.1rem}
+.stars .star{background:none;border:0;cursor:pointer;color:var(--line);transition:color .15s,transform .12s;line-height:1;padding:0 .12rem}
+.stars .star:hover{transform:scale(1.15)}
+.stars .star.on{color:var(--gold)}
+.fb-msg,.fb-in{width:100%;font-family:var(--sans);font-size:1rem;padding:.8em 1em;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);margin-bottom:.8rem}
+.fb-msg{resize:vertical}
+.fb-row{display:flex;gap:.8rem;flex-wrap:wrap}
+.fb-row .fb-in{flex:1;min-width:160px}
 .brand-mark img{width:32px;height:32px;object-fit:contain;border-radius:50%}
 .brand-mark svg{width:26px;height:26px}
 
@@ -429,7 +438,7 @@ form{display:grid;gap:1.1rem}
       </span>
       Christina <span>Carpenter</span>
     </a>
-    <span class="site-ver">v1.19.0</span>
+    <span class="site-ver">v1.20.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#story">About</a></li>
@@ -759,6 +768,34 @@ form{display:grid;gap:1.1rem}
   </div>
 </section>
 
+<!-- ===== FEEDBACK ===== -->
+<section class="feedback-sec" id="feedback">
+  <div class="wrap" style="max-width:680px;text-align:center">
+    <p class="eyebrow center">Your Voice</p>
+    <h2>Share your feedback</h2>
+    <p style="color:var(--ink-soft);margin:.9rem auto 1.7rem;max-width:52ch">Something you loved, an idea for the journey, or a bump in the road — Christina reads every note.</p>
+    <div id="fbForm">
+      <div class="stars" id="fbStars" role="radiogroup" aria-label="Rating">
+        <button type="button" class="star" data-v="1" aria-label="1 star">★</button>
+        <button type="button" class="star" data-v="2" aria-label="2 stars">★</button>
+        <button type="button" class="star" data-v="3" aria-label="3 stars">★</button>
+        <button type="button" class="star" data-v="4" aria-label="4 stars">★</button>
+        <button type="button" class="star" data-v="5" aria-label="5 stars">★</button>
+      </div>
+      <textarea class="fb-msg" id="fbMsg" rows="4" placeholder="What's on your mind?"></textarea>
+      <div class="fb-row">
+        <input class="fb-in" id="fbName" placeholder="Name (optional)" autocomplete="name">
+        <input class="fb-in" id="fbEmail" placeholder="Email (optional)" autocomplete="email" type="email">
+      </div>
+      <button class="btn btn-solid" id="fbSubmit" style="margin-top:.4rem">Send feedback</button>
+    </div>
+    <div id="fbThanks" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--sage-deep)" stroke-width="1.4" style="width:44px;margin:0 auto .6rem"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+      <p style="font-family:var(--serif);font-size:1.5rem;color:var(--ink)">Thank you — your note is on its way to Christina.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===== CONTACT ===== -->
 <section id="contact">
   <div class="wrap contact-grid">
@@ -987,6 +1024,7 @@ form{display:grid;gap:1.1rem}
           <h4>Connect</h4>
           <ul>
             <li><a href="#contact">Contact &amp; Newsletter</a></li>
+            <li><a href="#feedback">Share Feedback</a></li>
             <li><a href="tel:14172680620">(417) 268-0620</a></li>
             <li><a href="https://www.instagram.com/authenticjoyinthejourney" target="_blank" rel="noopener">Instagram</a></li>
           </ul>
@@ -1110,6 +1148,32 @@ async function postSubmission(sub){
   }catch(_){}
   return 'local';
 }
+
+/* feedback form */
+(function(){
+  const wrap=document.getElementById('fbStars');if(!wrap)return;
+  let rating=0;
+  const stars=[...wrap.querySelectorAll('.star')];
+  const paint=n=>stars.forEach(x=>x.classList.toggle('on',+x.dataset.v<=n));
+  stars.forEach(s=>{
+    s.addEventListener('click',()=>{rating=+s.dataset.v;paint(rating)});
+    s.addEventListener('mouseenter',()=>paint(+s.dataset.v));
+  });
+  wrap.addEventListener('mouseleave',()=>paint(rating));
+  const btn=document.getElementById('fbSubmit');
+  btn.addEventListener('click',async()=>{
+    const msg=document.getElementById('fbMsg').value.trim();
+    if(!rating && !msg){alert('Add a star rating or a short note first.');return;}
+    btn.disabled=true;const old=btn.textContent;btn.textContent='Sending…';
+    const sub={type:'feedback',questionnaire:'Site feedback',
+      id:'fb_'+Date.now().toString(36),createdAt:new Date().toISOString(),status:'new',
+      name:document.getElementById('fbName').value.trim(),email:document.getElementById('fbEmail').value.trim(),phone:'',preferredContact:'',
+      responses:[{q:'Rating',a:rating?rating+' / 5':'—'},{q:'Feedback',a:msg||'—'}]};
+    await postSubmission(sub);
+    document.getElementById('fbForm').style.display='none';
+    document.getElementById('fbThanks').style.display='block';
+  });
+})();
 
 quizForm.addEventListener('submit',async(e)=>{
   e.preventDefault();
