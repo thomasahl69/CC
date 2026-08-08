@@ -8,6 +8,26 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.21.0 — 2026-06-27
+
+Reworked the journey model around clearer intent:
+
+- **Markers are now education points** — the real learning destinations for each
+  stage (e.g. Letters & Sounds, Fluent Reading, Core Credits), rewritten for all five
+  parks across two paths.
+- **Rest · Review · Reset are pauses, not destinations** — they now sit *between* the
+  education points on the map and in the list (a dotted "rest-stop" between each), with
+  their own quiet styling. ("Reset" replaces the earlier "Relationship" so all three
+  read as pause actions.)
+- **Two paths, both = the full journey** — the Foundations Path (core skills) and the
+  Wonder Path (exploration & interests). Copy now says completing both makes the whole
+  journey, and how you navigate is yours.
+- **Your homeschool style is your route** — a style selector (Classical, Charlotte
+  Mason, Montessori, Interest-led, Eclectic, or your own blend) on every park result,
+  pre-set from the Compass Guide, showing how that style walks the same education points.
+- **Age is surfaced** — the child's age band shows on the result, and the park is matched
+  to it. The Compass submission now records the chosen style, path, and age.
+
 ## v1.20.0 — 2026-06-27
 
 - **Automatic database setup — no console, ever.** An API middleware now creates and
