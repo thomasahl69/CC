@@ -8,6 +8,18 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.28.0 — 2026-06-27
+
+- **The Compass Guide now ends with personalized encouragement, tips, and advice** — no AI
+  call required. A new "What would help most this season?" question captures where a family
+  wants to go, and the result composes a tailored word for their journey from where they
+  are (stage), who they are (educator + family), and where they’re headed (goal).
+- Built as **composable snippets**, not pre-baked combinations: ~20 short, editable pieces
+  assemble into thousands of personal results instantly and for free. AI stays reserved for
+  the human-reviewed reply Christina sends.
+- The goal answer is saved with the submission (and feeds the persona), giving Christina one
+  more read on each family.
+
 ## v1.27.0 — 2026-06-27
 
 - **Optional first name in the Compass Guide.** A friendly, skippable first question —

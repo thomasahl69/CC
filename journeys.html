@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.27.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.28.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.27.0">
+<meta name="version" content="1.28.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -237,6 +237,12 @@ section{padding-block:clamp(46px,6vw,84px)}
 .plan-paths li em{font-style:normal;font-family:var(--util);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-left:.4rem}
 .plan-paths li span{display:block;font-size:.9rem;color:var(--ink-soft);margin-top:.15rem}
 .plan-hearth{font-size:.95rem;color:var(--ink-soft);max-width:52ch;margin:.6rem auto}
+.advice{text-align:left;max-width:560px;margin:1.6rem auto 0;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--pk,var(--sage-deep));border-radius:14px;padding:1.2rem 1.3rem}
+.adv-eye{font-family:var(--util);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pk,var(--sage-deep));margin-bottom:.5rem}
+.adv-lead{font-family:var(--serif);font-style:italic;font-size:1.2rem;line-height:1.4;color:var(--ink);margin:0 0 .8rem}
+.adv-tips{list-style:none;padding:0;margin:0;display:grid;gap:.7rem}
+.adv-tips li{position:relative;padding-left:1.4rem;font-size:.96rem;color:var(--ink-soft);line-height:1.55}
+.adv-tips li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:var(--pk,var(--sage))}
 .plan-meta{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0}
 .plan-capture{margin:1.4rem auto 0;max-width:460px;text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:1.3rem}
 .plan-capture h4{font-family:var(--serif);font-size:1.35rem;margin:0 0 .3rem;text-align:center}
@@ -358,7 +364,7 @@ details.teach summary+p{margin-top:.2rem}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.27.0</span>
+      <span class="site-ver">v1.28.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -658,6 +664,13 @@ const STEPS=[
     {v:'beginning',b:'Just beginning',s:'New to homeschooling'},
     {v:'few',b:'A few years in',s:'Finding our rhythm'},
     {v:'seasoned',b:'Seasoned',s:'Many years, likely several kids'}
+  ]},
+  {key:'goal',q:'What would help most this season?',help:'Where you’d love to grow — this shapes the encouragement we send you.',type:'single',options:[
+    {v:'rhythm',b:'A doable, sustainable rhythm',s:'Days that actually work'},
+    {v:'wonder',b:'Wonder & a love of learning',s:'Curiosity over checklists'},
+    {v:'together',b:'Teaching all my kids together',s:'One table, many ages'},
+    {v:'depth',b:'Depth, mastery & strong academics',s:'Going deep, done well'},
+    {v:'confidence',b:'Confidence that I’m enough',s:'Peace that we’re doing okay'}
   ]}
 ];
 
@@ -729,6 +742,50 @@ const AGE_PATH={pre:'wildflower',early:'wildflower',middle:'meadow',tween:'range
 const AGE_LABEL={pre:'Preschool (3–5)',early:'Early (6–8)',middle:'Middle (9–11)',tween:'Tween (12–13)',teen:'Teen (14–17)'};
 const EDU_LABEL={cm:'Charlotte Mason',classical:'Classical',montessori:'Montessori',unschool:'Interest-led',eclectic:'Eclectic',unsure:'Still exploring'};
 const STAGE_LABEL={beginning:'Just beginning',few:'A few years in',seasoned:'Seasoned'};
+const GOAL_LABEL={rhythm:'A doable, sustainable rhythm',wonder:'Wonder & a love of learning',together:'Teaching all my kids together',depth:'Depth, mastery & strong academics',confidence:'Confidence that I’m enough'};
+/* ---- composable advice: ~20 snippets combine into thousands of personal results ---- */
+const ADVICE={
+  stage:{
+    beginning:'You’re standing at the trailhead — new to this — and that’s a gift, not a gap. You get to build gentle habits from day one. Start small and let rhythm, not rigor, lead your first year.',
+    few:'A few years in, you’ve already learned that curriculum is a tool, not a taskmaster. Trust what you’ve watched work for your family, and let Evergreen be the frame you hang your own good days on.',
+    seasoned:'You’re a seasoned guide who has carried children through real seasons. Evergreen gives you one story to gather everyone around — so you can teach the many without planning five separate days.'
+  },
+  educator:{
+    cm:'Evergreen was built with a Charlotte Mason heart — living books, narration, short lessons, and nature study — so you’ll feel right at home. Lean on narration and let beauty lead.',
+    classical:'Your classical instincts fit Evergreen’s chronological spine beautifully. Add memory work and, in Year 2 (Deep Trail), the primary sources — and let the history rotation carry the load.',
+    montessori:'Your hands-on, child-led approach shines in the Explore year. Offer each era as an invitation — maps, artifacts, making — and let every child go as deep as they wish.',
+    unschool:'Interest-led families thrive here, because a whole era is a buffet, not a checklist. Follow the rabbit trails your kids chase; every subject still connects back to the same story.',
+    eclectic:'Eclectic is Evergreen’s native language — take the parts that fit, in the order that fits, and blend methods freely. You already know there’s no single right way.',
+    unsure:'Still finding your style? Perfect. Evergreen gives you a gentle default to lean on while you discover what your family loves — and you’ll find your way as you walk.'
+  },
+  goal:{
+    rhythm:'Since you’re longing for a rhythm that lasts, start with just the Hearth basics — Bible, a read-aloud, and one subject — done consistently. Add more only once that feels easy.',
+    wonder:'To keep wonder alive, guard the read-alouds, nature study, and hands-on days. Curiosity is the fuel — don’t let checklists crowd it out.',
+    together:'To teach everyone together well, make Morning Time (Hearth) your anchor — shared Bible, story, poetry, and art — then split into short, level-specific work for skills.',
+    depth:'For real depth, let Year 1 build the story and Year 2 go deep with primary sources, research, and writing. Master a few things rather than skimming many.',
+    confidence:'Hear this clearly: you are already enough. Learning is happening all over your home. Choose a light, steady plan and let consistency — not intensity — carry you.'
+  }
+};
+function familyTip(paths,count){
+  const many=count==='4-5'||count==='6+';
+  if(paths.length>=2){
+    return 'With children at different levels ('+paths.map(p=>STYLE_LABEL[p]).join(', ')+'), let Hearth be where everyone gathers for the same story, then give each child short, level-right work of their own. One table, many depths — that’s the Evergreen superpower'+(many?', and with a full house it’s also what keeps the day sane.':'.');
+  }
+  if(paths.length===1){
+    return 'Your crew sits mostly at the '+STYLE_LABEL[paths[0]]+' path right now. Keep it light and rich — and know the same journey grows right alongside them.'+(many?' With a busy house, protect your rhythm fiercely.':'');
+  }
+  return 'As your children grow, the same journey meets each of them at their own level.';
+}
+function buildAdvice(paths){
+  const items=[];
+  if(ADVICE.educator[answers.educator])items.push(ADVICE.educator[answers.educator]);
+  items.push(familyTip(paths,answers.count));
+  if(ADVICE.goal[answers.goal])items.push(ADVICE.goal[answers.goal]);
+  const lead=ADVICE.stage[answers.stage]||'';
+  return '<div class="advice"><div class="adv-eye">A word for your journey</div>'
+    +(lead?'<p class="adv-lead">'+lead+'</p>':'')
+    +'<ul class="adv-tips">'+items.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';
+}
 function showResult(){
   bar.style.width='100%';
   const ages=answers.ages||[];
@@ -747,6 +804,7 @@ function showResult(){
     +(rows?'<ul class="plan-paths">'+rows+'</ul>':'<p class="plan-hearth">Add your children’s ages and we’ll suggest a path for each.</p>')
     +'<p class="plan-hearth">…and everyone shares <b>Hearth</b> — the Bible, poetry, art, nature, and read-alouds you do together, whatever their level.</p>'
     +'<div class="plan-meta">'+(edu?'<span class="chip">'+edu+'</span>':'')+(answers.count?'<span class="chip">'+answers.count+' children</span>':'')+(answers.stage?'<span class="chip">'+(STAGE_LABEL[answers.stage]||'')+'</span>':'')+'</div>'
+    +buildAdvice(order.filter(pth=>byPath[pth]))
     +'<form id="planForm" class="plan-capture" novalidate><h4>Want Christina to help you begin?</h4><p>Leave your name and she’ll send a personal welcome and your first-steps guide.</p>'
     +'<div class="row-2"><div class="field"><label>Name</label><input id="pl-name" type="text" autocomplete="name" value="'+fn.replace(/"/g,'&quot;')+'"></div><div class="field"><label>Email</label><input id="pl-email" type="email" autocomplete="email"></div></div>'
     +'<button type="submit" class="btn btn-pk">Send me my Evergreen welcome</button></form>'
@@ -766,6 +824,7 @@ function showResult(){
         {q:'Number of children',a:answers.count||'—'},
         {q:'Ages in family',a:ages.map(a=>AGE_LABEL[a]).join(', ')||'—'},
         {q:'Journey stage',a:STAGE_LABEL[answers.stage]||'—'},
+        {q:'Hoping for',a:GOAL_LABEL[answers.goal]||'—'},
         {q:'Suggested paths',a:order.filter(pth=>byPath[pth]).map(pth=>STYLE_LABEL[pth]+' ('+byPath[pth].join(', ')+')').join('; ')||'—'},
         {q:'Starting park',a:'Acadia — The Ancient World'}
       ]};
