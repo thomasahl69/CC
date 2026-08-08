@@ -8,6 +8,17 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.29.0 — 2026-06-27
+
+- **Plain-language "What's this?" explainers in the questionnaire.** The educator-type
+  question no longer assumes you already know the jargon — each option (Charlotte Mason,
+  Classical, Montessori, Interest-led, Eclectic, Still figuring it out) now has a tap-to-open,
+  jargon-free description, so a newcomer can choose honestly. The toggle is reusable on any
+  question option going forward.
+- **Four Paths spelled out in the result.** Wildflower / Meadow / Ranger / Hearth now each
+  carry a one-line plain description where the plan lists them, so those invented terms are
+  clear the first time a family meets them.
+
 ## v1.28.0 — 2026-06-27
 
 - **The Compass Guide now ends with personalized encouragement, tips, and advice** — no AI

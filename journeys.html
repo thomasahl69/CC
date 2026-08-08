@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.28.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.29.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.28.0">
+<meta name="version" content="1.29.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -112,6 +112,11 @@ section{padding-block:clamp(46px,6vw,84px)}
 .cg-textwrap{margin:.2rem 0 .4rem}
 .cg-textin{width:100%;font-family:var(--sans);font-size:1.15rem;padding:.8rem 1rem;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
 .cg-textin:focus{outline:none;border-color:var(--sage-deep);box-shadow:0 0 0 3px color-mix(in srgb,var(--sage) 25%,transparent)}
+.opt-wrap{display:flex;flex-direction:column}
+.opt-info-btn{align-self:flex-start;margin:.35rem 0 0 .3rem;background:none;border:0;padding:.15rem .2rem;font-family:var(--util);font-size:.72rem;letter-spacing:.03em;color:var(--sage-deep);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.opt-info-btn:hover{color:var(--ink)}
+.opt-info{margin:.4rem 0 .1rem .3rem;font-size:.88rem;color:var(--ink-soft);line-height:1.5;background:color-mix(in srgb,var(--sage) 8%,var(--paper));border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem}
+.path-desc{display:block;font-size:.85rem;color:var(--ink-soft);font-style:italic;margin-top:.25rem}
 .opt{display:flex;gap:.9rem;align-items:flex-start;text-align:left;width:100%;background:var(--paper-2);border:1.5px solid var(--line);border-radius:14px;padding:1rem 1.1rem;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;font:inherit;color:inherit}
 .opt:hover{border-color:var(--sage);transform:translateX(3px)}
 .opt.sel{border-color:var(--sage-deep);background:#fff;box-shadow:inset 3px 0 0 var(--sage-deep)}
@@ -364,7 +369,7 @@ details.teach summary+p{margin-top:.2rem}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.28.0</span>
+      <span class="site-ver">v1.29.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -639,13 +644,13 @@ const PARKS=[
 /* ---------------- compass guide steps ---------------- */
 const STEPS=[
   {key:'firstName',q:'First — what should we call you?',help:'Just a first name so Christina can make this personal. Totally optional.',type:'text',optional:true,placeholder:'Your first name'},
-  {key:'educator',q:'What kind of educator are you?',help:'However you’d describe your style today — it can grow and change with you.',type:'single',options:[
-    {v:'cm',b:'Charlotte Mason',s:'Living books, narration, nature'},
-    {v:'classical',b:'Classical',s:'Stages, great works, rigor'},
-    {v:'montessori',b:'Montessori / child-led',s:'Prepared environment, independence'},
-    {v:'unschool',b:'Interest-led / unschooling',s:'Following the child’s lead'},
-    {v:'eclectic',b:'Eclectic — a bit of everything',s:'Whatever works for us'},
-    {v:'unsure',b:'Still figuring it out',s:'And that’s perfectly okay'}
+  {key:'educator',q:'What kind of educator are you?',help:'New to these terms? Tap “What’s this?” under any option. However you’d describe your style today — it can grow and change with you.',type:'single',options:[
+    {v:'cm',b:'Charlotte Mason',s:'Living books, narration, nature',info:'A gentle, literature-rich approach: real (“living”) books instead of dry textbooks, short lessons, lots of time outdoors, and “narration” — having a child tell back what they learned in their own words.'},
+    {v:'classical',b:'Classical',s:'Stages, great works, structure',info:'Follows a child’s natural stages — first facts and memory work, then logic and discussion, then self-expression. Heavy on great books, history studied in order, and clear structure.'},
+    {v:'montessori',b:'Montessori / child-led',s:'Hands-on, independent',info:'A prepared, hands-on environment where children choose activities and learn by doing at their own pace. Lots of tactile, real-life materials; the adult guides more than directs.'},
+    {v:'unschool',b:'Interest-led / unschooling',s:'Following the child’s lead',info:'Learning driven by the child’s curiosity rather than a fixed curriculum. Everyday life, projects, and their own questions become the lessons — you follow their sparks.'},
+    {v:'eclectic',b:'Eclectic — a bit of everything',s:'Whatever works for us',info:'You mix and match — borrowing the best of several methods and whatever curriculum fits each child. Most homeschoolers land right here.'},
+    {v:'unsure',b:'Still figuring it out',s:'And that’s perfectly okay',info:'Totally normal, especially early on. You don’t need a label to begin — Evergreen gives you a gentle default to lean on while you discover what your family loves.'}
   ]},
   {key:'count',q:'How many children are you teaching?',help:'',type:'single',options:[
     {v:'1',b:'One',s:''},
@@ -705,10 +710,14 @@ function renderStep(){
     return;
   }
   const chosen=answers[st.key];
-  const opts=st.options.map(o=>{
+  const opts=st.options.map((o,oi)=>{
     const sel=st.type==='multi'?(chosen||[]).includes(o.v):chosen===o.v;
-    return '<button type="button" class="opt'+(st.type==='multi'?' multi':'')+(sel?' sel':'')+'" data-v="'+o.v+'">'
+    const btn='<button type="button" class="opt'+(st.type==='multi'?' multi':'')+(sel?' sel':'')+'" data-v="'+o.v+'">'
       +'<span class="dot"></span><span><b>'+o.b+'</b>'+(o.s?'<span>'+o.s+'</span>':'')+'</span></button>';
+    if(!o.info)return btn;
+    return '<div class="opt-wrap">'+btn
+      +'<button type="button" class="opt-info-btn" data-oi="'+oi+'" aria-expanded="false">What’s this?</button>'
+      +'<div class="opt-info" id="oi'+oi+'" hidden>'+o.info+'</div></div>';
   }).join('');
   const canNext=st.type==='multi'?((chosen||[]).length>0):!!chosen;
   stage.innerHTML=
@@ -729,6 +738,13 @@ function renderStep(){
     }else{answers[st.key]=v;}
     renderStep();
   });
+  stage.querySelectorAll('.opt-info-btn').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const box=document.getElementById('oi'+b.getAttribute('data-oi'));if(!box)return;
+    const open=box.hasAttribute('hidden');
+    if(open){box.removeAttribute('hidden');b.textContent='Hide';b.setAttribute('aria-expanded','true');b.classList.add('open');}
+    else{box.setAttribute('hidden','');b.textContent='What’s this?';b.setAttribute('aria-expanded','false');b.classList.remove('open');}
+  });
   const nx=document.getElementById('cgNext');if(nx)nx.onclick=next;
   const bk=document.getElementById('cgBack');if(bk)bk.onclick=()=>{stepIndex--;renderStep()};
 }
@@ -743,6 +759,12 @@ const AGE_LABEL={pre:'Preschool (3–5)',early:'Early (6–8)',middle:'Middle (9
 const EDU_LABEL={cm:'Charlotte Mason',classical:'Classical',montessori:'Montessori',unschool:'Interest-led',eclectic:'Eclectic',unsure:'Still exploring'};
 const STAGE_LABEL={beginning:'Just beginning',few:'A few years in',seasoned:'Seasoned'};
 const GOAL_LABEL={rhythm:'A doable, sustainable rhythm',wonder:'Wonder & a love of learning',together:'Teaching all my kids together',depth:'Depth, mastery & strong academics',confidence:'Confidence that I’m enough'};
+const PATH_DESC={
+  wildflower:'Wonder, stories, songs, and hands-on play — no writing required yet.',
+  meadow:'Narration (telling it back), notebooking, maps and timelines, and simple research.',
+  ranger:'Primary sources, analysis, independent research, and real writing.',
+  hearth:'The whole family together — Bible, poetry, art, nature, and read-alouds.'
+};
 /* ---- composable advice: ~20 snippets combine into thousands of personal results ---- */
 const ADVICE={
   stage:{
@@ -792,7 +814,7 @@ function showResult(){
   const byPath={};
   ages.forEach(a=>{const pth=AGE_PATH[a];(byPath[pth]=byPath[pth]||[]).push(AGE_LABEL[a])});
   const order=['wildflower','meadow','ranger'];
-  const rows=order.filter(pth=>byPath[pth]).map(pth=>'<li><b>'+STYLE_LABEL[pth]+'</b> <em>'+STYLE_SUB[pth]+'</em><span>'+byPath[pth].join(', ')+'</span></li>').join('');
+  const rows=order.filter(pth=>byPath[pth]).map(pth=>'<li><b>'+STYLE_LABEL[pth]+'</b> <em>'+STYLE_SUB[pth]+'</em><span>'+byPath[pth].join(', ')+'</span><span class="path-desc">'+PATH_DESC[pth]+'</span></li>').join('');
   const edu=EDU_LABEL[answers.educator]||answers.educator||'';
   const fn=(answers.firstName||'').trim();
   stepLbl.textContent='Your Evergreen plan';
