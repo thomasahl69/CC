@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.30.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.31.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.30.0">
+<meta name="version" content="1.31.0">
 <title>Evergreen Homeschool — Guided Journeys &amp; Compass Guide | Authentic Joy in the Journey</title>
 <meta name="description" content="Evergreen Homeschool is a multi-age, family-style curriculum: a 10-year journey through history — Bible, science, literature, art, poetry, writing, and nature — with every child learning at their own level. Take the free Compass Guide.">
 <meta name="keywords" content="Evergreen Homeschool, multi-age homeschool curriculum, family-style homeschool, homeschool history curriculum, Christian homeschool, Charlotte Mason, classical homeschool, homeschool for multiple ages, Compass Guide">
@@ -260,6 +260,7 @@ section{padding-block:clamp(46px,6vw,84px)}
 .cg-result{text-align:center;max-width:62ch;margin:0 auto}
 .cg-result h3{font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.4rem);margin:.6rem 0 .5rem}
 .cg-result>p{color:var(--ink-soft);margin:.4rem auto}
+.return-note{font-family:var(--util);font-size:.8rem;letter-spacing:.02em;color:var(--sage-deep)}
 .plan-paths{list-style:none;padding:0;margin:1.2rem auto;max-width:460px;display:grid;gap:.6rem;text-align:left}
 .plan-paths li{border:1px solid var(--line);border-radius:12px;padding:.7rem .9rem;background:color-mix(in srgb,var(--sage) 8%, var(--paper))}
 .plan-paths li b{font-family:var(--serif);font-size:1.2rem;color:var(--sage-deep)}
@@ -393,7 +394,7 @@ details.teach summary+p{margin-top:.2rem}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.30.0</span>
+      <span class="site-ver">v1.31.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -832,8 +833,13 @@ function buildAdvice(paths){
     +(lead?'<p class="adv-lead">'+lead+'</p>':'')
     +'<ul class="adv-tips">'+items.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';
 }
-function showResult(){
+const PROFILE_KEY='cc_evergreen_profile_v1';
+function saveProfile(){try{localStorage.setItem(PROFILE_KEY,JSON.stringify({firstName:answers.firstName||'',educator:answers.educator,count:answers.count,ages:answers.ages||[],stage:answers.stage,goal:answers.goal}))}catch(e){}}
+function loadProfile(){try{const raw=localStorage.getItem(PROFILE_KEY);if(!raw)return false;const p=JSON.parse(raw);if(!p||!p.educator)return false;answers.firstName=p.firstName||'';answers.educator=p.educator;answers.count=p.count;answers.ages=Array.isArray(p.ages)?p.ages:[];answers.stage=p.stage;answers.goal=p.goal;return true;}catch(e){return false;}}
+function forgetProfile(){try{localStorage.removeItem(PROFILE_KEY)}catch(e){}}
+function showResult(returning){
   bar.style.width='100%';
+  saveProfile();
   const ages=answers.ages||[];
   const byPath={};
   ages.forEach(a=>{const pth=AGE_PATH[a];(byPath[pth]=byPath[pth]||[]).push(AGE_LABEL[a])});
@@ -844,8 +850,9 @@ function showResult(){
   stepLbl.textContent='Your Evergreen plan';
   stage.innerHTML=
     '<div class="cg-result">'
-    +'<div class="rec-badge">Welcome to Evergreen</div>'
+    +'<div class="rec-badge">'+(returning?'Welcome back':'Welcome to Evergreen')+'</div>'
     +'<h3>Here’s where your family begins'+(fn?', '+fn.replace(/</g,'&lt;'):'')+'.</h3>'
+    +(returning?'<p class="return-note">This is your saved plan — adjust your answers anytime.</p>':'')
     +'<p>Every family starts in the <b>Ancient World</b> — the first park, <b>Acadia</b> — and travels forward through history together. Based on your children’s ages, here’s the path we’d suggest for each:</p>'
     +(rows?'<ul class="plan-paths">'+rows+'</ul>':'<p class="plan-hearth">Add your children’s ages and we’ll suggest a path for each.</p>')
     +'<p class="plan-hearth">…and everyone shares <b>Hearth</b> — the Bible, poetry, art, nature, and read-alouds you do together, whatever their level.</p>'
@@ -855,11 +862,11 @@ function showResult(){
     +'<div class="row-2"><div class="field"><label>Name</label><input id="pl-name" type="text" autocomplete="name" value="'+fn.replace(/"/g,'&quot;')+'"></div><div class="field"><label>Email</label><input id="pl-email" type="email" autocomplete="email"></div></div>'
     +'<button type="submit" class="btn btn-pk">Send me my Evergreen welcome</button></form>'
     +'<div class="plan-done" id="planDone" style="display:none"><div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4 4L19 7"/></svg></div><h4>Your welcome is on its way.</h4><p>Christina will reach out personally. Welcome to the journey.</p></div>'
-    +'<div class="rec-cta" style="justify-content:center;margin-top:1.2rem"><button class="btn btn-pk" id="toFirst">Step into the Ancient World</button><button class="linkbtn" id="retake">Retake the guide</button></div>'
+    +'<div class="rec-cta" style="justify-content:center;margin-top:1.2rem"><button class="btn btn-pk" id="toFirst">Step into the Ancient World</button><button class="linkbtn" id="retake">Adjust my answers</button></div>'
     +'</div>';
   document.getElementById('cg').scrollIntoView({behavior:'smooth',block:'start'});
   document.getElementById('toFirst').onclick=()=>{renderPark(PARKS[0],null);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
-  document.getElementById('retake').onclick=()=>{stepIndex=0;renderStep()};
+  document.getElementById('retake').onclick=()=>{const b=document.getElementById('cgBar');if(b&&b.parentElement)b.parentElement.style.display='';stepIndex=0;renderStep();document.getElementById('cg').scrollIntoView({behavior:'smooth'});};
   document.getElementById('planForm').addEventListener('submit',async e=>{
     e.preventDefault();
     const nm=document.getElementById('pl-name'),em=document.getElementById('pl-email');
@@ -1263,7 +1270,12 @@ document.getElementById('year').textContent=new Date().getFullYear();
   nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');ham.setAttribute('aria-expanded','false')})});}
   var hd=document.getElementById('siteHeader');if(hd)addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>8)});
 })();
-showPlacement();
+(function initEvergreen(){
+  var has=loadProfile();
+  if(has){showResult(true);}else{showPlacement();}
+  var sb=document.getElementById('startBtn');
+  if(sb)sb.onclick=has?function(){document.getElementById('compass').scrollIntoView({behavior:'smooth'});}:startCompass;
+})();
 </script>
 </body>
 </html>

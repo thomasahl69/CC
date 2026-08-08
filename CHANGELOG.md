@@ -8,6 +8,18 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.31.0 — 2026-06-27
+
+- **Evergreen remembers you.** Once a family completes the Compass Guide, their answers are
+  saved on their device. On return, the Journeys page skips straight to their saved plan with
+  a "Welcome back" note and an **Adjust my answers** button — no re-answering every visit.
+- **Migration redirects pre-filled from the real Wix sitemap.** `_redirects` now maps the
+  actual old URLs (the conference page, /authentic-joy-in-the-journey, /book-online, all
+  /event-details-registration/* events, /service-page/* booking pages, /challenge-page/*) to
+  the matching new pages with 301s. Same-domain move, so no Change-of-Address needed.
+- Added `ACTION-ITEMS.md` (running to-do list) — including wiring Resend so replies send as
+  Christina.
+
 ## v1.30.0 — 2026-06-27
 
 SEO, findability, and standalone URLs.

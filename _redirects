@@ -1,0 +1,39 @@
+# ============================================================================
+# Cloudflare Pages _redirects  —  old Wix URL  ->  new page   (301 = permanent)
+# ----------------------------------------------------------------------------
+# Pre-filled from the live Wix sitemap (same domain: www.christinacarpenter.org).
+# A 301 passes most of the old page's ranking to the new one. Single hop, no chains.
+# Deploy this file with the site; test a few of these after cutover.
+# ============================================================================
+
+# ---- Main pages ------------------------------------------------------------
+/bloom-and-blossom-conference           /bloom-and-blossom.html   301
+/authentic-joy-in-the-journey           /                         301
+/book-online                            /#spaces                  301
+/groups                                 /                         301
+/challenges                             /                         301
+
+# ---- Conference event pages (all past + current events) --------------------
+# Splat catches every /event-details-registration/... URL in one rule.
+/event-details-registration/*           /bloom-and-blossom.html   301
+
+# ---- Booking / coaching service pages --------------------------------------
+/service-page/coaching-session          /#spaces                  301
+/service-page/extended-coaching-session /#spaces                  301
+/service-page/initial-consultation      /#spaces                  301
+/service-page/workshop-or-speaker       /#spaces                  301
+/service-page/*                         /#spaces                  301
+
+# ---- Old online programs / challenge pages (2022, low traffic) -------------
+/challenge-page/*                       /                         301
+
+# ---- Wix system paths ------------------------------------------------------
+/book-online/*                          /#spaces                  301
+
+# ============================================================================
+# NOTE - www vs apex: _redirects matches the PATH only, not the hostname.
+# Your canonical is https://www.christinacarpenter.org, so if you keep both
+# hosts, add a Cloudflare Redirect Rule (Rules -> Redirect Rules) 301-ing the
+# bare christinacarpenter.org -> www.christinacarpenter.org (or the reverse,
+# if you'd rather drop the www - tell me and I'll flip the canonicals to match).
+# ============================================================================
