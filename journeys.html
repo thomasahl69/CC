@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.24.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.25.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.24.0">
+<meta name="version" content="1.25.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -225,6 +225,24 @@ section{padding-block:clamp(46px,6vw,84px)}
 .place-intro .rec-cta{justify-content:center;margin-top:1.4rem}
 .year-switch{text-align:center;margin:.2rem auto -.4rem}
 .year-switch .ys-label{font-family:var(--util);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.cg-result{text-align:center;max-width:62ch;margin:0 auto}
+.cg-result h3{font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.4rem);margin:.6rem 0 .5rem}
+.cg-result>p{color:var(--ink-soft);margin:.4rem auto}
+.plan-paths{list-style:none;padding:0;margin:1.2rem auto;max-width:460px;display:grid;gap:.6rem;text-align:left}
+.plan-paths li{border:1px solid var(--line);border-radius:12px;padding:.7rem .9rem;background:color-mix(in srgb,var(--sage) 8%, var(--paper))}
+.plan-paths li b{font-family:var(--serif);font-size:1.2rem;color:var(--sage-deep)}
+.plan-paths li em{font-style:normal;font-family:var(--util);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-left:.4rem}
+.plan-paths li span{display:block;font-size:.9rem;color:var(--ink-soft);margin-top:.15rem}
+.plan-hearth{font-size:.95rem;color:var(--ink-soft);max-width:52ch;margin:.6rem auto}
+.plan-meta{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0}
+.plan-capture{margin:1.4rem auto 0;max-width:460px;text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:1.3rem}
+.plan-capture h4{font-family:var(--serif);font-size:1.35rem;margin:0 0 .3rem;text-align:center}
+.plan-capture>p{color:var(--ink-soft);font-size:.92rem;text-align:center;margin:0 0 1rem}
+.plan-done{margin:1.4rem auto 0;max-width:460px;background:color-mix(in srgb,var(--sage) 12%, var(--paper));border:1px solid var(--line);border-radius:16px;padding:1.6rem;text-align:center}
+.plan-done .ok{width:44px;height:44px;border-radius:50%;background:var(--sage-deep);color:#fff;display:grid;place-items:center;margin:0 auto .6rem}
+.plan-done .ok svg{width:24px}
+.plan-done h4{font-family:var(--serif);font-size:1.4rem;margin:0 0 .3rem}
+.plan-done p{color:var(--ink-soft);margin:0}
 .sp-lens{margin:.9rem auto 0;max-width:56ch;font-size:.94rem;color:var(--ink-soft);background:color-mix(in srgb,var(--pk) 8%, var(--paper));border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
 .sp-lens b{color:var(--pk)}
 .pause-chip{display:flex;align-items:flex-start;gap:.7rem;max-width:60ch;margin:.2rem auto;padding:.55rem .9rem 1.5rem 2.4rem;position:relative;color:var(--ink-soft);font-size:.9rem}
@@ -337,7 +355,7 @@ details.teach summary+p{margin-top:.2rem}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.24.0</span>
+      <span class="site-ver">v1.25.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -360,7 +378,7 @@ details.teach summary+p{margin-top:.2rem}
     <h1>One family. <span class="accent">One story.</span></h1>
     <p class="tagline">A 10-year, National-Park journey through history — with every child at their own level.</p>
     <p class="sub">Evergreen is a multi-age, family-style curriculum. Instead of a separate grade-level track for each child, the whole family travels the same trail through history — Bible, science, literature, art, poetry, writing, and nature all woven into each era — while the work meets each child right where they are. Five parks, two years each, four paths for four kinds of learner.</p>
-    <button class="btn btn-solid" id="startBtn">Explore the five parks</button>
+    <button class="btn btn-solid" id="startBtn">Begin the Compass Guide</button>
     <div style="margin-top:1rem"><a href="#rabbit" style="font-family:var(--util);font-size:.8rem;letter-spacing:.06em;color:var(--sage-deep);text-decoration:underline">or wander a rabbit trail →</a></div>
     <figure class="hero-quote">
       <blockquote>"I'm not afraid of storms, for I am learning how to sail my ship."</blockquote>
@@ -611,53 +629,31 @@ const PARKS=[
 
 /* ---------------- compass guide steps ---------------- */
 const STEPS=[
-  {key:'stage',q:'Where are you on the journey?',help:'There’s no wrong answer — every trail starts somewhere.',type:'single',options:[
-    {v:'first',b:'Taking my first steps',s:'New to this — maybe a little anxious'},
-    {v:'footing',b:'Finding our footing',s:'A year or two in, still settling'},
-    {v:'confident',b:'Confident and exploring',s:'We’ve hit a stride and want to grow'},
-    {v:'seasoned',b:'A seasoned guide',s:'Many years, likely several children'},
-    {v:'summiting',b:'Summiting & launching',s:'Teens, or graduating children'}
-  ]},
-  {key:'age',q:'Who are you guiding right now?',help:'Pick the child most on your mind (or a range).',type:'single',options:[
-    {v:'4-7',b:'Little ones (4–7)',s:'The early years'},
-    {v:'8-10',b:'Middle years (8–10)',s:'Growing readers & explorers'},
-    {v:'11-13',b:'Tweens (11–13)',s:'More capable, more opinions'},
-    {v:'14-18',b:'Teens (14–18)',s:'High school & beyond'},
-    {v:'range',b:'A whole range of ages',s:'Several kids, several stages'}
-  ]},
-  {key:'crew',q:'How many are on the trail with you?',help:'',type:'single',options:[
-    {v:'one',b:'Just one',s:''},
-    {v:'two',b:'Two or three',s:''},
-    {v:'four',b:'Four or more',s:''},
-    {v:'full',b:'A full, busy crew',s:'The happy chaos'}
-  ]},
-  {key:'need',q:'What are you longing for in this season?',help:'What would make the biggest difference right now?',type:'single',options:[
-    {v:'wonder',b:'Wonder & gentle foundations',s:'Awe, habits, a doable rhythm'},
-    {v:'curiosity',b:'Curiosity & independence',s:'Following interests, growing capable'},
-    {v:'rhythm',b:'Rhythm for many ages',s:'Teaching the many, sustainably'},
-    {v:'depth',b:'Depth & mastery',s:'High school, rigor, launching'},
-    {v:'renewal',b:'Renewal & the long view',s:'Keep the joy, finish well, mentor'}
-  ]},
-  {key:'values',q:'What’s on your compass?',help:'Choose all that feel true — this shapes the flavor of your trail.',type:'multi',options:[
-    {v:'faith',b:'Faith at the center',s:''},
-    {v:'nature',b:'Nature-rich days',s:''},
-    {v:'books',b:'Living books & story',s:''},
-    {v:'handson',b:'Hands-on & real-world',s:''},
-    {v:'relationship',b:'Relationship over rigor',s:''},
-    {v:'structure',b:'Structure & clear goals',s:''}
-  ]},
-  {key:'philosophy',q:'And your approach?',help:'However you’d describe it today — this can change with the terrain.',type:'single',options:[
+  {key:'educator',q:'What kind of educator are you?',help:'However you’d describe your style today — it can grow and change with you.',type:'single',options:[
     {v:'cm',b:'Charlotte Mason',s:'Living books, narration, nature'},
     {v:'classical',b:'Classical',s:'Stages, great works, rigor'},
     {v:'montessori',b:'Montessori / child-led',s:'Prepared environment, independence'},
     {v:'unschool',b:'Interest-led / unschooling',s:'Following the child’s lead'},
     {v:'eclectic',b:'Eclectic — a bit of everything',s:'Whatever works for us'},
-    {v:'unsure',b:'Still figuring it out',s:'And that’s okay'}
+    {v:'unsure',b:'Still figuring it out',s:'And that’s perfectly okay'}
   ]},
-  {key:'style',q:'And how do you like to travel?',help:'There’s no right way — some paint by the lines, some splash the color where it lands. This just sets the tone.',type:'single',options:[
-    {v:'purist',b:'I love a clear, ordered path',s:'Give me the plan and I’ll follow it'},
-    {v:'improviser',b:'I wander, ad-lib, and veer',s:'I’ll make it my own as I go'},
-    {v:'both',b:'A bit of both, depending on the day',s:'Structure some days, freedom others'}
+  {key:'count',q:'How many children are you teaching?',help:'',type:'single',options:[
+    {v:'1',b:'One',s:''},
+    {v:'2-3',b:'Two or three',s:''},
+    {v:'4-5',b:'Four or five',s:''},
+    {v:'6+',b:'Six or more',s:'The happy, busy crew'}
+  ]},
+  {key:'ages',q:'What ages are in your family?',help:'Choose every group you have — in Evergreen they all learn at the same table.',type:'multi',options:[
+    {v:'pre',b:'Preschool (3–5)',s:''},
+    {v:'early',b:'Early (6–8)',s:''},
+    {v:'middle',b:'Middle (9–11)',s:''},
+    {v:'tween',b:'Tween (12–13)',s:''},
+    {v:'teen',b:'Teen (14–17)',s:''}
+  ]},
+  {key:'stage',q:'Where are you on the journey?',help:'There’s no wrong answer — every family starts somewhere.',type:'single',options:[
+    {v:'beginning',b:'Just beginning',s:'New to homeschooling'},
+    {v:'few',b:'A few years in',s:'Finding our rhythm'},
+    {v:'seasoned',b:'Seasoned',s:'Many years, likely several kids'}
   ]}
 ];
 
@@ -686,7 +682,7 @@ function renderStep(){
     +'<div class="cg-actions">'
     +(stepIndex>0?'<button class="linkbtn" id="cgBack">← Back</button>':'<span></span>')
     +(st.type==='multi'?'<span class="hint">Pick any that fit</span>':'<span></span>')
-    +'<button class="btn btn-solid" id="cgNext" '+(canNext?'':'disabled style="opacity:.45;pointer-events:none"')+'>'+(stepIndex===STEPS.length-1?'See my park':'Next')+'</button>'
+    +'<button class="btn btn-solid" id="cgNext" '+(canNext?'':'disabled style="opacity:.45;pointer-events:none"')+'>'+(stepIndex===STEPS.length-1?'See my Evergreen plan':'Next')+'</button>'
     +'</div>';
   stage.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>{
     const v=btn.getAttribute('data-v');
@@ -706,27 +702,54 @@ function next(){
   else{showResult();}
 }
 
-/* ---------------- scoring ---------------- */
-function scorePark(p){
-  if(!p.fit)return 0;
-  let s=0;
-  if(p.fit.stage.includes(answers.stage))s+=4;
-  if(p.fit.age.includes(answers.age))s+=3;
-  if(p.fit.need.includes(answers.need))s+=6;
-  if(answers.crew&&p.fit.crew&&p.fit.crew.includes(answers.crew))s+=2;
-  (answers.values||[]).forEach(v=>{if(p.fit.values.includes(v))s+=1});
-  return s;
-}
-function rankParks(){
-  return PARKS.map(p=>({p,s:scorePark(p)})).sort((a,b)=>b.s-a.s);
-}
-
+/* ---------------- result: Evergreen plan ---------------- */
+const AGE_PATH={pre:'wildflower',early:'wildflower',middle:'meadow',tween:'ranger',teen:'ranger'};
+const AGE_LABEL={pre:'Preschool (3–5)',early:'Early (6–8)',middle:'Middle (9–11)',tween:'Tween (12–13)',teen:'Teen (14–17)'};
+const EDU_LABEL={cm:'Charlotte Mason',classical:'Classical',montessori:'Montessori',unschool:'Interest-led',eclectic:'Eclectic',unsure:'Still exploring'};
+const STAGE_LABEL={beginning:'Just beginning',few:'A few years in',seasoned:'Seasoned'};
 function showResult(){
   bar.style.width='100%';
-  const ranked=rankParks();
-  const best=ranked[0].p, runner=ranked[1]?ranked[1].p:null;
-  renderPark(best,runner);
+  const ages=answers.ages||[];
+  const byPath={};
+  ages.forEach(a=>{const pth=AGE_PATH[a];(byPath[pth]=byPath[pth]||[]).push(AGE_LABEL[a])});
+  const order=['wildflower','meadow','ranger'];
+  const rows=order.filter(pth=>byPath[pth]).map(pth=>'<li><b>'+STYLE_LABEL[pth]+'</b> <em>'+STYLE_SUB[pth]+'</em><span>'+byPath[pth].join(', ')+'</span></li>').join('');
+  const edu=EDU_LABEL[answers.educator]||answers.educator||'';
+  stepLbl.textContent='Your Evergreen plan';
+  stage.innerHTML=
+    '<div class="cg-result">'
+    +'<div class="rec-badge">Welcome to Evergreen</div>'
+    +'<h3>Here’s where your family begins.</h3>'
+    +'<p>Every family starts in the <b>Ancient World</b> — the first park, <b>Acadia</b> — and travels forward through history together. Based on your children’s ages, here’s the path we’d suggest for each:</p>'
+    +(rows?'<ul class="plan-paths">'+rows+'</ul>':'<p class="plan-hearth">Add your children’s ages and we’ll suggest a path for each.</p>')
+    +'<p class="plan-hearth">…and everyone shares <b>Hearth</b> — the Bible, poetry, art, nature, and read-alouds you do together, whatever their level.</p>'
+    +'<div class="plan-meta">'+(edu?'<span class="chip">'+edu+'</span>':'')+(answers.count?'<span class="chip">'+answers.count+' children</span>':'')+(answers.stage?'<span class="chip">'+(STAGE_LABEL[answers.stage]||'')+'</span>':'')+'</div>'
+    +'<form id="planForm" class="plan-capture" novalidate><h4>Want Christina to help you begin?</h4><p>Leave your name and she’ll send a personal welcome and your first-steps guide.</p>'
+    +'<div class="row-2"><div class="field"><label>Name</label><input id="pl-name" type="text" autocomplete="name"></div><div class="field"><label>Email</label><input id="pl-email" type="email" autocomplete="email"></div></div>'
+    +'<button type="submit" class="btn btn-pk">Send me my Evergreen welcome</button></form>'
+    +'<div class="plan-done" id="planDone" style="display:none"><div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4 4L19 7"/></svg></div><h4>Your welcome is on its way.</h4><p>Christina will reach out personally. Welcome to the journey.</p></div>'
+    +'<div class="rec-cta" style="justify-content:center;margin-top:1.2rem"><button class="btn btn-pk" id="toFirst">Step into the Ancient World</button><button class="linkbtn" id="retake">Retake the guide</button></div>'
+    +'</div>';
   document.getElementById('cg').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('toFirst').onclick=()=>{renderPark(PARKS[0],null);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
+  document.getElementById('retake').onclick=()=>{stepIndex=0;renderStep()};
+  document.getElementById('planForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const nm=document.getElementById('pl-name'),em=document.getElementById('pl-email');
+    if(!nm.value.trim()||!emailRe.test(em.value.trim())){(!nm.value.trim()?nm:em).focus();return;}
+    const sub={type:'compass',questionnaire:'Evergreen — Family Profile',name:nm.value.trim(),email:em.value.trim(),phone:'',preferredContact:'Email',
+      responses:[
+        {q:'Educator type',a:edu||'—'},
+        {q:'Number of children',a:answers.count||'—'},
+        {q:'Ages in family',a:ages.map(a=>AGE_LABEL[a]).join(', ')||'—'},
+        {q:'Journey stage',a:STAGE_LABEL[answers.stage]||'—'},
+        {q:'Suggested paths',a:order.filter(pth=>byPath[pth]).map(pth=>STYLE_LABEL[pth]+' ('+byPath[pth].join(', ')+')').join('; ')||'—'},
+        {q:'Starting park',a:'Acadia — The Ancient World'}
+      ]};
+    await postSubmission(sub);
+    document.getElementById('planForm').style.display='none';
+    document.getElementById('planDone').style.display='block';
+  });
 }
 
 let marksByTrail={0:{},1:{}};let activeTrail=0;
@@ -1002,17 +1025,20 @@ document.querySelectorAll('.park-tile').forEach(t=>t.onclick=()=>{
 });
 
 function showPlacement(){
-  stepLbl.textContent='Where to begin';
+  stepLbl.textContent='The Compass Guide';
   const bar=document.getElementById('cgBar');if(bar&&bar.parentElement)bar.parentElement.style.display='none';
-  stage.innerHTML='<div class="place-intro"><h3>Evergreen begins at the beginning.</h3>'
-    +'<p>Every family starts in the Ancient World and travels forward through history <b>together</b> — each child at their own path (Wildflower, Meadow, Ranger) while the whole family shares the same story at Hearth.</p>'
-    +'<p>Pick any of the five parks below to explore its two years and its woven subjects — or step straight into the first era.</p>'
-    +'<div class="rec-cta"><button class="btn btn-pk" id="startFirst">Begin at the Ancient World</button><button class="linkbtn" id="seeParks">See all five parks ↓</button></div></div>';
-  document.getElementById('startFirst').onclick=()=>{renderPark(PARKS[0],null);document.getElementById('cg').scrollIntoView({behavior:'smooth'})};
+  stage.innerHTML='<div class="place-intro"><h3>Welcome to Evergreen.</h3>'
+    +'<p>Answer four quick questions — your teaching style, how many children, and their ages — and we’ll show where your Evergreen journey begins and a suggested path for each child. (It also helps Christina know exactly who she’s guiding.)</p>'
+    +'<div class="rec-cta"><button class="btn btn-pk" id="beginCompass">Begin the Compass Guide</button><button class="linkbtn" id="seeParks">or explore the five parks ↓</button></div></div>';
+  document.getElementById('beginCompass').onclick=startCompass;
   document.getElementById('seeParks').onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
 }
+function startCompass(){
+  const b=document.getElementById('cgBar');if(b&&b.parentElement)b.parentElement.style.display='';
+  stepIndex=0;renderStep();document.getElementById('compass').scrollIntoView({behavior:'smooth'});
+}
 
-document.getElementById('startBtn').onclick=()=>document.getElementById('parks').scrollIntoView({behavior:'smooth'});
+document.getElementById('startBtn').onclick=startCompass;
 
 /* ---------------- rabbit trails: Bible Weekly ---------------- */
 const RABBIT=[

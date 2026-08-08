@@ -8,6 +8,18 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.25.0 — 2026-06-27
+
+- **Compass Guide questionnaire is back — repurposed as an Evergreen family profile.**
+  Four quick questions now collect the data worth having: **what kind of educator you
+  are**, **how many children** you teach, **their ages**, and where you are on the
+  journey. Reachable from the hero and the intro card.
+- Instead of routing to a park by age, it produces a warm **Evergreen plan**: everyone
+  begins in the Ancient World (Acadia), and each child is matched to a suggested **path**
+  (Wildflower / Meadow / Ranger) by age, with Hearth for the whole family — plus a
+  save-your-profile capture so Christina collects every family's profile as a submission
+  (type "Compass Guide"). Groundwork for dynamic, per-child placement later.
+
 ## v1.24.0 — 2026-06-27
 
 **Journeys rebuilt as Evergreen (draft across all five parks) — for dinner review.**
