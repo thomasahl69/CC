@@ -8,6 +8,19 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.23.0 — 2026-06-27
+
+- **The journey now serves the parent-teacher, not just the student.** Every education
+  point can carry a "For you, teacher" note — how to actually guide the child through it,
+  when they're ready to move on, and a word of courage — because the hard part is usually
+  guiding the child, not the learning.
+- **Deeper proof-of-concept on Yellowstone:** all six education points (both paths) now
+  include full parent-teacher guidance, shown as an expandable panel on each card, plus a
+  banner explaining the journey is for the parent as much as the child. The other parks
+  keep the lighter treatment for now.
+- Attribution: the bravery quote is now credited to **Christina Carpenter** (home band and
+  Conference page).
+
 ## v1.22.0 — 2026-06-27
 
 - **Encouragement woven through the site.** A new rotating **encouragement band** on the

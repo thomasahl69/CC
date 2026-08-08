@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Guided Journeys — Compass Guide — page v1.22.0 -->
+<!-- Guided Journeys — Compass Guide — page v1.23.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.22.0">
+<meta name="version" content="1.23.0">
 <title>Guided Journeys | Authentic Joy in the Journey</title>
 <meta name="description" content="Find your trail. A Compass Guide that matches you to a national-park journey built for where you are in your homeschool story — from first steps to launching well.">
 <meta property="og:title" content="Guided Journeys — Find Your Trail">
@@ -216,6 +216,18 @@ section{padding-block:clamp(46px,6vw,84px)}
 .pause-chip .pz-ic{position:absolute;left:.35rem;top:.4rem;width:22px;height:22px;border-radius:50%;background:#EFE7D6;border:1.5px solid #B7AE97;display:grid;place-items:center;color:#8A7A5C}
 .pause-chip .pz-ic svg{width:12px}
 .pause-chip b{color:var(--ink);font-style:normal}
+.teach-note{max-width:60ch;margin:.2rem auto 1.4rem;text-align:center;font-size:.92rem;color:var(--ink-soft);background:color-mix(in srgb,var(--pk) 7%, var(--paper));border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
+.teach-note b{color:var(--pk)}
+details.teach{margin:.9rem 0 .2rem;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--pk) 6%, var(--paper));overflow:hidden}
+details.teach summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:.5em;padding:.7rem .9rem;font-family:var(--util);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pk);font-weight:600}
+details.teach summary::-webkit-details-marker{display:none}
+details.teach summary svg{width:16px}
+details.teach summary::after{content:"+";margin-left:auto;font-size:1.1rem;line-height:1;color:var(--pk)}
+details.teach[open] summary::after{content:"–"}
+details.teach p{margin:0 .9rem .8rem;font-size:.94rem;color:var(--ink-soft);line-height:1.55}
+details.teach summary+p{margin-top:.2rem}
+.teach-ready{border-top:1px dashed var(--line);padding-top:.7rem}
+.teach-ready b{color:var(--ink)}
 .vp.flash .card{animation:flashcard 1.3s ease}
 @keyframes flashcard{0%,100%{box-shadow:0 14px 30px -22px var(--shadow)}25%{box-shadow:0 0 0 3px var(--pk)}}
 /* provisions (journey tie-in to the shop) */
@@ -309,7 +321,7 @@ section{padding-block:clamp(46px,6vw,84px)}
         </span>
         Christina <span>Carpenter</span>
       </a>
-      <span class="site-ver">v1.22.0</span>
+      <span class="site-ver">v1.23.0</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -410,14 +422,26 @@ const PARKS=[
    why:'You’re standing at the trailhead, and these early years aren’t about doing everything — they’re about <b>awe, warm rhythms, and a few strong roots</b>. Yellowstone keeps the days short, the wonder big, and the pressure low.',
    trails:[
      {name:'The Foundations Path',sub:'Core skills',points:[
-       {n:'Letters & Sounds',t:'Reading begins',b:'Playful phonics and letter sounds — the first keys that unlock reading.'},
-       {n:'Numbers & Counting',t:'Early math',b:'Counting, sorting, and number sense woven through everyday play.'},
-       {n:'Copywork',t:'The writing hand',b:'Tracing, drawing, and copywork that build a steady, confident hand.'}
+       {n:'Letters & Sounds',t:'Reading begins',b:'Playful phonics and letter sounds — the first keys that unlock reading.',
+        teach:'You don’t need a boxed curriculum to start. Point out letters on signs, cereal boxes, and their own name; play sound games in the car ("what starts with buh?"). Fifteen playful minutes beats an hour of drills — and your calm matters more than your method.',
+        ready:'They’re ready to move on when they can hear the first sound in a word and know most letters — not when they read fluently. Fluency comes later, on its own.'},
+       {n:'Numbers & Counting',t:'Early math',b:'Counting, sorting, and number sense woven through everyday play.',
+        teach:'Count everything out loud — stairs, grapes, cars. Let them set the table (one plate per chair) and sort laundry by color. At this age math is a conversation, not a worksheet, so you don’t have to be "good at math" to teach it.',
+        ready:'Ready when they count objects accurately and notice "more" and "less." Reversed numbers and lost counts are normal — keep it light.'},
+       {n:'Copywork',t:'The writing hand',b:'Tracing, drawing, and copywork that build a steady, confident hand.',
+        teach:'Strengthen little hands first: play dough, tearing paper, tongs, lacing beads. Then trace, then copy one short word. If writing brings tears, back up to hands-and-play — you are not behind, and neither are they.',
+        ready:'Ready when they hold a pencil comfortably and copy simple shapes and letters. Neatness comes with years, never with pressure.'}
      ]},
      {name:'The Wonder Path',sub:'Exploration & interests',points:[
-       {n:'Nature Study',t:'The outdoor classroom',b:'Regular time outside — observing, collecting, and asking why.'},
-       {n:'Read-Alouds',t:'A world of story',b:'Living books and fairy tales that grow vocabulary and imagination.'},
-       {n:'Play & Making',t:'Learning through play',b:'Blocks, art, and pretend — deep learning disguised as fun.'}
+       {n:'Nature Study',t:'The outdoor classroom',b:'Regular time outside — observing, collecting, and asking why.',
+        teach:'You are not the expert here — wonder alongside them. Keep a jar, a magnifier, and a cheap notebook by the door. Ask "I wonder why…?" and let the answer be "let’s find out." Your curiosity is the whole lesson.',
+        ready:'This one never really "completes" — it’s a lifelong habit. You’re winning the moment they start noticing and asking on their own.'},
+       {n:'Read-Alouds',t:'A world of story',b:'Living books and fairy tales that grow vocabulary and imagination.',
+        teach:'Read a little above their level — they understand far more than they can read. Don’t quiz; just enjoy it. Let them wiggle, draw, or build LEGO while you read — listening still counts, and connection is the point.',
+        ready:'Add narration (having them "tell it back") when they can recall the story afterward. Until then, simply keep reading — that is the work.'},
+       {n:'Play & Making',t:'Learning through play',b:'Blocks, art, and pretend — deep learning disguised as fun.',
+        teach:'Resist filling every hour. Boredom is the doorway to imagination. Offer open-ended things — blocks, boxes, art supplies — and step back. Protecting unstructured play is real teaching, even when it feels like doing nothing.',
+        ready:'There’s no finish line. If they can lose themselves in their own invented games, the learning is already happening.'}
      ]}
    ]},
   {id:'acadia',name:'Acadia',sub:'Curiosity & Independence',ages:'Ages 8–12',tp:'#3E7CA8',pk:'#356F97',pk2:'#5E9B6B',
@@ -730,7 +754,7 @@ function renderPark(p,runner){
     +'<div class="map-head"><span class="mh-eye">Your trail map</span><h3>'+p.name+'</h3></div>'
     +mapSVG(p)
     +'<div class="map-legend"><span><i style="background:'+p.pk+'"></i>Education point</span><span><i class="pausekey"></i>Rest / Review / Reset — a pause</span><span>Tap a marker to jump to it</span></div>'
-    +'<p class="two-trails">The numbered <b>markers are education points</b> — the learning destinations for this stage. Between them sit <b>Rest, Review &amp; Reset</b>: pauses, not destinations. There are <b>two paths</b>, and completing <b>both</b> makes the full journey — but how you walk them is entirely yours.</p>'
+    +'<p class="two-trails">The numbered <b>markers are education points</b> — the learning destinations for this stage. Between them sit <b>Rest, Review &amp; Reset</b>: pauses, not destinations. There are <b>two paths</b>, and completing <b>both</b> makes the full journey — but how you walk them is entirely yours. And this journey is built for <b>you, the parent-teacher</b>, as much as for your child.</p>'
     +styleSel
     +toggle
     +'<div id="trailArea"></div>'
@@ -758,11 +782,15 @@ function setTrail(p,ti){
 }
 function renderActiveTrail(p){
   const trail=p.trails[activeTrail], pts=trail.points, mk=curMarks();
+  const hasTeach=pts.some(v=>v.teach);
   let list='';
   pts.forEach((v,i)=>{
+    const teach=v.teach?'<details class="teach"><summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14v7M7 11v4a5 3 0 0 0 10 0v-4"/></svg>For you, teacher</summary>'
+      +'<p>'+v.teach+'</p>'+(v.ready?'<p class="teach-ready"><b>You’ll know it’s landing when:</b> '+v.ready+'</p>':'')+'</details>':'';
     list+='<div class="vp'+(mk[i]?' marked-'+mk[i]:'')+'" data-i="'+i+'"><div class="marker">'+(i+1)+'</div><div class="card">'
       +'<div class="vp-name">Education point · '+v.n+'</div>'
       +'<h4 class="vp-title">'+v.t+'</h4><p class="vp-body">'+v.b+'</p>'
+      +teach
       +'<div class="vp-marks">'
       +'<button type="button" class="vpm'+(mk[i]==='on'?' act':'')+'" data-m="on">On my path</button>'
       +'<button type="button" class="vpm'+(mk[i]==='later'?' act':'')+'" data-m="later">Maybe later</button>'
@@ -771,6 +799,7 @@ function renderActiveTrail(p){
   });
   document.getElementById('trailArea').innerHTML=
     '<p class="trail-intro"><b>'+trail.name.replace(/^The\s/,'')+'</b> — '+trail.points.length+' education points to reach, with a <b>Rest</b>, <b>Review</b>, or <b>Reset</b> pause between each. Mark the points that are yours, in any order; start where you actually are and pause whenever you need to.</p>'
+    +(hasTeach?'<p class="teach-note">This journey is for <b>you</b> as much as for your child — the hard part is usually guiding them, not their learning. Open <b>“For you, teacher”</b> on any point for how to walk it (and a word of courage).</p>':'')
     +'<div class="trail">'+list+'</div>';
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});
   document.querySelectorAll('#trailArea .vp').forEach(el=>io.observe(el));
