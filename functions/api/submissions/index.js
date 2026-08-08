@@ -1,4 +1,4 @@
-import { json, requireAuth, rowToSub } from "../_lib.js";
+import { json, requireAuth, rowToSub, aiPersona } from "../_lib.js";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const clip = (v, n) => (v == null ? "" : String(v)).slice(0, n);
@@ -38,6 +38,20 @@ export async function onRequestPost(context) {
     rec.id, rec.created_at, rec.type, rec.questionnaire, rec.name,
     rec.email, rec.phone, rec.preferred_contact, rec.responses
   ).run();
+
+  // Generate a PII-free summary + parent persona in the background so the
+  // visitor's submit stays instant. Uses the AI engine when AI_API_KEY is set.
+  if (context.waitUntil) {
+    context.waitUntil((async () => {
+      try {
+        const p = await aiPersona(env, { type: rec.type, questionnaire: rec.questionnaire, responses });
+        if (p) {
+          await env.DB.prepare("UPDATE submissions SET summary = ?, persona = ? WHERE id = ?")
+            .bind(p.summary, p.persona, rec.id).run();
+        }
+      } catch (e) {}
+    })());
+  }
 
   return json({ ok: true, id: rec.id });
 }

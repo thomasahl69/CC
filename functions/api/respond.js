@@ -34,9 +34,11 @@ function buildUserMessage(sub) {
   const lines = [
     `A mother named ${sub.name || "(unknown)"} submitted the "${sub.questionnaire || "questionnaire"}".`,
     sub.preferredContact ? `Preferred contact: ${sub.preferredContact}.` : "",
-    "",
-    "Her answers:",
   ];
+  if (sub.persona) {
+    lines.push("", `Persona to guide your tone and pace (do not quote or reference this directly): ${sub.persona}`);
+  }
+  lines.push("", "Her answers:");
   for (const r of sub.responses || []) {
     lines.push(`- ${r.q}: ${r.a && r.a.trim() ? r.a.trim() : "(left blank)"}`);
   }

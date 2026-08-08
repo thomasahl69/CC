@@ -71,7 +71,38 @@ export function rowToSub(r) {
     name: r.name, email: r.email, phone: r.phone, preferredContact: r.preferred_contact,
     responses, status: r.status, response: r.response || "",
     aiDraft: r.ai_draft || "", respondedAt: r.responded_at,
+    summary: r.summary || "", persona: r.persona || "",
   };
+}
+
+// Generate a PII-free answer summary + parent persona from a submission's answers.
+// Returns { summary, persona } or null (no key / failure). Never includes name/email.
+export async function aiPersona(env, sub) {
+  if (!env || !env.AI_API_KEY) return null;
+  const answers = (sub.responses || [])
+    .map((r) => `- ${r.q}: ${r.a && String(r.a).trim() ? String(r.a).trim() : "(blank)"}`)
+    .join("\n");
+  const system =
+`You analyze homeschool-website form submissions for a homeschool coach (Christina). From ONLY the answers provided, produce a short answer summary and an anonymized parent persona that helps the coach shape the pace, direction, and tone of her reply.
+
+STRICT PRIVACY: never include names, emails, phone numbers, locations, or any identifying detail. Describe the parent in general terms only.
+
+Respond with ONLY valid JSON (no markdown fences) of the form:
+{"summary":"1-2 sentences on what they submitted or are asking","persona":"3-4 sentences: their likely homeschool style, family stage/size if implied, what they may be feeling or needing, and how best to encourage them"}`;
+  const user = `Form type: ${sub.type || "submission"} (${sub.questionnaire || ""}).\nAnswers:\n${answers || "(none)"}`;
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "x-api-key": env.AI_API_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      body: JSON.stringify({ model: env.AI_MODEL || "claude-sonnet-4-6", max_tokens: 450, system, messages: [{ role: "user", content: user }] }),
+    });
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    let txt = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("").trim();
+    txt = txt.replace(/^```json/i, "").replace(/^```/, "").replace(/```$/, "").trim();
+    const obj = JSON.parse(txt);
+    return { summary: String(obj.summary || "").slice(0, 600), persona: String(obj.persona || "").slice(0, 1400) };
+  } catch (e) { return null; }
 }
 
 // ---- Auto-migration: creates/updates all tables on first request per isolate.
@@ -99,6 +130,8 @@ const ALTER = [
   `ALTER TABLE submissions ADD COLUMN ai_draft TEXT DEFAULT ''`,
   `ALTER TABLE submissions ADD COLUMN responded_at TEXT`,
   `ALTER TABLE submissions ADD COLUMN type TEXT DEFAULT 'questionnaire'`,
+  `ALTER TABLE submissions ADD COLUMN summary TEXT DEFAULT ''`,
+  `ALTER TABLE submissions ADD COLUMN persona TEXT DEFAULT ''`,
 ];
 export async function ensureSchema(db) {
   if (SCHEMA_READY || !db) return;

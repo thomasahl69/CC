@@ -8,6 +8,22 @@ The version shows in three places: this file, the `VERSION` file, the
 `<meta name="version">` tag in each page, and the label next to "Content Studio"
 in the admin top bar. Update all of them together when you cut a new version.
 
+## v1.26.0 — 2026-06-27
+
+- **Every submission now gets a PII-free "coach brief" — an answer summary + a parent
+  persona.** Generated automatically in the background the moment a form is submitted (of
+  any type), so the visitor's submit stays instant. It captures what they're asking and a
+  short, anonymized profile of the parent — their likely style, family stage, what they may
+  be feeling, and how best to encourage them — with names, emails, and contact details
+  strictly excluded.
+- The brief appears at the top of each submission in Content Studio to help Christina shape
+  her pace, direction, and tone — with a **Generate / Refresh** button (for older
+  submissions or a re-run).
+- The persona is also fed into the **AI draft engine**, so generated replies are tuned to
+  that parent from the start.
+- Uses the same AI engine (AI_API_KEY); if the key isn't set, submissions still save
+  normally and the brief simply stays empty.
+
 ## v1.25.0 — 2026-06-27
 
 - **Compass Guide questionnaire is back — repurposed as an Evergreen family profile.**

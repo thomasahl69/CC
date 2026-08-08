@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Content Studio (admin) — v1.25.0 -->
+<!-- Content Studio (admin) — v1.26.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="version" content="1.25.0">
+<meta name="version" content="1.26.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Content Studio · Private</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -185,6 +185,13 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
 .media-actions button:hover{border-color:var(--sage)}
 .media-actions button.del:hover{border-color:var(--rose);color:var(--rose)}
 .media-empty{padding:clamp(30px,5vw,60px);text-align:center;color:var(--ink-soft)}
+.brief{background:color-mix(in srgb,var(--sage) 10%, var(--paper));border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;margin-bottom:1.4rem}
+.brief-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.5rem}
+.brief-eye{font-family:var(--util);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-deep)}
+.brief-sum{margin:0 0 .6rem;font-size:1rem;color:var(--ink);line-height:1.5}
+.brief-persona b{font-family:var(--util);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage-deep);display:block;margin-bottom:.15rem}
+.brief-persona p{margin:0;font-size:.94rem;color:var(--ink-soft);line-height:1.55}
+.brief-empty{margin:0;font-size:.9rem;color:var(--ink-soft);line-height:1.5}
 
 /* submission list items */
 .sub-item{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:.7rem .8rem;margin-bottom:.4rem;font-family:var(--sans);transition:all .18s}
@@ -229,7 +236,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
     <h1>Content Studio</h1>
     <p>Private workspace · Authentic Joy in the Journey</p>
-    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.25.0</p>
+    <p style="margin:-1rem 0 1.3rem;font-family:var(--util);font-size:.66rem;letter-spacing:.16em;color:var(--sage-deep)" id="gateVer">v1.26.0</p>
     <form id="gateForm">
       <input id="pw" type="password" placeholder="Enter password" autocomplete="current-password" autofocus>
       <div class="gate-err" id="gateErr"></div>
@@ -247,7 +254,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
     <div class="brand">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-4-3-6-3-10a3 3 0 0 1 6 0c0 4-3 6-3 10z"/><path d="M12 21c0-3 2.5-4.5 5-4.5"/><path d="M12 21c0-3-2.5-4.5-5-4.5"/></svg>
       <span>Content Studio<small>Private workspace</small></span>
-      <span class="ver" id="appVer">v1.25.0</span>
+      <span class="ver" id="appVer">v1.26.0</span>
     </div>
     <div class="viewtabs" role="tablist">
       <button class="vtab active" id="tabContent" role="tab">Content</button>
@@ -464,7 +471,7 @@ dialog::backdrop{background:rgba(51,64,46,.4)}
    ============================================================ */
 const LS_DATA='ccs_content_v1';
 const LS_PW='ccs_pwhash_v1';
-const APP_VERSION='1.25.0';
+const APP_VERSION='1.26.0';
 try{document.getElementById('appVer').textContent='v'+APP_VERSION}catch(e){}
 try{document.getElementById('gateVer').textContent='v'+APP_VERSION}catch(e){}
 const DEFAULT_PW_HASH='5589f7d7a215089cefaff76f0a454958ab258f41a2a9a24196592a4b4fe777dd'; // sha256("bloom2025")
@@ -776,6 +783,13 @@ function renderSubDetail(){
       <button class="btn danger tiny" id="delSub">Delete</button>
     </div>
 
+    <div class="brief" id="briefBox">
+      <div class="brief-head"><span class="brief-eye">Coach brief · at a glance</span><button class="btn ghost tiny" id="genBrief">${(s.summary||s.persona)?'Refresh':'Generate'}</button></div>
+      ${(s.summary||s.persona)
+        ? `${s.summary?`<p class="brief-sum">${esc(s.summary)}</p>`:''}${s.persona?`<div class="brief-persona"><b>Parent persona</b><p>${esc(s.persona)}</p></div>`:''}`
+        : `<p class="brief-empty">No brief yet. It’s written automatically for new submissions; click <b>Generate</b> to create one for this (older) submission. It never includes names or contact details.</p>`}
+    </div>
+
     <div class="qa">${qa}</div>
 
     <div class="statusrow">
@@ -816,6 +830,16 @@ function renderSubDetail(){
     renderSubList();renderSubDetail();updateSubBadge();
   }};
   const markResponded=()=>{s.status='responded';s.respondedAt=new Date().toISOString();commitSub(s);renderSubList();updateSubBadge();const sel=document.getElementById('subStatus');if(sel)sel.value='responded';tick();};
+  const gb=d.querySelector('#genBrief');
+  if(gb)gb.onclick=async()=>{
+    if(!SERVER){alert('The coach brief is generated by the live AI engine — available once the site is deployed.');return;}
+    gb.textContent='Working…';gb.disabled=true;
+    try{
+      const r=await api('/persona/'+encodeURIComponent(s.id),{method:'POST'});
+      if(r.ok&&r.body&&r.body.ok){s.summary=r.body.summary;s.persona=r.body.persona;renderSubDetail();}
+      else{alert('Could not generate a brief.\n\n'+((r.body&&r.body.error)||('Status '+r.status)));gb.textContent='Generate';gb.disabled=false;}
+    }catch(e){alert('Could not reach the server.');gb.textContent='Generate';gb.disabled=false;}
+  };
   d.querySelector('#sendResp').onclick=()=>{
     const body=(s.response||'').trim();
     if(!body){alert('Write a reply first — or use “Generate draft” below, then “Append to reply.”');return;}
